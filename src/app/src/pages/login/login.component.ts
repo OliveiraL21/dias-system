@@ -1,19 +1,77 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { Usuario } from '../../models/usuario/usuario';
+import { LoginService } from 'src/app/services/login/login.service';
+import { UsuarioLogin } from '../../models/login/UsuarioLogin';
+import { TokenService } from 'src/app/services/token-service/token.service';
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  providers: [ConfirmationService, MessageService]
 })
 export class LoginComponent {
 
-  constructor(private fb: FormBuilder, private route: Router, private activeRoute: ActivatedRoute) { }
+  form!: FormGroup;
+  loading: boolean = false;
+
+  constructor(private fb: FormBuilder, private loginService: LoginService, private tokenService: TokenService, private route: Router, private activeRoute: ActivatedRoute, private toastService: MessageService) { }
 
   novoUsuario() {
     this.route.navigateByUrl('/novo-usuario');
+  }
+
+  initForm() {
+    this.form = this.fb.group({
+      username: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+    });
+  }
+
+  ngOnInit() {
+    this.initForm();
+  }
+
+  Show(type: string, title: string, message: string) {
+
+    this.toastService.add({ key: 'tr', severity: type, summary: title, detail: message });
+  }
+
+  logar() {
+    if (this.form.valid) {
+      this.loading = true;
+      let usuario = new UsuarioLogin();
+      usuario = this.form.value;
+      this.loginService.login(usuario).subscribe({
+        next: (response) => {
+          this.tokenService.setToken(response.token);
+          if (this.tokenService.possuiToken()) {
+            localStorage.setItem('Id', response.usuarioId);
+            this.Show('success', 'Login', 'Login efetuado com sucesso');
+            this.loading = false;
+          } else {
+            this.Show('error', 'Login', 'Não foi possivel realizar o login, tente novamente mais tarde!');
+            this.loading = false;
+          }
+        }, error: (error) => {
+          this.Show('error', 'Login', 'Não foi possivel realizar o login, tente novamente mais tarde!');
+          this.loading = false;
+        }
+      })
+
+    } else {
+      this.Show('error', 'Login', 'Por favor verifique se os campos estão preenchidos corretamente');
+      Object.values(this.form.controls).forEach((control: AbstractControl) => {
+        if (!control.valid) {
+          control.markAsDirty();
+          control.updateValueAndValidity();
+        }
+      })
+    }
   }
 
 }

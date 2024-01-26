@@ -1,6 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { NovoUsuarioRoutingModule } from './novo-usuario-routing.module';
 import { NovoUsuarioComponent } from './novo-usuario.component';
 import { ShareModuleModule } from '../../common/share-module/share-module.module';
@@ -11,7 +9,6 @@ import { ShareModuleModule } from '../../common/share-module/share-module.module
     NovoUsuarioComponent
   ],
   imports: [
-    CommonModule,
     NovoUsuarioRoutingModule,
     ShareModuleModule
   ],

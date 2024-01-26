@@ -1,4 +1,10 @@
 <div class="w-full h-full flex align-items-center justify-content-center bg-gray-600">
+  <p-toast position="top-right"></p-toast>
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
+
   <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
     <div class="text-center mb-5">
       <img src="../../../../assets/images/clock red.png" alt="Image" height="50" class="mb-3">
@@ -7,34 +13,65 @@
       <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" (click)="login()">Faça o Login Agora !</a>
     </div>
 
-    <div>
+    <div class="justify-content-center align-items-center">
       <form [formGroup]="form">
+
         <label for="usuario" class="block text-900 font-medium mb-2">Username</label>
         <input id="usuario" type="text" formControlName="username" placeholder="Username" pInputText
           class="w-full mb-3">
-        <small class="p-error block p-0 m-0"
+
+        <small class="p-error block p-1 mb-2"
           *ngIf="form.get('username')?.hasError('required') && form.get('username')?.dirty && form.get('username')?.invalid">
           Campo obrigatório
         </small>
-        <br>
+
         <label for="email" class="block text-900 font-medium mb-2">Email</label>
         <input id="email" type="text" formControlName="email" placeholder="Email address" pInputText
           class="w-full mb-3">
-        <small class="p-error block p-0 m-0"
+        <small class="p-error block p-1 mb-2"
           *ngIf="form.get('email')?.hasError('required') && form.get('email')?.dirty">
           Campo obrigatório
         </small>
-        <br>
-        <label for="password" class="block text-900 font-medium mb-2">Password</label>
-        <input id="password" type="password" placeholder="Password" formControlName="password" pInputText
-          class="w-full mb-3">
-        <small class="p-error block p-0 m-0"
+
+        <span class="p-input-icon-right w-full">
+          <label for="password" class="block text-900 font-medium mb-2">Password</label>
+          <i [ngClass]="setPasswordVisibleIcon" class="p-1" (click)="changeVisibility('password')"></i>
+          <input id="password" type="password" placeholder="Password" formControlName="password" #passwordRef pInputText
+            class="w-full mb-3 ">
+        </span>
+
+        <small class="p-error block p-1 mb-2"
           *ngIf="form.get('password')?.hasError('required') && form.get('password')?.dirty">
           Campo obrigatório
         </small>
-        <br>
-        <button pButton pRipple label="Cadastrar" icon="pi pi-user" class="w-full" (click)="criar()"></button>
+        <small class="p-error block p-1 mb-2"
+          *ngIf="form.get('password')?.hasError('minlength') && form.get('password')?.dirty">A senha deve
+          conter ao menos 8 caracteres</small>
+
+        <small class="p-error block p-1 mb-2" *ngIf="form.get('password')?.hasError('strongPassword')">
+          A senha deve conter pelo menos 1 caractere especial e 1 uma letra maiúscula
+        </small>
+
+        <span class="p-input-icon-right w-full mt-1">
+          <label for="confPassword" class="block text-900 font-medium mb-2">Cofirm Password</label>
+          <i [ngClass]="setConfirmPassVisibleIcon" class="p-1" (click)="changeVisibility('confirmPassword')"></i>
+          <input id="confPassword" type="password" placeholder="Digite a senha novamente"
+            formControlName="confirmPassword" #confirmPassRef pInputText class="w-full mb-3">
+        </span>
+
+        <small class="p-error block p-0 mb-2"
+          *ngIf="form.get('confirmPassword')?.hasError('required') && form.get('confirmPassword')?.dirty">
+          Campo obrigatório
+        </small>
+
+        <small class="p-error block p-0 mb-2"
+          *ngIf="form.get('confirmPassword')?.hasError('confirmPassError') && form.get('confirmPassword')?.dirty">A
+          senha de confirmação
+          deve ser igual a senha original</small>
+        <button pButton pRipple label="Cadastrar" icon="pi pi-user" class="w-full mt-3" (click)="criar()"></button>
+
       </form>
     </div>
   </div>
+
 </div>

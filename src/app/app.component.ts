@@ -8,5 +8,5 @@ import { ButtonModule } from 'primeng/button';
 })
 export class AppComponent {
   value: any = "teste";
-  title = 'Gereciador_Tarefas_Front-End_New';
+  title = 'Gereciador Tarefas Dias';
 }

@@ -7,7 +7,10 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BlockUIModule } from 'primeng/blockui';
 import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -24,6 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     CheckboxModule,
     InputTextModule,
     ToastModule,
+    ProgressSpinnerModule,
+    BlockUIModule,
     HttpClientModule
   ],
 
@@ -37,6 +42,8 @@ import { HttpClientModule } from '@angular/common/http';
     CheckboxModule,
     InputTextModule,
     ToastModule,
+    ProgressSpinnerModule,
+    BlockUIModule,
     HttpClientModule
   ]
 })
