@@ -93,7 +93,7 @@ export class NovoUsuarioComponent {
           }
         },
         error: (error: any) => {
-          this.Show('error', 'Novo Usuário', error.message ?? 'Error ao tentar cadastrar o usuário');
+          this.Show('error', 'Novo Usuário', error.error.error ?? 'Error ao tentar cadastrar o usuário');
           this.loading = false;
         }
       });
