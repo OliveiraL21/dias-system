@@ -15,7 +15,17 @@ const routes: Routes = [
   {
     path: 'novo-usuario',
     loadChildren: () => import('./src/pages/novo-usuario/novo-usuario.module').then((m) => m.NovoUsuarioModule)
+  },
+  {
+    path: 'esqueceu-senha',
+    loadChildren: () => import("./src/pages/esqueceu-senha/esqueceu-senha.module").then((m) => m.EsqueceuSenhaModule),
+  },
+
+  {
+    path: 'redefinirSenha',
+    loadChildren: () => import("./src/pages/redefinir-senha/redefinir-senha.module").then((m) => m.RedefinirSenhaModule),
   }
+
 ];
 
 @NgModule({

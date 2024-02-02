@@ -1,31 +1,30 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Usuario } from '../../models/usuario/usuario';
-import { UsersService } from 'src/app/services/user-service/user.service';
 import { MessageService } from 'primeng/api';
+import { UsersService } from 'src/app/services/user-service/user.service';
+import { ResetSenha } from '../../models/redefinirSenha/resetSenha';
+import { EsqueceuSenhaService } from 'src/app/services/esqueceu-senha/esqueceu-senha.service';
 
 @Component({
-  selector: 'app-novo-usuario',
-  templateUrl: './novo-usuario.component.html',
-  styleUrl: './novo-usuario.component.css',
+  selector: 'app-redefinir-senha',
+  templateUrl: './redefinir-senha.component.html',
+  styleUrl: './redefinir-senha.component.css',
   providers: [MessageService]
 })
-
-
-
-export class NovoUsuarioComponent {
+export class RedefinirSenhaComponent {
   @ViewChild('passwordRef') passwordRef!: ElementRef<HTMLInputElement>;
   @ViewChild('confirmPassRef') confirmPassRef!: ElementRef<HTMLInputElement>;
 
   form!: FormGroup;
+  loading: boolean = false;
   setPasswordVisibleIcon: string = "pi pi-eye-slash";
   setConfirmPassVisibleIcon: string = 'pi pi-eye-slash';
-  loading: boolean = false;
+  usuarioId: number = parseInt(this.activatedRoute.snapshot.paramMap.get('id') ?? "");
+  email: string = this.activatedRoute.snapshot.paramMap.get("email") ?? "";
+  codigoRecuperacao: string = this.activatedRoute.snapshot.paramMap.get("codigo") ?? "";
 
-
-  constructor(private fb: FormBuilder, private route: Router, private activatedRoute: ActivatedRoute, private userService: UsersService, private messageService: MessageService) { }
-
+  constructor(private fb: FormBuilder, private route: Router, private recuperaSenhaService: EsqueceuSenhaService, private activatedRoute: ActivatedRoute, private messageService: MessageService) { }
 
   isStrongPassword(password: FormControl): ValidationErrors | null {
     if (password.value) {
@@ -57,8 +56,6 @@ export class NovoUsuarioComponent {
 
   initForm() {
     this.form = this.fb.group({
-      username: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required, Validators.minLength(8), this.isStrongPassword]],
       confirmPassword: [null, [Validators.required, Validators.minLength(8), this.isConfirmPasswordEqual]]
     });
@@ -74,26 +71,25 @@ export class NovoUsuarioComponent {
     this.initForm();
   }
 
-  login() {
-    this.route.navigateByUrl('/login');
-  }
-
-  criar() {
+  enviar() {
     if (this.form.valid) {
       this.loading = true;
-      let usuario = new Usuario();
-      usuario = this.form.value;
 
-      this.userService.create(usuario).subscribe({
+      let recuperaSenha = new ResetSenha();
+      recuperaSenha.id = this.usuarioId;
+      recuperaSenha.email = this.email;
+      recuperaSenha.token = this.codigoRecuperacao;
+      recuperaSenha.password = this.form.get('password')?.value;
+      recuperaSenha.PasswordConfirm = this.form.get('confirmPassword')?.value;
+
+      this.recuperaSenhaService.redefinirSenha(recuperaSenha).subscribe({
         next: (response: any) => {
-          if (response.isSuccess) {
-            this.route.navigateByUrl('/login');
-            this.Show('success', 'Novo Usuário', 'Usuário cadastrado com sucesso');
-            this.loading = false;
-          }
+          this.route.navigateByUrl('/login');
+          this.Show('success', 'Recuperação de Senha', response.message);
+          this.loading = false;
         },
         error: (error: any) => {
-          this.Show('error', 'Novo Usuário', error.message ?? 'Error ao tentar cadastrar o usuário');
+          this.Show('error', 'Recuperação de Senha', error.message ?? 'Error ao tentar cadastrar o usuário');
           this.loading = false;
         }
       });
@@ -107,4 +103,5 @@ export class NovoUsuarioComponent {
       });
     }
   }
+
 }
