@@ -24,7 +24,10 @@ const routes: Routes = [
   {
     path: 'redefinirSenha',
     loadChildren: () => import("./src/pages/redefinir-senha/redefinir-senha.module").then((m) => m.RedefinirSenhaModule),
-  }
+  },
+
+  { path: 'cliente', loadChildren: () => import('./src/pages/cliente/cliente.module').then((m) => m.ClienteModule) }
+
 
 ];
 

@@ -1,3 +1,15 @@
-<main class="h-screen overflow-hidden">
-  <router-outlet></router-outlet>
+<main class="h-screen overflow-hidden flex">
+  <div *ngIf="authenticated == true" class="w-auto h-screen bg-bluegray-700 text-white border-round-right">
+    <div class="flex justify-content-center p-5">
+      <p-avatar size="xlarge" icon="pi pi-user"></p-avatar>
+    </div>
+    <p-menu [model]="items"
+      styleClass="h-full bg-bluegray-700 text-white border-round-right border-none border-noround-left">
+    </p-menu>
+
+  </div>
+  <div [ngClass]="authenticated ? 'w-10 ml-7' : 'w-full'">
+    <router-outlet></router-outlet>
+  </div>
+
 </main>

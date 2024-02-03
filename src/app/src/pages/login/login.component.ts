@@ -51,14 +51,16 @@ export class LoginComponent {
           this.tokenService.setToken(response.token);
           if (this.tokenService.possuiToken()) {
             localStorage.setItem('Id', response.usuarioId);
+            localStorage.setItem('authenticated', response.authenticated);
             this.Show('success', 'Login', 'Login efetuado com sucesso');
             this.loading = false;
+            this.route.navigateByUrl('cliente');
           } else {
             this.Show('error', 'Login', 'Não foi possivel realizar o login, tente novamente mais tarde!');
             this.loading = false;
           }
         }, error: (error) => {
-          this.Show('error', 'Login', 'Não foi possivel realizar o login, tente novamente mais tarde!');
+          this.Show('error', 'Login', `${error.error.error}`);
           this.loading = false;
         }
       })

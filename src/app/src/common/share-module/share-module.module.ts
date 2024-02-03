@@ -9,6 +9,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BlockUIModule } from 'primeng/blockui';
+import { Menu, MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
+import { MegaMenuModule } from 'primeng/megamenu';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -29,6 +34,11 @@ import { HttpClientModule } from '@angular/common/http';
     ToastModule,
     ProgressSpinnerModule,
     BlockUIModule,
+    MenuModule,
+    MenubarModule,
+    MegaMenuModule,
+    AvatarModule,
+    AvatarGroupModule,
     HttpClientModule
   ],
 
@@ -44,6 +54,11 @@ import { HttpClientModule } from '@angular/common/http';
     ToastModule,
     ProgressSpinnerModule,
     BlockUIModule,
+    MenuModule,
+    MegaMenuModule,
+    MenubarModule,
+    AvatarModule,
+    AvatarGroupModule,
     HttpClientModule
   ]
 })
