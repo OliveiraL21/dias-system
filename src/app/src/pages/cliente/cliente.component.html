@@ -1,1 +1,29 @@
-<p>cliente works!</p>
+<div class="justify-content-center align-item-center h-full mt-5">
+  <p-card header="Clientes">
+
+    <p-table [value]="clients" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Razão Social</th>
+          <th>Cnpj</th>
+          <th>Telefone</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cliente>
+        <tr>
+          <td>{{cliente.razaoSocial}}</td>
+          <td>{{cliente.cnpj}}</td>
+          <td>{{cliente.telefone}}</td>
+          <td>{{cliente.status}}</td>
+          <td>
+            <p-button icon="pi pi-edit" [rounded]="true"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+
+  </p-card>
+</div>

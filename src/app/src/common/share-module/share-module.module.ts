@@ -15,7 +15,8 @@ import { MegaMenuModule } from 'primeng/megamenu';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { HttpClientModule } from '@angular/common/http';
-
+import { Card, CardModule } from 'primeng/card';
+import { Table, TableModule } from 'primeng/table';
 
 
 
@@ -39,7 +40,9 @@ import { HttpClientModule } from '@angular/common/http';
     MegaMenuModule,
     AvatarModule,
     AvatarGroupModule,
-    HttpClientModule
+    HttpClientModule,
+    CardModule,
+    TableModule
   ],
 
   exports: [
@@ -59,7 +62,9 @@ import { HttpClientModule } from '@angular/common/http';
     MenubarModule,
     AvatarModule,
     AvatarGroupModule,
-    HttpClientModule
+    HttpClientModule,
+    CardModule,
+    TableModule
   ]
 })
 export class ShareModuleModule { }
