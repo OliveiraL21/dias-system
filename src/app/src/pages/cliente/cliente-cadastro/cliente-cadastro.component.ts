@@ -17,6 +17,7 @@ export class ClienteCadastroComponent {
   loading: boolean = false;
   id: any = this.activatedRouter.snapshot.paramMap.get('id');
   title: string = 'Cadastro de Cliente';
+  cliente: any;
 
   constructor(private fb: FormBuilder, private messageService: MessageService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService) { }
 
@@ -38,8 +39,35 @@ export class ClienteCadastroComponent {
     this.router.navigateByUrl('cliente');
   }
 
+  getDetail() {
+    if (this.id) {
+      this.loading = true;
+      this.clienteService.details(this.id).subscribe({
+        next: (response: Cliente) => {
+          this.cliente = response;
+          this.preencherFormulario();
+          this.loading = false;
+        },
+        error: (error: any) => {
+          this.show('error', this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do cliente, tente novamente mais tarde!'}`);
+          this.loading = false;
+        }
+      });
+    }
+  }
+
+  preencherFormulario() {
+    if (this.id) {
+      Object.keys(this.cliente).forEach((key: string) => {
+        this.form.get(key)?.setValue(this.cliente[key]);
+      });
+    }
+  }
+
   ngOnInit() {
     this.initForm();
+    this.getDetail();
+    this.id ? this.title = 'Editar Cliente' : 'Cadastro de Cliente';
   }
 
   save() {

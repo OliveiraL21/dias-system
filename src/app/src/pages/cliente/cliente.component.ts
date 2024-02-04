@@ -22,8 +22,39 @@ export class ClienteComponent {
     this.listarClientes();
   }
 
+  show(type: string, title: string, message: string) {
+    this.messageService.add({ severity: type, summary: title, detail: message });
+  }
+
   novoCliente() {
     this.router.navigateByUrl('cliente/cadastro');
+  }
+
+  editarCliente(id: number) {
+    this.router.navigateByUrl(`cliente/editar/${id}`)
+  }
+
+  deletarCliente(id: number) {
+    if (id) {
+      this.loading = true;
+      this.clienteService.delete(id).subscribe({
+        next: (response: any) => {
+          if (response) {
+            this.show('success', 'Excluir Cliente', 'Cliente excluido com sucesso!');
+            this.listarClientes();
+            this.loading = false;
+          } else {
+            this.show('error', 'Excluir Cliente', 'Não foi possível excluir o cliente, tente novamente mais tarde');
+            this.loading = false;
+          }
+
+        },
+        error: (error: any) => {
+          this.show('error', 'Excluir Cliente', `${error.error.error ? error.error.error : 'Não foi possível excluir o cliente, tente novamente mais tarde'}`);
+          this.loading = false;
+        }
+      })
+    }
   }
 
   listarClientes() {

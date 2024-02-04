@@ -17,7 +17,6 @@
           <th>Razão Social</th>
           <th>Cnpj</th>
           <th>Telefone</th>
-          <th>Status</th>
           <th></th>
         </tr>
       </ng-template>
@@ -26,9 +25,10 @@
           <td>{{cliente.razaoSocial}}</td>
           <td>{{cliente.cnpj}}</td>
           <td>{{cliente.telefone}}</td>
-          <td>{{cliente.status}}</td>
           <td>
-            <p-button icon="pi pi-edit" [rounded]="true"></p-button>
+            <p-button icon="pi pi-pencil" [text]="true" (onClick)="editarCliente(cliente.id)"></p-button>
+            <p-button icon="pi pi-trash" [text]="true" severity="danger"
+              (onClick)="deletarCliente(cliente.id)"></p-button>
           </td>
         </tr>
       </ng-template>

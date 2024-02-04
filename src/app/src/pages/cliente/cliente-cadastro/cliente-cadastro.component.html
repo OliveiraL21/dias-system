@@ -48,7 +48,7 @@
         class="p-0 mb-4 p-error block">Campo obrigatório
       </small>
       <small *ngIf="form.get('email')?.hasError('email') && form.get('email')?.dirty"
-        class="p-0 mb-4 p-error block"></small>
+        class="p-0 mb-4 p-error block">E-mail no formato inválido</small>
 
       <div class="flex">
         <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
