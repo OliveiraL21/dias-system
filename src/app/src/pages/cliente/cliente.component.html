@@ -1,5 +1,15 @@
 <div class="justify-content-center align-item-center h-full mt-5">
+  <p-toast position="top-right"></p-toast>
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
   <p-card header="Clientes">
+
+    <div class="flex justify-content-end w-full mb-5">
+      <p-button label="Novo Cliente" icon="pi pi-plus" [rounded]="true" size="small" iconPos="right"
+        (onClick)="novoCliente()"></p-button>
+    </div>
 
     <p-table [value]="clients" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
       <ng-template pTemplate="header">

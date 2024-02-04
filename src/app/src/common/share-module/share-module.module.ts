@@ -17,7 +17,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { HttpClientModule } from '@angular/common/http';
 import { Card, CardModule } from 'primeng/card';
 import { Table, TableModule } from 'primeng/table';
-
+import { InputMaskModule } from 'primeng/inputmask';
 
 
 
@@ -42,7 +42,8 @@ import { Table, TableModule } from 'primeng/table';
     AvatarGroupModule,
     HttpClientModule,
     CardModule,
-    TableModule
+    TableModule,
+    InputMaskModule
   ],
 
   exports: [
@@ -64,7 +65,8 @@ import { Table, TableModule } from 'primeng/table';
     AvatarGroupModule,
     HttpClientModule,
     CardModule,
-    TableModule
+    TableModule,
+    InputMaskModule
   ]
 })
 export class ShareModuleModule { }

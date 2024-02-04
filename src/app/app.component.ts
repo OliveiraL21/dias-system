@@ -50,7 +50,7 @@ export class AppComponent {
       },
       {
         label: 'Sair',
-        icon: 'pi pi-power-off',
+        icon: 'pi pi-sign-out',
         iconClass: 'text-white',
         command: () => {
           this.logout();
@@ -93,7 +93,5 @@ export class AppComponent {
 
       }
     })
-
-    console.log(this.authenticated);
   }
 }
