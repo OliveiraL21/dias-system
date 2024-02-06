@@ -82,7 +82,7 @@ export class ClienteCadastroComponent {
           next: (response: Cliente) => {
             this.show('success', 'Cadastro de Cliente', 'Cliente Cadastrado com sucesso!');
             this.loading = false;
-            setTimeout(() => { this.router.navigateByUrl('cliente') }, 2000);
+            setTimeout(() => { this.router.navigateByUrl('cliente') }, 1000);
           },
           error: (error: any) => {
             this.show('error', this.title, `${error.error.error}`);

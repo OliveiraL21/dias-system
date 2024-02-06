@@ -36,12 +36,14 @@ export class AppComponent {
       {
         label: 'Clientes',
         icon: 'pi pi-user',
-        iconClass: 'text-white'
+        iconClass: 'text-white',
+        routerLink: 'cliente/'
       },
       {
         label: 'Projetos',
         icon: 'pi pi-chart-line',
-        iconClass: 'text-white'
+        iconClass: 'text-white',
+        routerLink: 'projeto/'
       },
       {
         label: 'Tarefas',

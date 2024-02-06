@@ -18,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { Card, CardModule } from 'primeng/card';
 import { Table, TableModule } from 'primeng/table';
 import { InputMaskModule } from 'primeng/inputmask';
-
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 @NgModule({
@@ -43,7 +44,9 @@ import { InputMaskModule } from 'primeng/inputmask';
     HttpClientModule,
     CardModule,
     TableModule,
-    InputMaskModule
+    InputMaskModule,
+    CalendarModule,
+    DropdownModule,
   ],
 
   exports: [
@@ -66,7 +69,9 @@ import { InputMaskModule } from 'primeng/inputmask';
     HttpClientModule,
     CardModule,
     TableModule,
-    InputMaskModule
+    InputMaskModule,
+    CalendarModule,
+    DropdownModule
   ]
 })
 export class ShareModuleModule { }
