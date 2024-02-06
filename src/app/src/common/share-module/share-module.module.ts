@@ -20,6 +20,7 @@ import { Table, TableModule } from 'primeng/table';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
+import { TagModule } from 'primeng/tag';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { DropdownModule } from 'primeng/dropdown';
     InputMaskModule,
     CalendarModule,
     DropdownModule,
+    TagModule,
   ],
 
   exports: [
@@ -71,7 +73,8 @@ import { DropdownModule } from 'primeng/dropdown';
     TableModule,
     InputMaskModule,
     CalendarModule,
-    DropdownModule
+    DropdownModule,
+    TagModule,
   ]
 })
 export class ShareModuleModule { }

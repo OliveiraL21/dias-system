@@ -67,6 +67,6 @@ export class ListagemProjetoComponent {
   }
 
   ngOnInit() {
-
+    this.getProjetos();
   }
 }

@@ -43,14 +43,13 @@
 
 
 
-      <label for="email" class="block text-900 font-medium mb-2">Status <span class="text-red-500">*</span></label>
-      <input type="text" name="email" id="email" formControlName="email" placeholder="exemplo@exemplo.com" pInputText
-        class="w-full mb-3">
-      <small *ngIf="form.get('email')?.hasError('required') && form.get('email')?.dirty"
+      <label for="status" class="block text-900 font-medium mb-2">Status <span class="text-red-500">*</span></label>
+      <p-dropdown formControlName="status" [options]="status" optionValue="id" optionLabel="descricao"
+        placeholder="Selecione o status" styleClass="w-full mb-3"></p-dropdown>
+      <small *ngIf="form.get('status')?.hasError('required') && form.get('status')?.dirty"
         class="p-0 mb-4 p-error block">Campo obrigatório
       </small>
-      <small *ngIf="form.get('email')?.hasError('email') && form.get('email')?.dirty"
-        class="p-0 mb-4 p-error block">E-mail no formato inválido</small>
+
 
       <div class="flex">
         <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>

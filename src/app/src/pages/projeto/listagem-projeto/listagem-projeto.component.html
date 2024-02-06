@@ -17,16 +17,36 @@
           <th>Descrição</th>
           <th>Cliente</th>
           <th>Data Inicio</th>
+          <th>Data Fim</th>
           <th>Status</th>
           <th></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-projeto>
         <tr>
-          <td>{{projeto.Descricao}}</td>
-          <td>{{projeto.Cliente.razaoSocial}}</td>
-          <td>{{projeto.DataInicio}}</td>
-          <td>{{projeto.status}}</td>
+          <td>{{projeto.descricao}}</td>
+          <td>{{projeto.cliente.razaoSocial}}</td>
+          <td>{{projeto.data_Inicio}}</td>
+          <td>{{projeto.data_Fim}}</td>
+          <td>
+            <p-tag *ngIf="projeto.status.descricao == 'Ativo' " [value]="projeto.status.descricao"
+              [severity]="'primary'"></p-tag>
+
+            <p-tag *ngIf="projeto.status.descricao == 'Inatívo' " [value]="projeto.status.descricao"
+              [severity]="'warning'"></p-tag>
+
+            <p-tag *ngIf="projeto.status.descricao == 'Excluído' " [value]="projeto.status.descricao"
+              [severity]="'danger'"></p-tag>
+
+            <p-tag *ngIf="projeto.status.descricao == 'Finalizado' " [value]="projeto.status.descricao"
+              [severity]="'success'"></p-tag>
+
+            <p-tag *ngIf="projeto.status.descricao == 'Em Pausa' " [value]="projeto.status.descricao"
+              [severity]="'warning'"></p-tag>
+
+            <p-tag *ngIf="projeto.status.descricao == 'Bloqueado' " [value]="projeto.status.descricao"
+              [severity]="'danger'"></p-tag>
+          </td>
           <td>
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(projeto.id)"></p-button>
             <p-button icon="pi pi-trash" [text]="true" severity="danger" (onClick)="deletar(projeto.id)"></p-button>
