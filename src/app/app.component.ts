@@ -43,12 +43,13 @@ export class AppComponent {
         label: 'Projetos',
         icon: 'pi pi-chart-line',
         iconClass: 'text-white',
-        routerLink: 'projeto/'
+        routerLink: 'projeto/listagem'
       },
       {
         label: 'Tarefas',
         icon: 'pi pi-check-square',
-        iconClass: 'text-white'
+        iconClass: 'text-white',
+        routerLink: 'tarefas/listagem'
       },
       {
         label: 'Sair',
