@@ -84,14 +84,10 @@ export class CadastroProjetoComponent {
     if (this.id) {
       Object.keys(this.projeto).forEach((key: string) => {
         this.form.get(key)?.setValue(key.includes('data') ? new Date(this.projeto[key]) : this.projeto[key]);
-        if (key == 'clienteId') {
-          this.form.get('cliente')?.setValue(this.projeto.clienteId);
-        }
-
-        if (key == 'statusId') {
-          this.form.get('status')?.setValue(this.projeto.statusId);
-        }
       });
+
+      this.form.get('cliente')?.setValue(this.projeto.clienteId);
+      this.form.get('status')?.setValue(this.projeto.statusId);
     }
     console.log(this.clientes);
   }
