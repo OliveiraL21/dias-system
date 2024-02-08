@@ -21,7 +21,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
-
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [],
@@ -49,6 +49,7 @@ import { TagModule } from 'primeng/tag';
     CalendarModule,
     DropdownModule,
     TagModule,
+    InputTextareaModule,
   ],
 
   exports: [
@@ -75,6 +76,7 @@ import { TagModule } from 'primeng/tag';
     CalendarModule,
     DropdownModule,
     TagModule,
+    InputTextareaModule,
   ]
 })
 export class ShareModuleModule { }

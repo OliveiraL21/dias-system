@@ -1,1 +1,105 @@
-<p>cadastro-tarefa works!</p>
+<div class="flex align-item-center mt-5">
+  <p-toast position="top-right"></p-toast>
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
+
+  <p-card [header]="title" class="w-full">
+    <form class="w-5 flex flex-wrap" [formGroup]="form">
+
+      <div class="w-full">
+        <label for="razaoSocial" class="block text-900 font-medium mb-2">Descricao<span
+            class="text-red-500">*</span></label>
+        <input type="text" name="descricao" placeholder="Informe o nome da tarefa" id="descricao"
+          formControlName="descricao" pInputText class="w-full mb-3">
+        <small *ngIf="form.get('descricao')?.hasError('required') && form.get('descricao')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório
+        </small>
+      </div>
+
+
+      <div class="w-4 mr-2">
+        <label for="horarioInicio" class="block text-900 font-medium mb-2">Horário de Início <span
+            class="text-red-500">*</span></label>
+        <p-inputMask mask="99:99" slotChar="hh:mm" placeholder="hh:mm" formControlName="horarioInicio"
+          name="horarioInicio" id="horarioInicio" styleClass="w-full mb-3" (ngModelChange)="HoraGasta()"></p-inputMask>
+        <small *ngIf="form.get('horarioInicio')?.hasError('required') && form.get('horarioInicio')?.dirty">Campo
+          obrigatório</small>
+      </div>
+
+      <div class="w-4 mr-2">
+        <label for="horarioFim" class="block text-900 font-medium mb-2">Horário Final <span
+            class="text-red-500">*</span></label>
+        <p-inputMask mask="99:99" slotChar="hh:mm" formControlName="horarioFim" name="horarioFim" id="horarioFim"
+          styleClass="w-full mb-3" placeholder="hh:mm" (ngModelChange)="HoraGasta()"></p-inputMask>
+        <small *ngIf="form.get('horarioFim')?.hasError('required') && form.get('horarioFim')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório
+        </small>
+        <small class="p-0 mb-4 p-error block"
+          *ngIf="form.get('horarioFim')?.hasError('horarioFinalInvalido') && form.get('horarioFim')?.dirty ">O horário
+          final não pode ser menor que o horário
+          inicial</small>
+      </div>
+
+      <div class="w-3 mr-2">
+
+        <label for="duracao" class="block text-900 font-medium mb-2">Duração <span class="text-red-500">*</span></label>
+        <input type="text" pInputText id="duracao" formControlName="duracao" name="duracao" placeholder="hh:mm"
+          class="w-full mb-3" />
+
+        <small *ngIf="form.get('duracao')?.hasError('required') && form.get('duracao')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório
+        </small>
+
+      </div>
+
+
+
+
+      <div class="w-5 mr-2">
+        <label for="data" class="block text-900 font-medium mb-2">Data<span class="text-red-500">*</span></label>
+        <p-calendar formControlName="data" dateFormat="dd/mm/yy" id="data" name="data" styleClass="w-full mb-3"
+          placeholder="Selecione a data"></p-calendar>
+        <small *ngIf="form.get('data')?.hasError('required') && form.get('data')?.dirty">Campo
+          obrigatório</small>
+      </div>
+
+
+      <div class="w-6">
+        <label for="projetoId" class="block text-900 font-medium mb-2">Projeto <span
+            class="text-red-500">*</span></label>
+        <p-dropdown formControlName="projetoId" [options]="projetos" optionLabel="descricao" optionValue="id"
+          placeholder="Selecione um projeto" styleClass="w-full mb-3"></p-dropdown>
+
+        <small *ngIf="form.get('projetoId')?.hasError('required') && form.get('projetoId')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório
+        </small>
+      </div>
+
+      <div class="w-5">
+        <label for="status" class="block text-900 font-medium mb-2">Status <span class="text-red-500">*</span></label>
+        <p-dropdown formControlName="status" [options]="status" optionValue="id" optionLabel="descricao"
+          placeholder="Selecione o status" styleClass="w-full mb-3"></p-dropdown>
+        <small *ngIf="form.get('status')?.hasError('required') && form.get('status')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório
+        </small>
+
+      </div>
+
+
+      <div class="mb-4 w-full">
+        <label for="observacao" class="block text-900 font-medium mb-2">Observações</label>
+        <textarea rows="5" cols="30" pInputTextarea formControlName="observacao"></textarea>
+      </div>
+
+
+      <div class="flex">
+        <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
+        <p-button class="ml-2" label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right"
+          (onClick)="cancelar()"></p-button>
+      </div>
+
+    </form>
+  </p-card>
+</div>
