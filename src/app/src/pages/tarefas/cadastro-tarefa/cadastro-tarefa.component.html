@@ -22,8 +22,8 @@
       <div class="w-4 mr-2">
         <label for="horarioInicio" class="block text-900 font-medium mb-2">Horário de Início <span
             class="text-red-500">*</span></label>
-        <p-inputMask mask="99:99" slotChar="hh:mm" placeholder="hh:mm" formControlName="horarioInicio"
-          name="horarioInicio" id="horarioInicio" styleClass="w-full mb-3" (ngModelChange)="HoraGasta()"></p-inputMask>
+        <p-inputMask mask="99:99" placeholder="hh:mm" formControlName="horarioInicio" name="horarioInicio"
+          id="horarioInicio" styleClass="w-full mb-3" (ngModelChange)="HoraGasta()"></p-inputMask>
         <small *ngIf="form.get('horarioInicio')?.hasError('required') && form.get('horarioInicio')?.dirty">Campo
           obrigatório</small>
       </div>
@@ -31,7 +31,7 @@
       <div class="w-4 mr-2">
         <label for="horarioFim" class="block text-900 font-medium mb-2">Horário Final <span
             class="text-red-500">*</span></label>
-        <p-inputMask mask="99:99" slotChar="hh:mm" formControlName="horarioFim" name="horarioFim" id="horarioFim"
+        <p-inputMask mask="99:99" formControlName="horarioFim" name="horarioFim" id="horarioFim"
           styleClass="w-full mb-3" placeholder="hh:mm" (ngModelChange)="HoraGasta()"></p-inputMask>
         <small *ngIf="form.get('horarioFim')?.hasError('required') && form.get('horarioFim')?.dirty"
           class="p-0 mb-4 p-error block">Campo obrigatório

@@ -51,26 +51,29 @@ export class CadastroTarefaComponent {
   }
 
   HoraGasta() {
-    let horarioInicio: Date = this.form.get('horarioInicio')?.value;
-    let horarioFim: Date = this.form.get('horarioFim')?.value;
+    let horarioInicio: string = this.form.get('horarioInicio')?.value;
+    let horarioFim: string = this.form.get('horarioFim')?.value;
+
+    if (horarioInicio && horarioInicio.includes('_')) {
+      horarioInicio = horarioInicio.replaceAll('_', '');
+    }
+
+    if (horarioFim && horarioFim.includes("_")) {
+      horarioFim = horarioFim.replaceAll('_', '');
+    }
 
     if (
       horarioInicio &&
       horarioFim &&
       horarioInicio !== null &&
-      horarioFim !== null
+      horarioFim !== null && horarioInicio.length >= 5 && horarioFim.length >= 5
     ) {
       this.loading = true;
 
-      if (typeof horarioInicio !== 'object' || typeof horarioFim !== 'object') {
-        horarioInicio = new Date(horarioInicio);
-        horarioFim = new Date(horarioFim);
-      }
-
       this.service
         .calcularDuracao(
-          horarioInicio.toLocaleTimeString(),
-          horarioFim.toLocaleTimeString()
+          horarioInicio,
+          horarioFim
         )
         .subscribe({
           next: (data: any) => {
@@ -130,19 +133,13 @@ export class CadastroTarefaComponent {
   getDetails() {
     this.service.details(this.id).subscribe({
       next: (tarefa: any) => {
-        console.log(tarefa);
-        Object.keys(tarefa).forEach((key: any) => {
-          this.form.get(key)?.setValue(tarefa[key]);
-        })
-
-        // this.form.get('descricao')?.setValue(tarefa.descricao);
-        // this.form.get('data')?.setValue(tarefa.data);
-
-        // this.form.get('duracao')?.setValue(tarefa.duracao);
-        // this.form.get('projeto')?.setValue(tarefa.projetoId);
-        // this.form.get('observacao')?.setValue(tarefa.observacao);
-        // this.form.get('horarioInicio')?.setValue(tarefa.horarioInicio);
-        // this.form.get('horarioFim')?.setValue(tarefa.horarioFim);
+        this.form.get('descricao')?.setValue(tarefa.descricao);
+        this.form.get('data')?.setValue(new Date(tarefa.data.substr(0, 10)));
+        this.form.get('duracao')?.setValue(tarefa.duracao);
+        this.form.get('projetoId')?.setValue(tarefa.projetoId);
+        this.form.get('observacao')?.setValue(tarefa.observacao);
+        this.form.get('horarioInicio')?.setValue(tarefa.horarioInicio.substr(11, 15));
+        this.form.get('horarioFim')?.setValue(tarefa.horarioFim.substr(11, 15));
         this.form.get('status')?.setValue(tarefa.status.id);
       },
     });
@@ -163,6 +160,59 @@ export class CadastroTarefaComponent {
   }
 
   save() {
+    this.loading = true;
+    if (this.form.valid) {
 
+      let data = this.form.value;
+      console.log(data);
+
+      const tarefa: Tarefa = {
+        descricao: data.descricao,
+        data: new Date(data.data).toDateString(),
+        horarioInicio: data.horarioInicio,
+        horarioFim: data.horarioFim,
+        duracao: data.duracao,
+        observacao: data.observacao,
+        projetoId: data.projetoId,
+        status: this.status.find(x => x.id == data.status)
+      };
+
+
+      if (!this.id) {
+        this.service.create(tarefa).subscribe({
+          next: (response: Tarefa) => {
+            this.show('success', 'Cadastro de Tarefa', 'Tarefa Cadastrada com sucesso!');
+            this.loading = false;
+            setTimeout(() => { this.router.navigateByUrl('tarefas/listagem') }, 1000);
+          },
+          error: (error: any) => {
+            this.show('error', this.title, `${error.error.error}`);
+            this.loading = false;
+          }
+        })
+      } else {
+        this.title == 'Cadastro de Tarefa' ? 'Editar Tarefa' : 'Cadastro de Tarefa';
+        this.service.update(this.id, tarefa).subscribe({
+          next: (response: Tarefa) => {
+            this.show('success', this.title, 'Tarefa Editada com sucesso!');
+            this.loading = false;
+            setTimeout(() => { this.router.navigateByUrl('tarefas/listagem') }, 2000);
+          },
+          error: (error: any) => {
+            this.show('error', this.title, `${error.error.error}`);
+            this.loading = false;
+          }
+        });
+      }
+    } else {
+      this.show('error', 'Cadastro de Tarefa', 'Preencha todos os campos obrigatórios');
+      Object.values(this.form.controls).forEach((control: AbstractControl) => {
+        if (control.hasError('required') && control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity();
+        }
+      });
+      this.loading = false;
+    }
   }
 }
