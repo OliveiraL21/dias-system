@@ -22,6 +22,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [],
@@ -50,6 +51,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     DropdownModule,
     TagModule,
     InputTextareaModule,
+    ConfirmDialogModule
   ],
 
   exports: [
@@ -77,6 +79,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     DropdownModule,
     TagModule,
     InputTextareaModule,
+    ConfirmDialogModule
   ]
 })
 export class ShareModuleModule { }

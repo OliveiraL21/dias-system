@@ -45,7 +45,7 @@
       <div class="w-3 mr-2">
 
         <label for="duracao" class="block text-900 font-medium mb-2">Duração <span class="text-red-500">*</span></label>
-        <input type="text" pInputText id="duracao" formControlName="duracao" name="duracao" placeholder="hh:mm"
+        <input type="text" readonly pInputText id="duracao" formControlName="duracao" name="duracao" placeholder="hh:mm"
           class="w-full mb-3" />
 
         <small *ngIf="form.get('duracao')?.hasError('required') && form.get('duracao')?.dirty"
