@@ -34,8 +34,14 @@ export class AppComponent {
   ngOnInit() {
     this.items = [
       {
-        label: 'Clientes',
+        label: 'Perfil',
         icon: 'pi pi-user',
+        iconClass: 'text-white',
+        routerLink: 'minha-conta/'
+      },
+      {
+        label: 'Clientes',
+        icon: 'pi pi-users',
         iconClass: 'text-white',
         routerLink: 'cliente/'
       },

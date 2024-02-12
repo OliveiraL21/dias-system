@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'redefinirSenha', loadChildren: () => import("./src/pages/redefinir-senha/redefinir-senha.module").then((m) => m.RedefinirSenhaModule) },
   { path: 'cliente', loadChildren: () => import('./src/pages/cliente/cliente.module').then((m) => m.ClienteModule) },
   { path: 'projeto', loadChildren: () => import('./src/pages/projeto/projeto.module').then((m) => m.ProjetoModule) },
-  { path: 'tarefas', loadChildren: () => import('./src/pages/tarefas/tarefas.module').then((m) => m.TarefasModule) }
+  { path: 'tarefas', loadChildren: () => import('./src/pages/tarefas/tarefas.module').then((m) => m.TarefasModule) },
+  { path: 'minha-conta', loadChildren: () => import('./src/pages/minha-conta/minha-conta.module').then((m) => m.MinhaContaModule) },
 
 
 ];

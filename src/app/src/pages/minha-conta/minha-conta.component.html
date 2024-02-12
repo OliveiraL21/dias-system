@@ -1,0 +1,60 @@
+<div class="flex align-item-center mt-5">
+  <p-toast position="top-right"></p-toast>
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
+
+  <p-card header="Minha Conta" class="w-full">
+    <form [formGroup]="form" class="w-full">
+
+      <div>
+        <p-toast></p-toast>
+        <div class="flex justify-content-flex-start w-full">
+          <p-fileUpload name="profileUserPhoto" chooseLabel="Choose" [showUploadButton]="false" name="demo[]"
+            accept="image/*" [maxFileSize]="1000000" (onSelect)="uploadPhoto($event)" (onClear)="clearPhoto()"
+            (onRemove)="clearPhoto()">
+          </p-fileUpload>
+        </div>
+
+        <span class="p-input-icon-right w-full mt-5">
+          <label for="username" class="block text-900 font-medium mb-2">Username</label>
+          <i class="pi pi-lock my-1"></i>
+          <input type=" text" aria-describedby="username-help" name="username" id="username" formControlName="username"
+            pInputText class="w-full mb-3" readonly>
+
+        </span>
+
+        <div>
+          <label for="email" class="block text-900 font-medium mb-2">E-mail</label>
+          <input type="text" name="email" id="email" formControlName="email" pInputText class="w-full mb-3">
+
+          <small class="p-error block p-1 mb-2"
+            *ngIf="form.get('email')?.hasError('required') && form.get('email')?.dirty">
+            Campo obrigatório
+          </small>
+
+          <small class="p-error block p-1 mb-2"
+            *ngIf="form.get('email')?.hasError('email') && form.get('email')?.dirty">
+            E-mail no formato inválido
+          </small>
+
+        </div>
+
+        <div>
+          <label for="phoneNumber" class="block text-900 font-medium mb-2">Telefone</label>
+          <p-inputMask mask="(99) 99999-9999" formControlName="phoneNumber" name="telefone" id="telefone"
+            placeholder="(99) 99999-9999" styleClass="w-full mb-3"></p-inputMask>
+        </div>
+
+
+        <div class="flex">
+          <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
+          <p-button class="ml-2" label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right"
+            (onClick)="cancelar()"></p-button>
+        </div>
+      </div>
+    </form>
+  </p-card>
+
+</div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -16,8 +16,11 @@ import { TokenService } from 'src/app/services/token-service/token.service';
 })
 export class LoginComponent {
 
+  @ViewChild('passwordRef') passwordRef!: ElementRef<HTMLInputElement>;
+
   form!: FormGroup;
   loading: boolean = false;
+  setPasswordVisibleIcon: string = "pi pi-eye-slash";
 
   constructor(private fb: FormBuilder, private loginService: LoginService, private tokenService: TokenService, private route: Router, private activeRoute: ActivatedRoute, private toastService: MessageService) { }
 
@@ -40,6 +43,12 @@ export class LoginComponent {
 
     this.toastService.add({ key: 'tr', severity: type, summary: title, detail: message });
   }
+
+  changeVisibility() {
+    this.setPasswordVisibleIcon == 'pi pi-eye' ? this.setPasswordVisibleIcon = 'pi pi-eye-slash' : this.setPasswordVisibleIcon = 'pi pi-eye';
+    this.passwordRef.nativeElement.type = this.setPasswordVisibleIcon == 'pi pi-eye' ? 'text' : 'password';
+  }
+
 
   logar() {
     if (this.form.valid) {

@@ -23,6 +23,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TagModule } from 'primeng/tag';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [],
@@ -51,7 +52,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DropdownModule,
     TagModule,
     InputTextareaModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FileUploadModule,
   ],
 
   exports: [
@@ -79,7 +81,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     DropdownModule,
     TagModule,
     InputTextareaModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    FileUploadModule
   ]
 })
 export class ShareModuleModule { }
