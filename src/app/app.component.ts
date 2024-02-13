@@ -5,6 +5,9 @@ import { ButtonModule } from 'primeng/button';
 import { filter } from 'rxjs';
 import { LogoutService } from './services/logout/logout.service';
 import { TokenService } from './services/token-service/token.service';
+import { UsersService } from './services/user-service/user.service';
+import { Usuario } from './src/models/usuario/usuario';
+import Utils from './src/common/helpers/utils/utils';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +20,10 @@ export class AppComponent {
   title = 'Gereciador Tarefas Dias';
   items: MenuItem[] | undefined;
   authenticated: boolean = false;
-  constructor(private activeRoute: ActivatedRoute, private route: Router, private logoutService: LogoutService, private tokenService: TokenService, private router: Router) { }
+  utils: Utils = new Utils();
+  photo!: any;
+  avatarImage: boolean = false;
+  constructor(private activeRoute: ActivatedRoute, private route: Router, private logoutService: LogoutService, private tokenService: TokenService, private router: Router, private userService: UsersService) { }
 
   logout(): void {
     this.logoutService.logoutUsuario().subscribe({
@@ -31,10 +37,29 @@ export class AppComponent {
     })
   }
 
+  getUser() {
+    const id = parseInt(localStorage.getItem("Id") ?? "");
+    if (id) {
+      this.userService.details(id).subscribe({
+        next: (response: Usuario) => {
+          if (response.profileImageUrl) {
+            this.photo = this.utils.convertBase64ToBlob(response.profileImageUrl);
+            if (this.photo) {
+              this.avatarImage = true;
+              this.utils.convertToBase64(this.photo).then(response => {
+                this.photo = response;
+              });
+            }
+          }
+        }
+      })
+    }
+  }
+
   ngOnInit() {
     this.items = [
       {
-        label: 'Perfil',
+        label: 'Minha Conta',
         icon: 'pi pi-user',
         iconClass: 'text-white',
         routerLink: 'minha-conta/'
@@ -67,7 +92,7 @@ export class AppComponent {
       }
     ];
 
-
+    this.getUser();
 
     this.route.events.pipe(filter((event: any) => event instanceof NavigationEnd)).subscribe(({ url }: any) => {
       const appUrl = url.split('/')[1];
