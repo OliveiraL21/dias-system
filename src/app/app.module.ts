@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { ShareModuleModule } from './src/common/share-module/share-module.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { AuthenticateInterceptor } from './src/common/helpers/interceptors/authenticate.interceptor';
+import { AuthenticateInterceptor } from './common/helpers/interceptors/authenticate.interceptor';
+import { ShareModuleModule } from './common/share-module/share-module.module';
+
 
 
 
