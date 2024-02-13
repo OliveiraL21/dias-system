@@ -61,6 +61,7 @@ export class LoginComponent {
           if (this.tokenService.possuiToken()) {
             localStorage.setItem('Id', response.usuarioId);
             localStorage.setItem('authenticated', response.authenticated);
+
             this.Show('success', 'Login', 'Login efetuado com sucesso');
             this.loading = false;
             this.route.navigateByUrl('cliente');

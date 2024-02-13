@@ -23,6 +23,9 @@ export class AppComponent {
   utils: Utils = new Utils();
   photo!: any;
   avatarImage: boolean = false;
+  loading: boolean = false;
+
+
   constructor(private activeRoute: ActivatedRoute, private route: Router, private logoutService: LogoutService, private tokenService: TokenService, private router: Router, private userService: UsersService) { }
 
   logout(): void {
@@ -57,6 +60,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.loading = true;
     this.items = [
       {
         label: 'Minha Conta',
@@ -92,7 +96,9 @@ export class AppComponent {
       }
     ];
 
-    this.getUser();
+    if (this.authenticated) {
+      this.getUser();
+    }
 
     this.route.events.pipe(filter((event: any) => event instanceof NavigationEnd)).subscribe(({ url }: any) => {
       const appUrl = url.split('/')[1];
@@ -124,8 +130,10 @@ export class AppComponent {
 
         default:
           this.authenticated = true;
+          this.getUser();
 
       }
-    })
+    });
+    this.loading = false;
   }
 }

@@ -1,4 +1,8 @@
 <main class="h-screen overflow-hidden flex">
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
   <div *ngIf="authenticated == true" class="w-auto h-screen bg-bluegray-700 text-white border-round-right">
     <div class="flex justify-content-center p-5">
       <p-avatar *ngIf="avatarImage" size="xlarge" [image]="photo" shape="circle"></p-avatar>
