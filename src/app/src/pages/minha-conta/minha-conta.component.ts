@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { UsersService } from 'src/app/services/user-service/user.service';
 import { Usuario } from '../../models/usuario/usuario';
-import { UploadEvent } from 'primeng/fileupload';
+import { FileUpload, UploadEvent } from 'primeng/fileupload';
 import Utils from '../../common/helpers/utils/utils';
 
 @Component({
@@ -14,12 +14,15 @@ import Utils from '../../common/helpers/utils/utils';
   providers: [MessageService]
 })
 export class MinhaContaComponent {
+  @ViewChild("profileImageRef") profileImageRef!: FileUpload;
   form!: FormGroup;
   file!: any;
   loading: boolean = false;
   id: any = this.activatedRouter.snapshot.paramMap.get('id');
   usuario: Usuario = new Usuario();
   utils: Utils = new Utils();
+  files: any[] = [];
+
 
 
 
@@ -44,8 +47,7 @@ export class MinhaContaComponent {
 
   uploadPhoto(event: any) {
     if (event.currentFiles) {
-      this.file = event.currentFiles[0];
-      console.log(this.file);
+      this.files = [...this.files, event.currentFiles[0]];
     }
   }
 
@@ -65,6 +67,10 @@ export class MinhaContaComponent {
           Object.keys(response).forEach((key: any) => {
             this.form.get(key)?.setValue(response[key]);
           });
+
+          let arquivo = this.utils.convertBase64ToBlob(response.profileImageUrl);
+          let file = new File([arquivo], 'profileImage', { type: 'image/png' });
+          this.files = [...this.files, file];
           this.loading = false;
         },
 
@@ -84,7 +90,7 @@ export class MinhaContaComponent {
       this.usuario.email = this.form.get('email')?.value;
       this.usuario.username = this.form.get('username')?.value;
       this.usuario.phoneNumber = this.form.get('phoneNumber')?.value;
-      this.usuario.profileImageUrl = await this.utils.convertToBase64(this.file);
+      this.usuario.profileImageUrl = await this.utils.convertToBase64(this.files[0]);
 
       this.service.update(this.usuario).subscribe({
         next: (response: Usuario) => {
