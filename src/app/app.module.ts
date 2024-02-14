@@ -1,12 +1,11 @@
-import { HTTP_INTERCEPTORS, HttpInterceptor } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { AuthenticateInterceptor } from './common/helpers/interceptors/authenticate.interceptor';
 import { ShareModuleModule } from './common/share-module/share-module.module';
+
 
 
 

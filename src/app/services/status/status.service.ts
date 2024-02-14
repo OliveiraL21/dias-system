@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Status } from 'src/app/src/models/status/status';
+import { Status } from 'src/app/models/status/status';
 import { environment } from 'src/environments/environment';
 
 const url = `${environment.api_url}/Status`;

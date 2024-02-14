@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
-import Cliente from 'src/app/src/models/cliente/cliente';
+import Cliente from 'src/app/models/cliente/cliente';
 
 @Component({
   selector: 'app-cliente-cadastro',

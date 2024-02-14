@@ -1,0 +1,37 @@
+<div class="w-full">
+  <form [formGroup]="form" class="w-full flex gap-3">
+    <div *ngFor="let control of formControls; let i = index;trackBy:trackByFn">
+      <div *ngIf="control.type === 'text' || control.type === 'email'">
+        <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
+        <input type="text" [id]="control.name" [name]="control.name" [placeholder]="control.placeholder"
+          [formControlName]="control.name" pInputText class="w-20rem mb-3">
+      </div>
+
+      <div
+        *ngIf="control.type === 'cnpj' || control.type === 'cpf' || control.type === 'telefone' || control.type === 'celular'">
+        <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
+        <p-inputMask [mask]="control.mask" [formControlName]="control.name" [id]="control.name"
+          [placeholder]="control.placeholder" styleClass="w-full mb-3"></p-inputMask>
+      </div>
+
+      <div *ngIf="control.type === 'dropdown'">
+        <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
+        <p-dropdown [placeholder]="control.placeholder" [options]="control.dropdownList"
+          [optionLabel]="control.dropdownLabel" [optionValue]="control.dropdownValue" [formControlName]="control.name"
+          [id]="control.name" styleClass="w-full mb-3"></p-dropdown>
+      </div>
+
+      <div *ngIf="control.type === 'date'">
+        <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
+        <p-calendar selectionMode="single" [formControlName]="control.name" [id]="control.name" [readonlyInput]="false"
+          [placeholder]="control.placeholder"></p-calendar>
+      </div>
+
+    </div>
+
+    <div class="flex align-item-center mt-5">
+      <p-button label=" Filtrar" icon="pi pi-filter" iconPos="right" [rounded]="true" size="small"
+        (onClick)="filtrar()"></p-button>
+    </div>
+  </form>
+</div>

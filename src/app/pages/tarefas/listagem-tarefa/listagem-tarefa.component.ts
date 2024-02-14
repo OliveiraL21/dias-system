@@ -5,8 +5,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { TarefaService } from 'src/app/services/tarefas/tarefa.service';
-import { ProjetoListagem } from 'src/app/src/models/projeto/projeto';
-import { Tarefa, TarefaListagem } from 'src/app/src/models/tarefa/tarefa';
+import { ProjetoListagem } from 'src/app/models/projeto/projeto';
+import { Tarefa, TarefaListagem } from 'src/app/models/tarefa/tarefa';
 
 @Component({
   selector: 'app-listagem-tarefa',

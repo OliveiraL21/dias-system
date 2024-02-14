@@ -5,9 +5,9 @@ import { MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { StatusService } from 'src/app/services/status/status.service';
-import Cliente from 'src/app/src/models/cliente/cliente';
-import { Projeto } from 'src/app/src/models/projeto/projeto';
-import { Status } from 'src/app/src/models/status/status';
+import Cliente from 'src/app/models/cliente/cliente';
+import { Projeto } from 'src/app/models/projeto/projeto';
+import { Status } from 'src/app/models/status/status';
 
 @Component({
   selector: 'app-cadastro-projeto',

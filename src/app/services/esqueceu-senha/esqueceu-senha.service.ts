@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ResetSenha } from 'src/app/src/models/redefinirSenha/resetSenha';
+import { ResetSenha } from 'src/app/models/redefinirSenha/resetSenha';
 import { environment } from 'src/environments/environment';
 
 const baseUrl = `${environment.api_usuario_url}`;

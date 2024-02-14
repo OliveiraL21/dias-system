@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import Cliente from 'src/app/src/models/cliente/cliente';
+import Cliente from 'src/app/models/cliente/cliente';
 import { environment } from 'src/environments/environment';
 
 const url = `${environment.api_url}`;

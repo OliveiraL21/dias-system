@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
-import { Projeto, ProjetoListagem } from 'src/app/src/models/projeto/projeto';
+import { Projeto, ProjetoListagem } from 'src/app/models/projeto/projeto';
 
 @Component({
   selector: 'app-listagem-projeto',

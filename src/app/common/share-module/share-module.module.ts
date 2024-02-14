@@ -24,9 +24,10 @@ import { TagModule } from 'primeng/tag';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FileUploadModule } from 'primeng/fileupload';
+import { FilterComponent } from 'src/app/components/filter/filter.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [FilterComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -82,7 +83,8 @@ import { FileUploadModule } from 'primeng/fileupload';
     TagModule,
     InputTextareaModule,
     ConfirmDialogModule,
-    FileUploadModule
+    FileUploadModule,
+    FilterComponent
   ]
 })
 export class ShareModuleModule { }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Tarefa, TarefaListagem } from 'src/app/src/models/tarefa/tarefa';
+import { Tarefa, TarefaListagem } from 'src/app/models/tarefa/tarefa';
 import { environment } from 'src/environments/environment';
 
 const url = `${environment.api_url}/Tarefa`;

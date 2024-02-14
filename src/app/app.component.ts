@@ -6,8 +6,8 @@ import { filter } from 'rxjs';
 import { LogoutService } from './services/logout/logout.service';
 import { TokenService } from './services/token-service/token.service';
 import { UsersService } from './services/user-service/user.service';
-import { Usuario } from './src/models/usuario/usuario';
-import Utils from './src/common/helpers/utils/utils';
+import { Usuario } from './models/usuario/usuario';
+import Utils from './common/helpers/utils/utils';
 
 @Component({
   selector: 'app-root',

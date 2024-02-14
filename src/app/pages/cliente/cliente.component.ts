@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { CustomFilter } from 'src/app/models/customFilter/customFilter';
 
 @Component({
   selector: 'app-cliente',
@@ -20,6 +21,32 @@ export class ClienteComponent {
 
   ngOnInit() {
     this.listarClientes();
+  }
+
+  getCustomFilter(): CustomFilter[] {
+    return [
+      new CustomFilter('razaoSocial', 'text', 'Informe a razão social', 'Razão Social'),
+      new CustomFilter('cnpj', 'cnpj', '00.000.000/0000-00', 'Cnpj', '99.999.999/9999-99'),
+      new CustomFilter('email', 'email', 'exemplo@exemplo.com', 'E-mail')
+    ]
+  }
+
+  filtrar(data: any): void {
+    console.log(data);
+    if (data) {
+      this.loading = true;
+      data.cnpj = data.cnpj ? data.cnpj.replace('/', '-') : data.cnpj;
+      this.clienteService.filtrar(data.razaoSocial, data.cnpj, data.email).subscribe({
+        next: (response: Cliente[]) => {
+          console.log(response);
+          this.clients = response;
+          this.loading = false;
+        },
+        error: (error: any) => {
+          this.loading = false;
+        }
+      })
+    }
   }
 
   show(type: string, title: string, message: string) {

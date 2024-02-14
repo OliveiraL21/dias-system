@@ -6,6 +6,7 @@
   </p-blockUI>
   <p-card header="Clientes">
 
+    <app-filter [formControls]="getCustomFilter()" (filtrarChange)="filtrar($event)"></app-filter>
     <div class="flex justify-content-end w-full mb-5">
       <p-button label="Novo Cliente" icon="pi pi-plus" [rounded]="true" size="small" iconPos="right"
         (onClick)="novoCliente()"></p-button>
