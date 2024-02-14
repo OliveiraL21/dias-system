@@ -21,6 +21,11 @@ export class ClienteService {
   listarTodos(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(`${url}/lista`);
   }
+
+  listaSimples(): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${url}/lista-simples`);
+  }
+
   create(cliente: Cliente): Observable<Cliente> {
     return this.http.post<Cliente>(`${url}/create`, cliente);
   }

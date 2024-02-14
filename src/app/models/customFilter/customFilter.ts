@@ -7,9 +7,10 @@ export class CustomFilter {
   dropdownList: any[] = [];
   dropdownValue: string = '';
   dropdownLabel: string = '';
+  dropdownShowClear: boolean = false;
   dateInputMode: string = '';
 
-  constructor(name: string, type: string, placeholder: string, label: string, mascara: string = '', dropdownList: any[] = [], dropdownValue: string = '', dropdownLabel: string = '', dateInputMode: string = '') {
+  constructor(name: string, type: string, placeholder: string, label: string, mascara: string = '', dropdownList: any[] = [], dropdownValue: string = '', dropdownLabel: string = '', showClearDropdown: boolean = false, dateInputMode: string = '') {
     this.name = name;
     this.type = type;
     this.label = label;
@@ -18,6 +19,7 @@ export class CustomFilter {
     this.dropdownList = dropdownList;
     this.dropdownLabel = dropdownLabel;
     this.dropdownValue = dropdownValue;
+    this.dropdownShowClear = showClearDropdown;
     this.dateInputMode = dateInputMode;
   }
 }

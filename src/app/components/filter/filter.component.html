@@ -18,7 +18,7 @@
         <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
         <p-dropdown [placeholder]="control.placeholder" [options]="control.dropdownList"
           [optionLabel]="control.dropdownLabel" [optionValue]="control.dropdownValue" [formControlName]="control.name"
-          [id]="control.name" styleClass="w-full mb-3"></p-dropdown>
+          [id]="control.name" [showClear]="control.dropdownShowClear" styleClass="w-full mb-3"></p-dropdown>
       </div>
 
       <div *ngIf="control.type === 'date'">

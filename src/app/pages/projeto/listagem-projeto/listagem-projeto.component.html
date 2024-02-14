@@ -6,6 +6,8 @@
   </p-blockUI>
   <p-card header="projetos">
 
+    <app-filter [formControls]="getCustomFilter()" (filtrarChange)="filtrar($event)"></app-filter>
+
     <div class="flex justify-content-end w-full mb-5">
       <p-button label="Novo Projeto" icon="pi pi-plus" [rounded]="true" size="small" iconPos="right"
         (onClick)="novo()"></p-button>
