@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthenticateInterceptor } from './common/helpers/interceptors/authenticate.interceptor';
 import { ShareModuleModule } from './common/share-module/share-module.module';
+import { errorHandleInterceptor } from './common/helpers/interceptors/error-handle.interceptor';
 
 
 
@@ -19,7 +20,10 @@ import { ShareModuleModule } from './common/share-module/share-module.module';
     BrowserAnimationsModule,
     ShareModuleModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticateInterceptor, multi: true }],
+  providers: [
+    AuthenticateInterceptor, { provide: HTTP_INTERCEPTORS, useClass: AuthenticateInterceptor, multi: true },
+    errorHandleInterceptor, { provide: HTTP_INTERCEPTORS, useExisting: errorHandleInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

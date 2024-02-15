@@ -7,6 +7,7 @@ import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { TarefaService } from 'src/app/services/tarefas/tarefa.service';
 import { ProjetoListagem } from 'src/app/models/projeto/projeto';
 import { Tarefa, TarefaListagem } from 'src/app/models/tarefa/tarefa';
+import { CustomFilter } from 'src/app/models/customFilter/customFilter';
 
 @Component({
   selector: 'app-listagem-tarefa',
@@ -24,6 +25,15 @@ export class ListagemTarefaComponent {
 
   show(type: string, title: string, message: string) {
     this.messageService.add({ severity: type, summary: title, detail: message });
+  }
+
+  getCustomFilter(): CustomFilter[] {
+    return [
+      new CustomFilter('descricao', 'text', 'Informe a descrição da tarefa', 'Tarefa'),
+      new CustomFilter('dataInicio', 'date', 'Selecione a data inicial', 'Inicio'),
+      new CustomFilter('dataFim', 'date', 'Selecione a data fim', 'Fim'),
+      new CustomFilter('projetoId', 'dropdown', 'Selecione o projeto', 'Projeto', '', this.projetos, 'id', 'descricao', true),
+    ]
   }
 
   getProjetos() {
@@ -108,36 +118,22 @@ export class ListagemTarefaComponent {
     }
   }
 
-  filtrar() {
-    let data = this.form.value;
+  filtrar(data: any) {
     if (data) {
       this.loading = true;
 
-      let dataInicio;
-      let dataFim;
-
-      if (data?.periodo && data?.periodo[0]) {
-        dataInicio = data.periodo[0].toDateString();
-      } else {
-        dataInicio = null;
-      }
-
-      if (data?.periodo && data.periodo[1]) {
-        dataFim = data.periodo[1].toDateString();
-      } else {
-        dataFim = null;
-      }
-
       data.descricao = data.descricao === '' || data.descricao === undefined || data.descricao === null ? null : data.descricao;
       data.projetoId = data.projetoId === null || data.projetoId === undefined ? data.projetoId = 0 : data.projetoId;
+      data.dataInicio = data.dataInicio === null || data.dataInicio === undefined ? null : data.dataInicio.toDateString();
+      data.dataFim = data.dataFim === null || data.dataFim === undefined ? null : data.dataFim.toDateString();
 
-      if (dataInicio && !dataFim || !dataInicio && dataFim) {
-        this.show('error', 'Tarefas', 'É necessário preencher um periodo de data válido');
+      if (data.dataInicio && !data.dataFim || !data.dataInicio && data.dataFim) {
+        this.show('error', 'Tarefas', 'É necessário preencher a data inicio e data fim');
         this.loading = false;
         return;
       }
 
-      this.service.filtrar(data.descricao, dataInicio, dataFim, data.projetoId).subscribe({
+      this.service.filtrar(data.descricao, data.dataInicio, data.dataFim, data.projetoId).subscribe({
         next: (response: TarefaListagem[]) => {
           this.formatTarefasList(response);
           this.loading = false;
@@ -150,7 +146,7 @@ export class ListagemTarefaComponent {
     }
   }
 
-  _initForm() {
+  initForm() {
     this.form = this.fb.group({
       descricao: [null, null],
       periodo: [null, null],
@@ -161,6 +157,6 @@ export class ListagemTarefaComponent {
   ngOnInit() {
     this.listarTarefas();
     this.getProjetos();
-    this._initForm();
+    this.initForm();
   }
 }

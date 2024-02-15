@@ -7,34 +7,7 @@
   </p-blockUI>
   <p-card header="Tarefas">
 
-    <div class="w-full">
-      <form [formGroup]="form" class="w-full flex gap-3">
-        <div>
-          <label for="descricao" class="block text-900 font-medium mb-2">Descrição</label>
-          <input type="text" id="descricao" name="descricao" placeholder="Informe a descrição da tarefa"
-            formControlName="descricao" pInputText class="w-20rem mb-3">
-        </div>
-
-        <div>
-          <label for="periodo" class="block text-900 font-medium mb-2">Periodo</label>
-          <p-calendar selectionMode="range" formControlName="periodo" id="periodo" name="periodo"
-            [readonlyInput]="false" placeholder="Data inicial - Data final"></p-calendar>
-        </div>
-
-
-        <div>
-          <label for="projetoId" class="block text-900 font-medium mb-2">Projeto</label>
-          <p-dropdown placeholder="Selecione o nome do projeto" [options]="projetos" optionLabel="descricao"
-            optionValue="id" formControlName="projetoId" name="projetoId" id="projetoId"
-            styleClass="w-full mb-3"></p-dropdown>
-        </div>
-
-        <div class="flex align-item-center mt-5">
-          <p-button label=" Filtrar" icon="pi pi-filter" iconPos="right" [rounded]="true" size="small"
-            (onClick)="filtrar()"></p-button>
-        </div>
-      </form>
-    </div>
+    <app-filter [formControls]="getCustomFilter()" (filtrarChange)="filtrar($event)"></app-filter>
 
     <div class="flex justify-content-end w-full mb-5">
       <p-button label="Nova Tarefa" icon="pi pi-plus" [rounded]="true" size="small" iconPos="right"
