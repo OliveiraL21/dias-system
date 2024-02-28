@@ -164,7 +164,6 @@ export class CadastroTarefaComponent {
     if (this.form.valid) {
 
       let data = this.form.value;
-      console.log(data);
 
       const tarefa: Tarefa = {
         descricao: data.descricao,

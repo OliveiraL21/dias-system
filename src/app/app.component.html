@@ -1,20 +1,20 @@
-<main class="h-screen overflow-hidden flex">
+<main class="h-screen overflow-y-auto flex">
   <p-blockUI [blocked]="loading">
     <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
       animationDuration=".5s"></p-progressSpinner>
   </p-blockUI>
-  <div *ngIf="authenticated == true" class="w-auto h-screen bg-bluegray-700 text-white border-round-right">
-    <div class="flex justify-content-center p-5">
-      <p-avatar *ngIf="avatarImage" size="xlarge" [image]="photo" shape="circle"></p-avatar>
-      <p-avatar *ngIf="!avatarImage" size="xlarge" icon="pi pi-user"></p-avatar>
+  <div *ngIf="authenticated == true" class="w-auto h-full bg-bluegray-700 text-white border-round-right">
+    <div class="h-full">
+      <div class="flex justify-content-center p-5">
+        <p-avatar *ngIf="avatarImage" size="xlarge" [image]="photo" shape="circle"></p-avatar>
+        <p-avatar *ngIf="!avatarImage" size="xlarge" icon="pi pi-user"></p-avatar>
+      </div>
+      <p-menu [model]="items" class="h-full"
+        styleClass="h-full bg-bluegray-700 text-white border-round-right border-none border-noround-left">
+      </p-menu>
     </div>
-    <p-menu [model]="items"
-      styleClass="h-full bg-bluegray-700 text-white border-round-right border-none border-noround-left">
-    </p-menu>
-
   </div>
-  <div [ngClass]="authenticated ? 'w-10 ml-7' : 'w-full'">
+  <div [ngClass]="authenticated ? 'w-10 ml-7 h-full' : 'w-full h-full'">
     <router-outlet></router-outlet>
   </div>
-
 </main>

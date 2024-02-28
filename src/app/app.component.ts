@@ -63,6 +63,12 @@ export class AppComponent {
     this.loading = true;
     this.items = [
       {
+        label: 'Dashboard',
+        icon: 'pi pi-chart-bar',
+        iconClass: 'text-white',
+        routerLink: 'dashboard'
+      },
+      {
         label: 'Minha Conta',
         icon: 'pi pi-user',
         iconClass: 'text-white',

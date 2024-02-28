@@ -25,6 +25,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FilterComponent } from 'src/app/components/filter/filter.component';
+import { FieldsetModule } from 'primeng/fieldset';
+import { ChartModule } from 'primeng/chart';
 
 @NgModule({
   declarations: [FilterComponent],
@@ -55,6 +57,8 @@ import { FilterComponent } from 'src/app/components/filter/filter.component';
     InputTextareaModule,
     ConfirmDialogModule,
     FileUploadModule,
+    FieldsetModule,
+    ChartModule
   ],
 
   exports: [
@@ -84,7 +88,9 @@ import { FilterComponent } from 'src/app/components/filter/filter.component';
     InputTextareaModule,
     ConfirmDialogModule,
     FileUploadModule,
-    FilterComponent
+    FilterComponent,
+    FieldsetModule,
+    ChartModule
   ]
 })
 export class ShareModuleModule { }

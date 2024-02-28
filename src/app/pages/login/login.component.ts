@@ -70,8 +70,8 @@ export class LoginComponent {
             this.loading = false;
           }
         }, error: (error) => {
-          this.Show('error', 'Login', `${error.error.error}`);
           this.loading = false;
+          this.Show('error', 'Login', `${error.error ? error.error!.error : 'Erro ao tentar realizar o login, entre em contato com o suporte técnico'}`);
         }
       })
 
