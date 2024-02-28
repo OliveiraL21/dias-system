@@ -38,7 +38,7 @@ export class MinhaContaComponent {
   }
 
   cancelar() {
-    this.router.navigateByUrl('cliente');
+    history.back();
   }
 
   show(type: string, title: string, message: string) {
@@ -47,7 +47,7 @@ export class MinhaContaComponent {
 
   uploadPhoto(event: any) {
     if (event.currentFiles) {
-      this.files = [...this.files, event.currentFiles[0]];
+      this.files = [event.currentFiles[0]];
     }
   }
 
@@ -95,6 +95,7 @@ export class MinhaContaComponent {
       this.service.update(this.usuario).subscribe({
         next: (response: Usuario) => {
           this.show('success', 'Minha Conta', 'Dados atualizados com sucesso!');
+          history.back();
           this.loading = false;
         }, error: (error: any) => {
           this.show('error', 'Minha Conta', `${error.error.error ? error.error.error : 'Erro ao tentar atualizar os dados, entre me contato com o suporte'}`);
