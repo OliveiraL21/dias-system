@@ -64,7 +64,7 @@ export class LoginComponent {
 
             this.Show('success', 'Login', 'Login efetuado com sucesso');
             this.loading = false;
-            this.route.navigateByUrl('cliente');
+            this.route.navigateByUrl('dashboard');
           } else {
             this.Show('error', 'Login', 'Não foi possivel realizar o login, tente novamente mais tarde!');
             this.loading = false;
