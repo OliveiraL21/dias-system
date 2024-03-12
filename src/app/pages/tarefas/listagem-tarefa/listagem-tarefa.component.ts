@@ -32,7 +32,7 @@ export class ListagemTarefaComponent {
       new CustomFilter('descricao', 'text', 'Informe a descrição da tarefa', 'Tarefa'),
       new CustomFilter('dataInicio', 'date', 'Selecione a data inicial', 'Inicio'),
       new CustomFilter('dataFim', 'date', 'Selecione a data fim', 'Fim'),
-      new CustomFilter('projetoId', 'dropdown', 'Selecione o projeto', 'Projeto', '', this.projetos, 'id', 'descricao', true),
+      new CustomFilter('projetoId', 'dropdown', 'Selecione o projeto', 'Projeto', '', this.projetos, 'id', 'descricao', true, ""),
     ]
   }
 
