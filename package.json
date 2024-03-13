@@ -1,12 +1,15 @@
 {
   "name": "gereciador-tarefas-front-end-new",
   "version": "0.0.0",
+  "main": "main.js",
+  "author": "Lucas José Dias de Oliveira",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "electron": "ng build --base-href ./ && electron ."
   },
   "private": true,
   "dependencies": {
@@ -31,6 +34,7 @@
     "@angular/cli": "~17.1.0",
     "@angular/compiler-cli": "^17.1.0",
     "@types/jasmine": "~4.3.0",
+    "electron": "^29.1.1",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
