@@ -142,6 +142,10 @@ export class CadastroTarefaComponent {
         this.form.get('horarioFim')?.setValue(tarefa.horarioFim.substr(11, 15));
         this.form.get('status')?.setValue(tarefa.status.id);
       },
+      error: (error: any) => {
+        this.loading = false;
+        this.show('error', 'Tarefas', `${error.error && error.error.error ? error.error.error : 'Erro ao trazer os dados da tarefa tente novamente mais tarde!'}`)
+      }
     });
   }
 
@@ -185,8 +189,8 @@ export class CadastroTarefaComponent {
             setTimeout(() => { this.router.navigateByUrl('tarefas/listagem') }, 1000);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
             this.loading = false;
+            this.show('error', this.title, `${error.error && error.error.error ? error.error.error : 'Erro ao tentar cadastrar a tarefa, tente novamente mais tarde!'}`);
           }
         })
       } else {
@@ -198,8 +202,9 @@ export class CadastroTarefaComponent {
             setTimeout(() => { this.router.navigateByUrl('tarefas/listagem') }, 2000);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
             this.loading = false;
+            this.show('error', this.title, `${error.error && error.error.error ? error.error.error : 'Erro ao tentar editar a tarefa, tente novamente mais tarde!'}`);
+
           }
         });
       }

@@ -73,8 +73,9 @@ export class CadastroProjetoComponent {
           this.loading = false;
         },
         error: (error: any) => {
-          this.show('error', this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do projeto, tente novamente mais tarde!'}`);
           this.loading = false;
+          this.show('error', this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do projeto, tente novamente mais tarde!'}`);
+
         }
       });
     }
@@ -121,8 +122,8 @@ export class CadastroProjetoComponent {
       if (!this.id) {
         this.service.create(projeto).subscribe({
           next: (response: Projeto) => {
-            this.show('success', 'Cadastro de Projeto', 'Projeto Cadastrado com sucesso!');
             this.loading = false;
+            this.show('success', 'Cadastro de Projeto', 'Projeto Cadastrado com sucesso!');
             setTimeout(() => { this.router.navigateByUrl('projeto/listagem') }, 100);
           },
           error: (error: any) => {
@@ -139,8 +140,8 @@ export class CadastroProjetoComponent {
             setTimeout(() => { this.router.navigateByUrl('projeto/listagem') }, 100);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
             this.loading = false;
+            this.show('error', this.title, `${error.error.error}`);
           }
         });
       }

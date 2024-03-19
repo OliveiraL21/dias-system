@@ -98,8 +98,9 @@ export class MinhaContaComponent {
           history.back();
           this.loading = false;
         }, error: (error: any) => {
-          this.show('error', 'Minha Conta', `${error.error.error ? error.error.error : 'Erro ao tentar atualizar os dados, entre me contato com o suporte'}`);
           this.loading = false;
+          this.show('error', 'Minha Conta', `${error.error.error ? error.error.error : 'Erro ao tentar atualizar os dados, entre me contato com o suporte'}`);
+
         }
       })
 

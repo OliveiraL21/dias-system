@@ -76,6 +76,7 @@ export class ClienteCadastroComponent {
       const data = this.form.value;
       let cliente: Cliente = new Cliente();
       cliente = data;
+      cliente.id = parseInt(this.id);
 
       if (!this.id) {
         this.clienteService.create(cliente).subscribe({
@@ -93,7 +94,7 @@ export class ClienteCadastroComponent {
         this.title == 'Cadastro de Cliente' ? 'Editar Cliente' : 'Cadastro de Cliente';
         this.clienteService.update(this.id, cliente).subscribe({
           next: (response: Cliente) => {
-            this.show('success', this.title, 'Cliente Cadastrado com sucesso!');
+            this.show('success', this.title, 'Cliente Editado com sucesso!');
             this.loading = false;
             setTimeout(() => { this.router.navigateByUrl('cliente') }, 2000);
           },

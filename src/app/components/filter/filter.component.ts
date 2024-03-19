@@ -46,7 +46,7 @@ export class FilterComponent implements AfterContentChecked {
     let data = this.form.value;
     if (data) {
       Object.keys(data).forEach((key: any) => {
-        if (key == 'cnpj' && data[key].length < 14) {
+        if (key == 'cnpj' && data[key] && data[key].length < 14) {
           this.show('error', 'Filtros', 'É necessário preencher todos os digitos do cnpj');
           data[key] = typeof data[key] !== 'number' && (data[key] === '' || data[key] === null || data[key] === undefined) ? null : data[key];
           return;
