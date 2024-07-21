@@ -13,7 +13,7 @@ export class errorHandleInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401 || error.status === 403 || error.status === 0) {
+        if (error.status === 401 || error.status === 403) {
           this.logoutService.logoutUsuario().subscribe({
             next: (response: any) => {
               this.tokenService.clearStorage();
@@ -22,7 +22,7 @@ export class errorHandleInterceptor implements HttpInterceptor {
             },
             error: () => {
               this.tokenService.clearStorage();
-              this.router.navigateByUrl("");
+              this.router.navigateByUrl("login");
               return throwError("");
             }
           });
