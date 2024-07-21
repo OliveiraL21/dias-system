@@ -68,9 +68,12 @@ export class MinhaContaComponent {
             this.form.get(key)?.setValue(response[key]);
           });
 
-          let arquivo = this.utils.convertBase64ToBlob(response.profileImageUrl);
-          let file = new File([arquivo], 'profileImage', { type: 'image/png' });
-          this.files = [...this.files, file];
+          if (response.profileImageUrl) {
+            let arquivo = this.utils.convertBase64ToBlob(response.profileImageUrl);
+            let file = new File([arquivo], 'profileImage', { type: 'image/png' });
+            this.files = [...this.files, file];
+          }
+
           this.loading = false;
         },
 

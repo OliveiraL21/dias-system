@@ -12,7 +12,7 @@
         <p-toast></p-toast>
         <div class="flex justify-content-flex-start w-full">
           <p-fileUpload name="profileUserPhoto" chooseLabel="Choose" [showUploadButton]="false" name="demo[]"
-            accept="image/*" [maxFileSize]="1000000" (onSelect)="uploadPhoto($event)" #profileImageRef [files]="files"
+            accept="image/*" [maxFileSize]="10000000" (onSelect)="uploadPhoto($event)" #profileImageRef [files]="files"
             (onClear)="clearPhoto()" (onRemove)="clearPhoto()">
           </p-fileUpload>
         </div>
