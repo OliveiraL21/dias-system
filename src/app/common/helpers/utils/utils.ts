@@ -16,13 +16,16 @@ export default class Utils {
   }
 
   convertBase64ToBlob(base64: string) {
-    const byteString = window.atob(base64.substring(base64.indexOf(",") + 1));
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
+    if (base64) {
+      const byteString = window.atob(base64!.substring(base64.indexOf(",") + 1));
+      const arrayBuffer = new ArrayBuffer(byteString.length);
+      const int8Array = new Uint8Array(arrayBuffer);
+      for (let i = 0; i < byteString.length; i++) {
+        int8Array[i] = byteString.charCodeAt(i);
+      }
+      const blob = new Blob([int8Array], { type: 'image/png' });
+      return blob;
     }
-    const blob = new Blob([int8Array], { type: 'image/png' });
-    return blob;
+    return null;
   }
 }
