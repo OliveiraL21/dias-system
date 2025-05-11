@@ -76,7 +76,7 @@ export class ClienteCadastroComponent {
       const data = this.form.value;
       let cliente: Cliente = new Cliente();
       cliente = data;
-      cliente.id = parseInt(this.id);
+      cliente.id = parseInt(this.id ?? 0);
 
       if (!this.id) {
         this.clienteService.create(cliente).subscribe({

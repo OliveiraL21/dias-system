@@ -42,10 +42,6 @@ export class LoginComponent {
     this.initForm();
   }
 
-  // Show(type: string, title: string, message: string) {
-  //   this.toastService.add({ key: 'tr', severity: type, summary: title, detail: message });
-  // }
-
   changeVisibility() {
     this.setPasswordVisibleIcon == 'pi pi-eye' ? this.setPasswordVisibleIcon = 'pi pi-eye-slash' : this.setPasswordVisibleIcon = 'pi pi-eye';
     this.passwordRef.nativeElement.type = this.setPasswordVisibleIcon == 'pi pi-eye' ? 'text' : 'password';
