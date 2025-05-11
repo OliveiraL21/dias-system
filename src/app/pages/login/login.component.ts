@@ -6,6 +6,8 @@ import { Usuario } from '../../models/usuario/usuario';
 import { LoginService } from 'src/app/services/login/login.service';
 import { UsuarioLogin } from '../../models/login/UsuarioLogin';
 import { TokenService } from 'src/app/services/token-service/token.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
 
 @Component({
@@ -22,7 +24,8 @@ export class LoginComponent {
   loading: boolean = false;
   setPasswordVisibleIcon: string = "pi pi-eye-slash";
 
-  constructor(private fb: FormBuilder, private loginService: LoginService, private tokenService: TokenService, private route: Router, private activeRoute: ActivatedRoute, private toastService: MessageService) { }
+  constructor(private fb: FormBuilder, private loginService: LoginService, private tokenService: TokenService, private route: Router, private activeRoute: ActivatedRoute, private messageService: MensagemService
+  ) { }
 
   novoUsuario() {
     this.route.navigateByUrl('/novo-usuario');
@@ -39,10 +42,9 @@ export class LoginComponent {
     this.initForm();
   }
 
-  Show(type: string, title: string, message: string) {
-
-    this.toastService.add({ key: 'tr', severity: type, summary: title, detail: message });
-  }
+  // Show(type: string, title: string, message: string) {
+  //   this.toastService.add({ key: 'tr', severity: type, summary: title, detail: message });
+  // }
 
   changeVisibility() {
     this.setPasswordVisibleIcon == 'pi pi-eye' ? this.setPasswordVisibleIcon = 'pi pi-eye-slash' : this.setPasswordVisibleIcon = 'pi pi-eye';
@@ -62,21 +64,23 @@ export class LoginComponent {
             localStorage.setItem('Id', response.usuarioId);
             localStorage.setItem('authenticated', response.authenticated);
 
-            this.Show('success', 'Login', 'Login efetuado com sucesso');
+            this.messageService.sucesso('Login', 'Login efetuado com sucesso');
             this.loading = false;
             this.route.navigateByUrl('dashboard');
           } else {
-            this.Show('error', 'Login', 'Não foi possivel realizar o login, tente novamente mais tarde!');
+            this.messageService.erro('Login', 'Não foi possivel realizar o login, tente novamente mais tarde!');
             this.loading = false;
+            console.log("dentro")
           }
-        }, error: (error) => {
+        }, error: (error: HttpErrorResponse) => {
           this.loading = false;
-          this.Show('error', 'Login', `${error.error ? error.error!.error : 'Erro ao tentar realizar o login, entre em contato com o suporte técnico'}`);
+          this.messageService.erro('Login', `${error ? error.message : 'Erro ao tentar realizar o login, entre em contato com o suporte técnico'}`);
+          console.log(error);
         }
       })
 
     } else {
-      this.Show('error', 'Login', 'Por favor verifique se os campos estão preenchidos corretamente');
+      this.messageService.erro('Login', 'Por favor verifique se os campos estão preenchidos corretamente');
       Object.values(this.form.controls).forEach((control: AbstractControl) => {
         if (!control.valid) {
           control.markAsDirty();

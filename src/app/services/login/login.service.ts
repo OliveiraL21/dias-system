@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { UsuarioLogin } from 'src/app/models/login/UsuarioLogin';
 import { environment } from 'src/environments/environment';
 
@@ -14,7 +14,11 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(usuario: UsuarioLogin): Observable<any> {
-    return this.http.post<any>(`${url}`, usuario);
+    return this.http.post<any>(`${url}`, usuario).pipe(
+      catchError((error: HttpErrorResponse) => {
+        return throwError(error);
+      })
+    )
   }
 
 }
