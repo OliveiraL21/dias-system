@@ -6,6 +6,7 @@ import { UsersService } from 'src/app/services/user-service/user.service';
 import { Usuario } from '../../models/usuario/usuario';
 import { FileUpload, UploadEvent } from 'primeng/fileupload';
 import Utils from '../../common/helpers/utils/utils';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
 @Component({
   selector: 'app-minha-conta',
@@ -26,7 +27,7 @@ export class MinhaContaComponent {
 
 
 
-  constructor(private fb: FormBuilder, private messageService: MessageService, private router: Router, private activatedRouter: ActivatedRoute, private service: UsersService) { }
+  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private service: UsersService) { }
 
   initForm() {
     this.form = this.fb.group({
@@ -39,10 +40,6 @@ export class MinhaContaComponent {
 
   cancelar() {
     history.back();
-  }
-
-  show(type: string, title: string, message: string) {
-    this.messageService.add({ severity: type, summary: title, detail: message });
   }
 
   uploadPhoto(event: any) {
@@ -78,7 +75,7 @@ export class MinhaContaComponent {
 
         error: (error: any) => {
           console.log(error);
-          this.show("error", "Minha Conta", "Erro ao trazer os dados do usuário, tente novamente mais tarde");
+          this.messageService.erro("Minha Conta", "Erro ao trazer os dados do usuário, tente novamente mais tarde");
           this.loading = false;
         }
       })
@@ -96,17 +93,17 @@ export class MinhaContaComponent {
 
       this.service.update(this.usuario).subscribe({
         next: (response: Usuario) => {
-          this.show('success', 'Minha Conta', 'Dados atualizados com sucesso!');
+          this.messageService.sucesso('Minha Conta', 'Dados atualizados com sucesso!');
           history.back();
           this.loading = false;
         }, error: (error: any) => {
-          this.show('error', 'Minha Conta', `${error.error.error ? error.error.error : 'Erro ao tentar atualizar os dados, entre me contato com o suporte'}`);
+          this.messageService.erro('Minha Conta', `${error.error.error ? error.error.error : 'Erro ao tentar atualizar os dados, entre me contato com o suporte'}`);
           this.loading = false;
         }
       })
 
     } else {
-      this.show('error', 'Cadastro de Cliente', 'Preencha todos os campos obrigatórios');
+      this.messageService.erro('Cadastro de Cliente', 'Preencha todos os campos obrigatórios');
       Object.values(this.form.controls).forEach((control: AbstractControl) => {
         if (control.hasError('required') && control.invalid) {
           control.markAsDirty();
