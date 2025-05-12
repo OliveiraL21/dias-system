@@ -40,6 +40,7 @@ export class ClienteCadastroComponent {
   }
 
   getDetail() {
+    console.log(this.id)
     if (this.id) {
       this.loading = true;
       this.clienteService.details(this.id).subscribe({

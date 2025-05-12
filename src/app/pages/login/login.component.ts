@@ -66,11 +66,10 @@ export class LoginComponent {
           } else {
             this.messageService.erro('Login', 'Não foi possivel realizar o login, tente novamente mais tarde!');
             this.loading = false;
-            console.log("dentro")
           }
         }, error: (error: HttpErrorResponse) => {
           this.loading = false;
-          this.messageService.erro('Login', `${error ? error.message : 'Erro ao tentar realizar o login, entre em contato com o suporte técnico'}`);
+          this.messageService.erro('Login', `${error.error ? error.error.message : 'Erro ao tentar realizar o login, entre em contato com o suporte técnico'}`);
           console.log(error);
         }
       })
