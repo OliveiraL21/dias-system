@@ -26,7 +26,12 @@
       <div *ngIf="control.type === 'date'">
         <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
         <p-calendar dateFormat="dd/mm/yy" selectionMode="single" [formControlName]="control.name" [id]="control.name"
-          [readonlyInput]="false" [placeholder]="control.placeholder"></p-calendar>
+          [readonlyInput]="false" [placeholder]="control.placeholder" [iconDisplay]="'input'" [showIcon]="true"
+          inputId="templatedisplay">
+          <ng-template #inputicon let-clickDate>
+            <i class="pi pi-times" (click)="resetDateField()"></i>
+          </ng-template>
+        </p-calendar>
       </div>
 
     </div>

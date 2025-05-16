@@ -42,9 +42,6 @@ export class LoginComponent {
     this.initForm();
   }
 
-  // Show(type: string, title: string, message: string) {
-  //   this.toastService.add({ key: 'tr', severity: type, summary: title, detail: message });
-  // }
 
   changeVisibility() {
     this.setPasswordVisibleIcon == 'pi pi-eye' ? this.setPasswordVisibleIcon = 'pi pi-eye-slash' : this.setPasswordVisibleIcon = 'pi pi-eye';
@@ -74,8 +71,8 @@ export class LoginComponent {
           }
         }, error: (error: HttpErrorResponse) => {
           this.loading = false;
-          this.messageService.erro('Login', `${error ? error.message : 'Erro ao tentar realizar o login, entre em contato com o suporte técnico'}`);
-          console.log(error);
+          this.messageService.erro('Login', `${error ? error.error.error : 'Erro ao tentar realizar o login, entre em contato com o suporte técnico'}`);
+          console.log(error.error.error);
         }
       })
 

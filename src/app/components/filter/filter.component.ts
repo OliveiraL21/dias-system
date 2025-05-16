@@ -58,4 +58,12 @@ export class FilterComponent implements AfterContentChecked {
       this.filtrarChange.emit(data);
     }
   }
+
+  resetDateField() {
+    Object.keys(this.form.controls).forEach((key: string) => {
+      if (key.includes('date') || key.includes('data')) {
+        this.form.get(key)?.reset();
+      }
+    })
+  }
 }

@@ -36,25 +36,25 @@
           <td>{{ tarefa.data | date : "dd/MM/yyyy" }}</td>
           <td>{{tarefa.projeto?.descricao}}</td>
           <td>
-            <p-tag *ngIf="tarefa.status.descricao == 'Ativo' " [value]="tarefa.status.descricao"
+            <p-tag *ngIf="tarefa.status.descricao == 'Ativo' " class="text-center" [value]="tarefa.status.descricao"
               [severity]="'primary'"></p-tag>
 
-            <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " [value]="tarefa.status.descricao"
+            <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " class="text-center" [value]="tarefa.status.descricao"
               [severity]="'warning'"></p-tag>
 
-            <p-tag *ngIf="tarefa.status.descricao == 'Excluído' " [value]="tarefa.status.descricao"
+            <p-tag *ngIf="tarefa.status.descricao == 'Excluído' " class="text-center" [value]="tarefa.status.descricao"
               [severity]="'danger'"></p-tag>
 
-            <p-tag *ngIf="tarefa.status.descricao == 'Finalizado' " [value]="tarefa.status.descricao"
-              [severity]="'success'"></p-tag>
+            <p-tag *ngIf="tarefa.status.descricao == 'Finalizado' " class="text-center"
+              [value]="tarefa.status.descricao" [severity]="'success'"></p-tag>
 
-            <p-tag *ngIf="tarefa.status.descricao == 'Em pausa' " [value]="tarefa.status.descricao"
+            <p-tag *ngIf="tarefa.status.descricao == 'Em pausa' " class="text-center" [value]="tarefa.status.descricao"
               [severity]="'warning'"></p-tag>
 
-            <p-tag *ngIf="tarefa.status.descricao == 'Bloqueado' " [value]="tarefa.status.descricao"
+            <p-tag *ngIf="tarefa.status.descricao == 'Bloqueado' " class="text-center" [value]="tarefa.status.descricao"
               [severity]="'danger'"></p-tag>
           </td>
-          <td>
+          <td class="w-2">
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(tarefa.id)"></p-button>
             <p-button icon="pi pi-trash" [text]="true" severity="danger"
               (onClick)="deletar($event, tarefa.id)"></p-button>
