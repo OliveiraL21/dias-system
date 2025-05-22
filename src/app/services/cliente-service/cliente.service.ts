@@ -14,8 +14,8 @@ export class ClienteService {
 
   constructor(private http: HttpClient) { }
 
-  filtrar(razaoSocial: string, cnpj: string, email: string): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${url}/filtrar/${razaoSocial}/${cnpj}/${email}`);
+  filtrar(razaoSocial: string, cnpj: string): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${url}/filtrar?razaoSocial=${razaoSocial}&cnpj=${cnpj}`);
   }
 
   listarTodos(): Observable<Cliente[]> {

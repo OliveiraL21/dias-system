@@ -33,9 +33,9 @@ export class ClienteComponent {
   filtrar(data: any): void {
     if (data) {
       this.loading = true;
-
+      console.log(data);
       data.cnpj = data.cnpj ? data.cnpj.replace('/', '-') : data.cnpj;
-      this.clienteService.filtrar(data.razaoSocial, data.cnpj, data.email).subscribe({
+      this.clienteService.filtrar(data.razaoSocial, data.cnpj).subscribe({
         next: (response: Cliente[]) => {
           this.clients = response;
           this.loading = false;
