@@ -41,7 +41,7 @@ export class AppComponent {
   }
 
   getUser() {
-    const id = parseInt(localStorage.getItem("Id") ?? "");
+    const id = localStorage.getItem("Id") ?? null;
     if (id) {
       this.userService.details(id).subscribe({
         next: (response: Usuario) => {

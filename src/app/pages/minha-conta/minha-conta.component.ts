@@ -55,7 +55,7 @@ export class MinhaContaComponent {
 
   getUser() {
     this.loading = true;
-    const userId = parseInt(localStorage.getItem('Id') ?? "") !== undefined && parseInt(localStorage.getItem('Id') ?? "") !== null ? parseInt(localStorage.getItem('Id') ?? "") : 0;
+    const userId = localStorage.getItem('Id') !== undefined && localStorage.getItem('Id') !== null ? localStorage.getItem('Id') : null;
 
     if (userId) {
       this.service.details(userId).subscribe({
@@ -94,7 +94,7 @@ export class MinhaContaComponent {
       this.usuario.phoneNumber = this.form.get('phoneNumber')?.value;
       this.usuario.profileImageUrl = await this.utils.convertToBase64(this.files[0]);
 
-      this.service.update(this.usuario).subscribe({
+      this.service.update(this.id, this.usuario).subscribe({
         next: (response: Usuario) => {
           this.messageService.sucesso('Minha Conta', 'Dados atualizados com sucesso!');
           history.back();

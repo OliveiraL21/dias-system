@@ -19,12 +19,12 @@ export class UsersService {
     return this.http.post<any>(`${baseUrl}`, usuario);
   }
 
-  details(id: number): Observable<Usuario> {
+  details(id: string): Observable<Usuario> {
     return this.http.get<Usuario>(`${baseUrl}/detalhes/${id}`);
   }
 
-  update(usuario: Usuario): Observable<Usuario> {
-    return this.http.put<Usuario>(`${baseUrl}/update`, usuario);
+  update(id: string, usuario: Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(`${baseUrl}/update/${id}`, usuario);
   }
 
   recuperarUsuario(): Observable<Usuario> {
