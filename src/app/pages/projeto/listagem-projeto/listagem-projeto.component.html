@@ -28,8 +28,8 @@
         <tr>
           <td>{{projeto.descricao}}</td>
           <td>{{projeto.cliente.razaoSocial}}</td>
-          <td>{{projeto.data_Inicio}}</td>
-          <td>{{projeto.data_Fim}}</td>
+          <td>{{projeto.dataInicio | date: 'dd/MM/yyyy'}}</td>
+          <td>{{projeto.dataFim | date: 'dd/MM/yyyy'}}</td>
           <td>
             <p-tag *ngIf="projeto.status.descricao == 'Ativo' " [value]="projeto.status.descricao"
               [severity]="'primary'"></p-tag>
