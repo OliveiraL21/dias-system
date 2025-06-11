@@ -123,7 +123,7 @@ export class ListagemTarefaComponent {
       this.loading = true;
 
       data.descricao = data.descricao === '' || data.descricao === undefined || data.descricao === null ? null : data.descricao;
-      data.projetoId = data.projetoId === null || data.projetoId === undefined ? data.projetoId = 0 : data.projetoId;
+      data.projetoId = data.projetoId === null || data.projetoId === undefined ? data.projetoId = "" : data.projetoId;
       data.dataInicio = data.dataInicio === null || data.dataInicio === undefined ? null : data.dataInicio.toDateString();
       data.dataFim = data.dataFim === null || data.dataFim === undefined ? null : data.dataFim.toDateString();
 
