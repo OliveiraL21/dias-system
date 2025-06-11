@@ -24,10 +24,10 @@ export class ClienteCadastroComponent {
   initForm() {
     this.form = this.fb.group({
       razaoSocial: [null, [Validators.required]],
-      cnpj: [null, [Validators.required]],
-      telefone: [null, [Validators.required]],
-      celular: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]]
+      cnpj: [null, null],
+      telefone: [null, null],
+      celular: [null, null],
+      email: [null, [Validators.email]]
     })
   }
 

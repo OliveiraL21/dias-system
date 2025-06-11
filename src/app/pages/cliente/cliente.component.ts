@@ -86,7 +86,12 @@ export class ClienteComponent {
     this.loading = true;
     this.clienteService.listarTodos().subscribe({
       next: (response: Cliente[]) => {
-        this.clients = response;
+        this.clients = response.map((cliente: Cliente) => ({
+          ...cliente,
+          cnpj: cliente.cnpj == '' ? "-" : cliente.cnpj,
+          telefone: cliente.telefone == '' ? "-" : cliente.telefone,
+        }));
+        console.log(this.clients);
         this.loading = false;
       },
       error: (error: any) => {
