@@ -85,9 +85,9 @@ export class ListagemProjetoComponent {
   filtrar(data: any) {
     if (data) {
       this.loading = true;
-      data.projeto = data.projeto == undefined || data.projeto == null ? 0 : data.projeto;
-      data.cliente = data.cliente == undefined || data.cliente == null ? 0 : data.cliente;
-      data.status = data.status == undefined || data.status == null ? 0 : data.status;
+      data.projeto = data.projeto == undefined || data.projeto == null ? "" : data.projeto;
+      data.cliente = data.cliente == undefined || data.cliente == null ? "" : data.cliente;
+      data.status = data.status == undefined || data.status == null ? "" : data.status;
 
       this.service.filtrar(data.projeto, data.cliente, data.status).subscribe({
         next: (response: ProjetoListagem[]) => {

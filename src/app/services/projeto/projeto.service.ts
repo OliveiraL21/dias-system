@@ -20,7 +20,7 @@ export class ProjetoService {
   }
 
   filtrar(projeto?: number, cliente?: number, status?: number): Observable<ProjetoListagem[]> {
-    return this.http.get<ProjetoListagem[]>(`${url}Projeto/filtrar_projetos/${projeto}/${cliente}/${status}`);
+    return this.http.get<ProjetoListagem[]>(`${url}Projeto/filtrar_projetos?projeto=${projeto}&cliente=${cliente}&status=${status}`);
   }
 
   create(projeto: Projeto): Observable<Projeto> {
