@@ -8,6 +8,7 @@ import { TarefaService } from 'src/app/services/tarefas/tarefa.service';
 import { ProjetoListagem } from 'src/app/models/projeto/projeto';
 import { Tarefa, TarefaListagem } from 'src/app/models/tarefa/tarefa';
 import { CustomFilter } from 'src/app/models/customFilter/customFilter';
+import { formatDate } from 'date-fns';
 
 @Component({
   selector: 'app-listagem-tarefa',
@@ -118,14 +119,27 @@ export class ListagemTarefaComponent {
     }
   }
 
+  createDateToRequest(date: any): string | null {
+    if (typeof date === 'string') {
+      date = new Date(date);
+      return formatDate(date, 'yyyy-MM-dd');
+    }
+
+    if (date instanceof Date && !isNaN(date.getTime())) {
+      return formatDate(date, 'yyyy-MM-dd');
+    }
+
+    return null;
+  }
+
   filtrar(data: any) {
     if (data) {
       this.loading = true;
 
       data.descricao = data.descricao === '' || data.descricao === undefined || data.descricao === null ? null : data.descricao;
       data.projetoId = data.projetoId === null || data.projetoId === undefined ? data.projetoId = "" : data.projetoId;
-      data.dataInicio = data.dataInicio === null || data.dataInicio === undefined ? null : data.dataInicio.toDateString();
-      data.dataFim = data.dataFim === null || data.dataFim === undefined ? null : data.dataFim.toDateString();
+      data.dataInicio = data.dataInicio === null || data.dataInicio === undefined ? null : this.createDateToRequest(data.dataInicio);
+      data.dataFim = data.dataFim === null || data.dataFim === undefined ? null : this.createDateToRequest(data.dataFim);
 
       if (data.dataInicio && !data.dataFim || !data.dataInicio && data.dataFim) {
         this.show('error', 'Tarefas', 'É necessário preencher a data inicio e data fim');
