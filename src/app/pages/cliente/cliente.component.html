@@ -29,7 +29,7 @@
           <td>
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editarCliente(cliente.id)"></p-button>
             <p-button icon="pi pi-trash" [text]="true" severity="danger"
-              (onClick)="deletarCliente(cliente.id)"></p-button>
+              (onClick)="deletarCliente($event, cliente.id)"></p-button>
           </td>
         </tr>
       </ng-template>

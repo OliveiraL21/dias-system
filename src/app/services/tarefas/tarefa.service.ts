@@ -42,7 +42,7 @@ export class TarefaService {
     return this.http.get<any>(`${url}/horasTotais/${data}`);
   }
 
-  excluirTarefa(id: number): Observable<boolean> {
+  excluirTarefa(id: string): Observable<boolean> {
     return this.http.delete<boolean>(`${url}/${id}`);
   }
 }

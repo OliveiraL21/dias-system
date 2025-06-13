@@ -78,7 +78,7 @@ export class ListagemTarefaComponent {
     this.router.navigateByUrl(`tarefas/editar/${id}`)
   }
 
-  deletar(event: Event, id: number) {
+  deletar(event: Event, id: string) {
     if (event) {
       this.loading = true;
       this.confirmationService.confirm({
