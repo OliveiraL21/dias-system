@@ -30,15 +30,15 @@ export class ClienteService {
     return this.http.post<Cliente>(`${url}/create`, cliente);
   }
 
-  update(id: number, cliente: Cliente): Observable<Cliente> {
+  update(id: string, cliente: Cliente): Observable<Cliente> {
     return this.http.put<Cliente>(`${url}/update/${id}`, cliente);
   }
 
-  details(id: number): Observable<Cliente> {
+  details(id: string): Observable<Cliente> {
     return this.http.get<Cliente>(`${url}/details/${id}`);
   }
 
-  delete(id: number | null): Observable<any> {
+  delete(id: string | null): Observable<any> {
     return this.http.delete<any>(`${url}/delete/${id}`);
   }
 

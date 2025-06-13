@@ -59,7 +59,7 @@ export class ClienteComponent {
     this.router.navigateByUrl(`cliente/editar/${id}`)
   }
 
-  deletarCliente(event: Event, id: number) {
+  deletarCliente(event: Event, id: string) {
     if (event) {
       this.loading = true;
       this.confirmationService.confirm({
