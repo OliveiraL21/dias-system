@@ -21,9 +21,8 @@ export class ListagemTarefaComponent {
   loading: boolean = false;
   tarefas: TarefaListagem[] = [];
   projetos: ProjetoListagem[] = [];
-  form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private projetoService: ProjetoService, private service: TarefaService, private messageService: MensagemService, private confirmationService: ConfirmationService, private router: Router) { }
+  constructor(private projetoService: ProjetoService, private service: TarefaService, private messageService: MensagemService, private confirmationService: ConfirmationService, private router: Router) { }
 
 
   getCustomFilter(): CustomFilter[] {
@@ -31,7 +30,7 @@ export class ListagemTarefaComponent {
       new CustomFilter('descricao', 'text', 'Informe a descrição da tarefa', 'Tarefa'),
       new CustomFilter('dataInicio', 'date', 'Selecione a data inicial', 'Inicio'),
       new CustomFilter('dataFim', 'date', 'Selecione a data fim', 'Fim'),
-      new CustomFilter('projetoId', 'dropdown', 'Selecione o projeto', 'Projeto', '', this.projetos, 'id', 'descricao', true, ""),
+      new CustomFilter('projetoId', 'dropdown', 'Selecione o projeto', 'Projeto', '', this.projetos, 'id', 'descricao', true),
     ]
   }
 
@@ -158,17 +157,9 @@ export class ListagemTarefaComponent {
     }
   }
 
-  initForm() {
-    this.form = this.fb.group({
-      descricao: [null, null],
-      periodo: [null, null],
-      projetoId: [null, null],
-    });
-  }
 
   ngOnInit() {
     this.listarTarefas();
     this.getProjetos();
-    this.initForm();
   }
 }

@@ -33,7 +33,7 @@
           <td>{{projeto.dataFim | date: 'dd/MM/yyyy'}}</td>
           <td>
             <p-tag *ngIf="projeto.status.descricao == 'Ativo' " [value]="projeto.status.descricao"
-              [severity]="'primary'"></p-tag>
+              [value]="'primary'"></p-tag>
 
             <p-tag *ngIf="projeto.status.descricao == 'Inatívo' " [value]="projeto.status.descricao"
               [severity]="'warning'"></p-tag>

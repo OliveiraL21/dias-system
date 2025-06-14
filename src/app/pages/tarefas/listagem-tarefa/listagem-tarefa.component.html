@@ -37,7 +37,7 @@
           <td>{{tarefa.projeto?.descricao}}</td>
           <td>
             <p-tag *ngIf="tarefa.status.descricao == 'Ativo' " [value]="tarefa.status.descricao"
-              [severity]="'primary'"></p-tag>
+              [value]="'primary'"></p-tag>
 
             <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " [value]="tarefa.status.descricao"
               [severity]="'warning'"></p-tag>
