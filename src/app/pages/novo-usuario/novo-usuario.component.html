@@ -6,69 +6,71 @@
   </p-blockUI>
 
   <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
-    <div class="text-center mb-5">
+    <div class="text-center mb-5 lg:mb-3">
       <img src="../../../../assets/images/clock red.png" alt="Image" height="50" class="mb-3">
-      <div class="text-900 text-3xl font-medium mb-3">Gerenciador de Tarefas Dias</div>
-      <span class="text-600 font-medium line-height-3">Já possui uma conta ?</span>
-      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" (click)="login()">Faça o Login Agora !</a>
+      <div class="text-900 text-3xl font-medium mb-3 lg:text-xl mb-2">Gerenciador de Tarefas Dias</div>
+      <span class="text-600 font-medium line-height-3 lg:text-sm">Já possui uma conta ?</span>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer lg:text-sm" (click)="login()">Faça o Login
+        Agora !</a>
     </div>
 
     <div class="justify-content-center align-items-center">
       <form [formGroup]="form">
 
-        <label for="usuario" class="block text-900 font-medium mb-2">Username</label>
+        <label for="usuario" class="block text-900 font-medium mb-2 lg:text-sm">Username</label>
         <input id="usuario" type="text" formControlName="username" placeholder="Username" pInputText
-          class="w-full mb-3">
+          class="w-full mb-3 lg:p-2">
 
         <small class="p-error block p-1 mb-2"
           *ngIf="form.get('username')?.hasError('required') && form.get('username')?.dirty && form.get('username')?.invalid">
           Campo obrigatório
         </small>
 
-        <label for="email" class="block text-900 font-medium mb-2">Email</label>
+        <label for="email" class="block text-900 font-medium mb-2 lg:text-sm">Email</label>
         <input id="email" type="text" formControlName="email" placeholder="Email address" pInputText
-          class="w-full mb-3">
+          class="w-full mb-3 lg:p-2">
         <small class="p-error block p-1 mb-2"
           *ngIf="form.get('email')?.hasError('required') && form.get('email')?.dirty">
           Campo obrigatório
         </small>
 
         <span class="p-input-icon-right w-full">
-          <label for="password" class="block text-900 font-medium mb-2">Password</label>
+          <label for="password" class="block text-900 font-medium mb-2 lg:text-sm">Password</label>
           <i [ngClass]="setPasswordVisibleIcon" class="p-1" (click)="changeVisibility('password')"></i>
           <input id="password" type="password" placeholder="Password" formControlName="password" #passwordRef pInputText
-            class="w-full mb-3 ">
+            class="w-full mb-3 lg:p-2 ">
         </span>
 
-        <small class="p-error block p-1 mb-2"
+        <small class="p-error block p-1 mb-2 lg:text-xs"
           *ngIf="form.get('password')?.hasError('required') && form.get('password')?.dirty">
           Campo obrigatório
         </small>
-        <small class="p-error block p-1 mb-2"
+        <small class="p-error block p-1 mb-2 lg:text-xs"
           *ngIf="form.get('password')?.hasError('minlength') && form.get('password')?.dirty">A senha deve
           conter ao menos 8 caracteres</small>
 
-        <small class="p-error block p-1 mb-2" *ngIf="form.get('password')?.hasError('strongPassword')">
+        <small class="p-error block p-1 mb-2 lg:text-xs" *ngIf="form.get('password')?.hasError('strongPassword')">
           A senha deve conter pelo menos 1 caractere especial e 1 uma letra maiúscula
         </small>
 
         <span class="p-input-icon-right w-full mt-1">
-          <label for="confPassword" class="block text-900 font-medium mb-2">Cofirm Password</label>
+          <label for="confPassword" class="block text-900 font-medium mb-2 lg:text-sm">Cofirm Password</label>
           <i [ngClass]="setConfirmPassVisibleIcon" class="p-1" (click)="changeVisibility('confirmPassword')"></i>
           <input id="confPassword" type="password" placeholder="Digite a senha novamente"
-            formControlName="confirmPassword" #confirmPassRef pInputText class="w-full mb-3">
+            formControlName="confirmPassword" #confirmPassRef pInputText class="w-full mb-3 lg:p-2">
         </span>
 
-        <small class="p-error block p-0 mb-2"
+        <small class="p-error block p-0 mb-2 lg:text-xs"
           *ngIf="form.get('confirmPassword')?.hasError('required') && form.get('confirmPassword')?.dirty">
           Campo obrigatório
         </small>
 
-        <small class="p-error block p-0 mb-2"
+        <small class="p-error block p-0 mb-2 lg:text-xs"
           *ngIf="form.get('confirmPassword')?.hasError('confirmPassError') && form.get('confirmPassword')?.dirty">A
           senha de confirmação
           deve ser igual a senha original</small>
-        <button pButton pRipple label="Cadastrar" icon="pi pi-user" class="w-full mt-3" (click)="criar()"></button>
+        <button pButton pRipple label="Cadastrar" icon="pi pi-user" class="w-full mt-3 lg:mt-2"
+          (click)="criar()"></button>
 
       </form>
     </div>
