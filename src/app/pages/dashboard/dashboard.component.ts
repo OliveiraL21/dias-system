@@ -44,8 +44,8 @@ export class DashboardComponent {
     })
   }
 
-  getProjectTasks(projeto: number) {
-    if (projeto && projeto > 0) {
+  getProjectTasks(projeto: string) {
+    if (projeto) {
       this.tarefasService.listByProjeto(projeto).subscribe({
         next: (tarefas: any) => {
           this.tarefas = tarefas;

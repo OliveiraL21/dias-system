@@ -9,6 +9,7 @@ import { CustomFilter } from 'src/app/models/customFilter/customFilter';
 import Cliente from 'src/app/models/cliente/cliente';
 import { Status } from 'src/app/models/status/status';
 import { StatusService } from 'src/app/services/status/status.service';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
 @Component({
   selector: 'app-listagem-projeto',
@@ -24,11 +25,8 @@ export class ListagemProjetoComponent {
   clientes: Cliente[] = [];
   status: Status[] = [];
 
-  constructor(private fb: FormBuilder, private clienteService: ClienteService, private statusService: StatusService, private service: ProjetoService, private messageService: MessageService, private router: Router, private confirmationService: ConfirmationService) { }
+  constructor(private fb: FormBuilder, private clienteService: ClienteService, private statusService: StatusService, private service: ProjetoService, private messageService: MensagemService, private router: Router, private confirmationService: ConfirmationService) { }
 
-  show(type: string, title: string, message: string) {
-    this.messageService.add({ severity: type, summary: title, detail: message });
-  }
 
   getCustomFilter(): CustomFilter[] {
     return [
@@ -107,7 +105,7 @@ export class ListagemProjetoComponent {
       this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Você tem certeza que deseja excluir este projeto?',
-        header: 'Excluir Projeto',
+        header: 'Projeto',
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: "none",
         rejectIcon: "none",
@@ -117,17 +115,17 @@ export class ListagemProjetoComponent {
           this.service.delete(id).subscribe({
             next: (response: any) => {
               if (response) {
-                this.show('success', 'Excluir Projeto', 'Projeto excluido com sucesso!');
+                this.messageService.sucesso('Excluir Projeto', 'Projeto excluido com sucesso!');
                 this.getProjetos();
                 this.loading = false;
               } else {
-                this.show('error', 'Excluir Projeto', 'Não foi possível excluir o projeto, tente novamente mais tarde');
+                this.messageService.erro('Excluir Projeto', 'Não foi possível excluir o projeto, tente novamente mais tarde');
                 this.loading = false;
               }
 
             },
             error: (error: any) => {
-              this.show('error', 'Excluir Projeto', `${error.error.error ? error.error.error : 'Não foi possível excluir o projeto, tente novamente mais tarde'}`);
+              this.messageService.erro('Excluir Projeto', `${error.error.error ? error.error.error : 'Não foi possível excluir o projeto, tente novamente mais tarde'}`);
               this.loading = false;
             }
           })

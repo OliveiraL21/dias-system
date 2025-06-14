@@ -16,22 +16,22 @@ export class TarefaService {
     return this.http.get<TarefaListagem[]>(`${url}`);
   }
 
-  listByProjeto(projeto: number): Observable<Tarefa[]> {
+  listByProjeto(projeto: string): Observable<Tarefa[]> {
     return this.http.get<Tarefa[]>(`${url}/lista/projeto/${projeto}`);
   }
 
-  filtrar(descricao?: string, dataInicio?: string, dataFim?: string, projeto?: number): Observable<TarefaListagem[]> {
+  filtrar(descricao?: string, dataInicio?: string, dataFim?: string, projeto?: string): Observable<TarefaListagem[]> {
     return this.http.get<TarefaListagem[]>(`${url}/filtrar?descricao=${descricao}&dataInicio=${dataInicio}&dataFim=${dataFim}&projetoId=${projeto}`);
   }
   create(tarefa: Tarefa): Observable<Tarefa> {
     return this.http.post<Tarefa>(`${url}`, tarefa);
   }
 
-  update(id: number, tarefa: Tarefa): Observable<Tarefa> {
+  update(id: string, tarefa: Tarefa): Observable<Tarefa> {
     return this.http.put<Tarefa>(`${url}/update_tarefas/${id}`, tarefa);
   }
 
-  details(id: number): Observable<Tarefa> {
+  details(id: string): Observable<Tarefa> {
     return this.http.get<Tarefa>(`${url}/detalhes_tarefas/${id}`);
   }
   calcularDuracao(horarioInicio: string, horarioFIm: string): Observable<any> {

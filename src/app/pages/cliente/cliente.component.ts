@@ -5,6 +5,7 @@ import { ClienteService } from 'src/app/services/cliente-service/cliente.service
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { CustomFilter } from 'src/app/models/customFilter/customFilter';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
 @Component({
   selector: 'app-cliente',
@@ -17,7 +18,7 @@ export class ClienteComponent {
   form!: FormGroup;
   loading: boolean = false
 
-  constructor(private fb: FormBuilder, private clienteService: ClienteService, private messageService: MessageService, private router: Router, private confirmationService: ConfirmationService) { }
+  constructor(private fb: FormBuilder, private clienteService: ClienteService, private messageService: MensagemService, private router: Router, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.listarClientes();
@@ -47,9 +48,7 @@ export class ClienteComponent {
     }
   }
 
-  show(type: string, title: string, message: string) {
-    this.messageService.add({ severity: type, summary: title, detail: message });
-  }
+
 
   novoCliente() {
     this.router.navigateByUrl('cliente/cadastro');
@@ -65,6 +64,7 @@ export class ClienteComponent {
       this.confirmationService.confirm({
         target: event.target as EventTarget,
         message: 'Você tem certeza que deseja excluir este cliente?',
+        header: 'Cliente',
         icon: 'pi pi-exclamation-triangle',
         acceptIcon: "none",
         rejectIcon: "none",
@@ -74,24 +74,24 @@ export class ClienteComponent {
           this.clienteService.delete(id).subscribe({
             next: (response: any) => {
               if (response) {
-                this.show('success', 'Excluir Cliente', 'Cliente excluido com sucesso!');
+                this.messageService.sucesso('Excluir Cliente', 'Cliente excluido com sucesso!');
                 this.listarClientes();
                 this.loading = false;
               } else {
-                this.show('error', 'Excluir Cliente', 'Não foi possível excluir o cliente, tente novamente mais tarde');
+                this.messageService.erro('Excluir Cliente', 'Não foi possível excluir o cliente, tente novamente mais tarde');
                 this.loading = false;
               }
 
             },
             error: (error: any) => {
-              this.show('error', 'Excluir Cliente', `${error.error.error ? error.error.error : 'Não foi possível excluir o cliente, tente novamente mais tarde'}`);
+              this.messageService.erro('Excluir Cliente', `${error.error.error ? error.error.error : 'Não foi possível excluir o cliente, tente novamente mais tarde'}`);
               this.loading = false;
             }
           })
         },
         reject: () => {
           this.loading = false;
-          this.show('error', 'Excluir Tarefa', 'O processo de exclusão foi rejeitado!');
+          this.messageService.erro('Excluir Tarefa', 'O processo de exclusão foi rejeitado!');
         }
       });
     }

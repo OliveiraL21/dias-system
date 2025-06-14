@@ -8,6 +8,7 @@ import { StatusService } from 'src/app/services/status/status.service';
 import Cliente from 'src/app/models/cliente/cliente';
 import { Projeto } from 'src/app/models/projeto/projeto';
 import { Status } from 'src/app/models/status/status';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
 @Component({
   selector: 'app-cadastro-projeto',
@@ -25,11 +26,7 @@ export class CadastroProjetoComponent {
   status: Status[] = [];
   projeto: any;
 
-  constructor(private fb: FormBuilder, private messageService: MessageService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService) { }
-
-  show(type: string, title: string, message: string) {
-    this.messageService.add({ severity: type, summary: title, detail: message });
-  }
+  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService) { }
 
   initForm() {
     this.form = this.fb.group({
@@ -74,7 +71,7 @@ export class CadastroProjetoComponent {
         },
         error: (error: any) => {
           this.loading = false;
-          this.show('error', this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do projeto, tente novamente mais tarde!'}`);
+          this.messageService.erro(this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do projeto, tente novamente mais tarde!'}`);
 
         }
       });
@@ -123,11 +120,11 @@ export class CadastroProjetoComponent {
         this.service.create(projeto).subscribe({
           next: (response: Projeto) => {
             this.loading = false;
-            this.show('success', 'Cadastro de Projeto', 'Projeto Cadastrado com sucesso!');
+            this.messageService.sucesso('Cadastro de Projeto', 'Projeto Cadastrado com sucesso!');
             setTimeout(() => { this.router.navigateByUrl('projeto/listagem') }, 100);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
+            this.messageService.erro(this.title, `${error.error.error}`);
             this.loading = false;
           }
         })
@@ -135,18 +132,18 @@ export class CadastroProjetoComponent {
         this.title == 'Cadastro de Projeto' ? 'Editar Projeto' : 'Cadastro de Projeto';
         this.service.update(this.id, projeto).subscribe({
           next: (response: Projeto) => {
-            this.show('success', this.title, 'Projeto Cadastrado com sucesso!');
+            this.messageService.sucesso(this.title, 'Projeto Cadastrado com sucesso!');
             this.loading = false;
             setTimeout(() => { this.router.navigateByUrl('projeto/listagem') }, 100);
           },
           error: (error: any) => {
             this.loading = false;
-            this.show('error', this.title, `${error.error.error}`);
+            this.messageService.erro(this.title, `${error.error.error}`);
           }
         });
       }
     } else {
-      this.show('error', 'Cadastro de Projeto', 'Preencha todos os campos obrigatórios');
+      this.messageService.erro('Cadastro de Projeto', 'Preencha todos os campos obrigatórios');
       Object.values(this.form.controls).forEach((control: AbstractControl) => {
         if (control.hasError('required') && control.invalid) {
           control.markAsDirty();

@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import Cliente from 'src/app/models/cliente/cliente';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
 @Component({
   selector: 'app-cliente-cadastro',
@@ -19,7 +20,7 @@ export class ClienteCadastroComponent {
   title: string = 'Cadastro de Cliente';
   cliente: any;
 
-  constructor(private fb: FormBuilder, private messageService: MessageService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService) { }
+  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService) { }
 
   initForm() {
     this.form = this.fb.group({
@@ -31,9 +32,6 @@ export class ClienteCadastroComponent {
     })
   }
 
-  show(type: string, title: string, message: string) {
-    this.messageService.add({ severity: type, summary: title, detail: message });
-  }
 
   cancelar() {
     this.router.navigateByUrl('cliente');
@@ -50,7 +48,7 @@ export class ClienteCadastroComponent {
           this.loading = false;
         },
         error: (error: any) => {
-          this.show('error', this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do cliente, tente novamente mais tarde!'}`);
+          this.messageService.erro(this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do cliente, tente novamente mais tarde!'}`);
           this.loading = false;
         }
       });
@@ -82,12 +80,12 @@ export class ClienteCadastroComponent {
       if (!this.id) {
         this.clienteService.create(cliente).subscribe({
           next: (response: Cliente) => {
-            this.show('success', 'Cadastro de Cliente', 'Cliente Cadastrado com sucesso!');
+            this.messageService.sucesso('Cadastro de Cliente', 'Cliente Cadastrado com sucesso!');
             this.loading = false;
             setTimeout(() => { this.router.navigateByUrl('cliente') }, 1000);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
+            this.messageService.erro(this.title, `${error.error.error}`);
             this.loading = false;
           }
         })
@@ -95,18 +93,18 @@ export class ClienteCadastroComponent {
         this.title == 'Cadastro de Cliente' ? 'Editar Cliente' : 'Cadastro de Cliente';
         this.clienteService.update(this.id, cliente).subscribe({
           next: (response: Cliente) => {
-            this.show('success', this.title, 'Cliente Editado com sucesso!');
+            this.messageService.sucesso(this.title, 'Cliente Editado com sucesso!');
             this.loading = false;
             setTimeout(() => { this.router.navigateByUrl('cliente') }, 2000);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
+            this.messageService.sucesso(this.title, `${error.error.error}`);
             this.loading = false;
           }
         });
       }
     } else {
-      this.show('error', 'Cadastro de Cliente', 'Preencha todos os campos obrigatórios');
+      this.messageService.erro('Cadastro de Cliente', 'Preencha todos os campos obrigatórios');
       Object.values(this.form.controls).forEach((control: AbstractControl) => {
         if (control.hasError('required') && control.invalid) {
           control.markAsDirty();
