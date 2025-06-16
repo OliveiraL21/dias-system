@@ -6,6 +6,9 @@ import { ClienteService } from 'src/app/services/cliente-service/cliente.service
 import Cliente from 'src/app/models/cliente/cliente';
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
+interface TipoCliente {
+  descricao: string;
+};
 @Component({
   selector: 'app-cliente-cadastro',
   templateUrl: './cliente-cadastro.component.html',
@@ -19,16 +22,22 @@ export class ClienteCadastroComponent {
   id: any = this.activatedRouter.snapshot.paramMap.get('id');
   title: string = 'Cadastro de Cliente';
   cliente: any;
+  tiposCliente: TipoCliente[] = [
+    { descricao: 'Pessoa Física' },
+    { descricao: 'Pessoa Jurídica' }
+  ]
 
   constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService) { }
 
   initForm() {
     this.form = this.fb.group({
       razaoSocial: [null, [Validators.required]],
+      tipo: [null, [Validators.required]],
       cnpj: [null, null],
-      telefone: [null, null],
+      cpf: [null, null],
+      telefone: [null, [Validators.required]],
       celular: [null, null],
-      email: [null, [Validators.email]]
+      email: [null, [Validators.required, Validators.email]]
     })
   }
 
@@ -38,7 +47,6 @@ export class ClienteCadastroComponent {
   }
 
   getDetail() {
-    console.log(this.id)
     if (this.id) {
       this.loading = true;
       this.clienteService.details(this.id).subscribe({
@@ -60,6 +68,25 @@ export class ClienteCadastroComponent {
       Object.keys(this.cliente).forEach((key: string) => {
         this.form.get(key)?.setValue(this.cliente[key]);
       });
+    }
+  }
+
+  tipoClienteChange() {
+    this.changeCPFCNPJValidator();
+
+  }
+
+  changeCPFCNPJValidator() {
+    if (this.form.get('tipo')?.value === 'Pessoa Física') {
+      this.form.get('cnpj')?.clearValidators();
+      this.form.get('cpf')?.setValidators([Validators.required]);
+      this.form.get('cnpj')?.updateValueAndValidity();
+      this.form.get('cpf')?.updateValueAndValidity();
+    } else {
+      this.form.get('cpf')?.clearValidators();
+      this.form.get('cnpj')?.setValidators([Validators.required]);
+      this.form.get('cpf')?.updateValueAndValidity();
+      this.form.get('cnpj')?.updateValueAndValidity();
     }
   }
 

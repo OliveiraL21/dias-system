@@ -15,16 +15,35 @@
         class="p-0 mb-4 p-error block">Campo obrigatório
       </small>
 
+      <label for="tipo" class="block text-900 font-medium mb-2">Tipo de cliente <span
+          class="text-red-500">*</span></label>
+      <p-dropdown styleClass="w-full mb-3" formControlName="tipo" [options]="tiposCliente" optionLabel="descricao"
+        optionValue="descricao" [showClear]="true" placeholder="ex: juridico ou fisica"></p-dropdown>
+      <small *ngIf="form.get('tipo')?.hasError('required') && form.get('tipo')?.dirty"
+        class="p-error block mb-4 p-0">Campo
+        obrigatório</small>
 
-      <label for="cnpj" class="block text-900 font-medium mb-2">Cnpj</label>
+      <label for="cnpj" class="block text-900 font-medium mb-2">Cnpj <span class="text-red-500">*</span></label>
       <p-inputMask mask="99.999.999/9999-99" formControlName="cnpj" name="cnpj" id="cnpj"
         placeholder="99.999.999/9999-99" styleClass="w-full mb-3"></p-inputMask>
+      <small *ngIf="form.get('cnpj')?.hasError('required') && form.get('cnpj')?.dirty"
+        class="p-0 mb-4 p-error block">Campo obrigatório
+      </small>
+
+      <label for="cnpj" class="block text-900 font-medium mb-2">Cpf <span class="text-red-500">*</span></label>
+      <p-inputMask mask="999.999.999-99" formControlName="cpf" name="cpf" id="cpf" placeholder="999.999.999-99"
+        styleClass="w-full mb-3"></p-inputMask>
+      <small *ngIf="form.get('cpf')?.hasError('required') && form.get('cpf')?.dirty"
+        class="p-0 mb-4 p-error block">Campo obrigatório
+      </small>
 
 
-
-      <label for="telefone" class="block text-900 font-medium mb-2">Telefone</label>
+      <label for="telefone" class="block text-900 font-medium mb-2">Telefone <span class="text-red-500">*</span></label>
       <p-inputMask mask="(99) 9999-9999" formControlName="telefone" name="telefone" id="telefone"
         placeholder="(99) 99999-9999" styleClass="w-full mb-3"></p-inputMask>
+      <small *ngIf="form.get('telefone')?.hasError('required') && form.get('telefone')?.dirty"
+        class="p-0 mb-4 p-error block">Campo obrigatório
+      </small>
 
 
       <label for="celular" class="block text-900 font-medium mb-2">Celular</label>
@@ -32,12 +51,17 @@
         placeholder="(99) 99999-9999" styleClass="w-full mb-3"></p-inputMask>
 
 
+      <div class="flex flex-column gap-2">
+        <label for="email" class="block text-900 font-medium mb-2">E-mail <span class="text-red-500">*</span></label>
+        <input type="text" name="email" id="email" formControlName="email" placeholder="exemplo@exemplo.com" pInputText
+          class="w-full mb-3">
+        <small *ngIf="form.get('email')?.hasError('email') && form.get('email')?.dirty"
+          class="p-0 mb-4 p-error block">E-mail no formato inválido</small>
 
-      <label for="email" class="block text-900 font-medium mb-2">E-mail</label>
-      <input type="text" name="email" id="email" formControlName="email" placeholder="exemplo@exemplo.com" pInputText
-        class="w-full mb-3">
-      <small *ngIf="form.get('email')?.hasError('email') && form.get('email')?.dirty"
-        class="p-0 mb-4 p-error block">E-mail no formato inválido</small>
+        <small
+          *ngIf="form.get('email')?.hasError('required') && !form.get('email')?.hasError('email') && form.get('email')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório</small>
+      </div>
 
       <div class="flex">
         <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
