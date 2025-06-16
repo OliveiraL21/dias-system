@@ -10,7 +10,7 @@
     <app-filter [formControls]="getCustomFilter()" (filtrarChange)="filtrar($event)"></app-filter>
 
     <div class="flex justify-content-end w-full mb-5">
-      <p-button label="Nova Tarefa" icon="pi pi-plus" [rounded]="true" size="small" iconPos="right"
+      <p-button class="mt-5" label="Nova Tarefa" icon="pi pi-plus" [rounded]="true" size="small" iconPos="right"
         (onClick)="novo()"></p-button>
     </div>
 
@@ -36,8 +36,7 @@
           <td>{{ tarefa.data | date : "dd/MM/yyyy" }}</td>
           <td>{{tarefa.projeto?.descricao}}</td>
           <td>
-            <p-tag *ngIf="tarefa.status.descricao == 'Ativo' " [value]="tarefa.status.descricao"
-              [value]="'primary'"></p-tag>
+            <p-tag *ngIf="tarefa.status.descricao == 'Ativo' " [value]="tarefa.status.descricao"></p-tag>
 
             <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " [value]="tarefa.status.descricao"
               [severity]="'warning'"></p-tag>
@@ -54,7 +53,7 @@
             <p-tag *ngIf="tarefa.status.descricao == 'Bloqueado' " [value]="tarefa.status.descricao"
               [severity]="'danger'"></p-tag>
           </td>
-          <td>
+          <td class="lg:w-2">
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(tarefa.id)"></p-button>
             <p-button icon="pi pi-trash" [text]="true" severity="danger"
               (onClick)="deletar($event, tarefa.id)"></p-button>
