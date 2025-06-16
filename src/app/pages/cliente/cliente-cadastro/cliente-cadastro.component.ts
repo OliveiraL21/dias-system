@@ -26,7 +26,7 @@ export class ClienteCadastroComponent {
     { descricao: 'Pessoa Física' },
     { descricao: 'Pessoa Jurídica' }
   ]
-
+  changeViewCpfCnpj?: string;
   constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService) { }
 
   initForm() {
@@ -82,13 +82,23 @@ export class ClienteCadastroComponent {
       this.form.get('cpf')?.setValidators([Validators.required]);
       this.form.get('cnpj')?.updateValueAndValidity();
       this.form.get('cpf')?.updateValueAndValidity();
-    } else {
+      this.changeViewCpfCnpj = "Pessoa Física";
+    } if (this.form.get('tipo')?.value === 'Pessoa Jurídica') {
       this.form.get('cpf')?.clearValidators();
       this.form.get('cnpj')?.setValidators([Validators.required]);
       this.form.get('cpf')?.updateValueAndValidity();
       this.form.get('cnpj')?.updateValueAndValidity();
+      this.changeViewCpfCnpj = "Pessoa Jurídica";
+    } else {
+      this.form.get('cnpj')?.clearValidators();
+      this.form.get('cpf')?.clearValidators();
+      this.form.get('cnpj')?.updateValueAndValidity();
+      this.form.get('cpf')?.updateValueAndValidity();
+      this.changeViewCpfCnpj = undefined;
     }
   }
+
+
 
   ngOnInit() {
     this.initForm();

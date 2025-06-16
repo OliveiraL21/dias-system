@@ -5,7 +5,7 @@
       animationDuration=".5s"></p-progressSpinner>
   </p-blockUI>
 
-  <p-card [header]="title" class="w-full">
+  <p-card [header]="title" class="w-full lg: w-11">
     <form class="w-4" [formGroup]="form">
       <label for="razaoSocial" class="block text-900 font-medium mb-2">Razão Social <span
           class="text-red-500">*</span></label>
@@ -18,24 +18,30 @@
       <label for="tipo" class="block text-900 font-medium mb-2">Tipo de cliente <span
           class="text-red-500">*</span></label>
       <p-dropdown styleClass="w-full mb-3" formControlName="tipo" [options]="tiposCliente" optionLabel="descricao"
-        optionValue="descricao" [showClear]="true" placeholder="ex: juridico ou fisica"></p-dropdown>
+        optionValue="descricao" [showClear]="true" placeholder="ex: juridico ou fisica"
+        (ngModelChange)="changeCPFCNPJValidator()"></p-dropdown>
       <small *ngIf="form.get('tipo')?.hasError('required') && form.get('tipo')?.dirty"
         class="p-error block mb-4 p-0">Campo
         obrigatório</small>
 
-      <label for="cnpj" class="block text-900 font-medium mb-2">Cnpj <span class="text-red-500">*</span></label>
-      <p-inputMask mask="99.999.999/9999-99" formControlName="cnpj" name="cnpj" id="cnpj"
-        placeholder="99.999.999/9999-99" styleClass="w-full mb-3"></p-inputMask>
-      <small *ngIf="form.get('cnpj')?.hasError('required') && form.get('cnpj')?.dirty"
-        class="p-0 mb-4 p-error block">Campo obrigatório
-      </small>
+      <div *ngIf="changeViewCpfCnpj === 'Pessoa Jurídica'">
+        <label for="cnpj" class="block text-900 font-medium mb-2">Cnpj <span class="text-red-500">*</span></label>
+        <p-inputMask mask="99.999.999/9999-99" formControlName="cnpj" name="cnpj" id="cnpj"
+          placeholder="99.999.999/9999-99" styleClass="w-full mb-3"></p-inputMask>
+        <small *ngIf="form.get('cnpj')?.hasError('required') && form.get('cnpj')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório
+        </small>
+      </div>
 
-      <label for="cnpj" class="block text-900 font-medium mb-2">Cpf <span class="text-red-500">*</span></label>
-      <p-inputMask mask="999.999.999-99" formControlName="cpf" name="cpf" id="cpf" placeholder="999.999.999-99"
-        styleClass="w-full mb-3"></p-inputMask>
-      <small *ngIf="form.get('cpf')?.hasError('required') && form.get('cpf')?.dirty"
-        class="p-0 mb-4 p-error block">Campo obrigatório
-      </small>
+      <div *ngIf="changeViewCpfCnpj === 'Pessoa Física'">
+        <label for="cnpj" class="block text-900 font-medium mb-2">Cpf <span class="text-red-500">*</span></label>
+        <p-inputMask mask="999.999.999-99" formControlName="cpf" name="cpf" id="cpf" placeholder="999.999.999-99"
+          styleClass="w-full mb-3"></p-inputMask>
+        <small *ngIf="form.get('cpf')?.hasError('required') && form.get('cpf')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório
+        </small>
+      </div>
+
 
 
       <label for="telefone" class="block text-900 font-medium mb-2">Telefone <span class="text-red-500">*</span></label>
