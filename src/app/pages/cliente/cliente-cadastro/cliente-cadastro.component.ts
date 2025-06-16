@@ -37,7 +37,12 @@ export class ClienteCadastroComponent {
       cpf: [null, null],
       telefone: [null, [Validators.required]],
       celular: [null, null],
-      email: [null, [Validators.required, Validators.email]]
+      email: [null, [Validators.required, Validators.email]],
+      logradouro: [null, [Validators.required]],
+      numero: [null, [Validators.required]],
+      bairro: [null, [Validators.required]],
+      cep: [null, null],
+      cidade: [null, [Validators.required]],
     })
   }
 
