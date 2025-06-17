@@ -9,6 +9,7 @@ import Cliente from 'src/app/models/cliente/cliente';
 import { Projeto } from 'src/app/models/projeto/projeto';
 import { Status } from 'src/app/models/status/status';
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
+import { Tarefa } from 'src/app/models/tarefa/tarefa';
 
 @Component({
   selector: 'app-cadastro-projeto',
@@ -25,6 +26,7 @@ export class CadastroProjetoComponent {
   clientes: Cliente[] = [];
   status: Status[] = [];
   projeto: any;
+  tarefas: Tarefa[] = [];
 
   constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService) { }
 
@@ -66,6 +68,7 @@ export class CadastroProjetoComponent {
       this.service.details(this.id).subscribe({
         next: (response: Projeto) => {
           this.projeto = response;
+          this.tarefas = response.tarefas;
           this.preencherFormulario();
           this.loading = false;
         },
@@ -81,7 +84,7 @@ export class CadastroProjetoComponent {
   preencherFormulario() {
     if (this.id) {
       Object.keys(this.projeto).forEach((key: string) => {
-        this.form.get(key)?.setValue(key.includes('data') ? new Date(this.projeto[key]) : this.projeto[key]);
+        this.form.get(key)?.setValue(this.projeto[key]);
       });
 
       this.form.get('cliente')?.setValue(this.projeto.cliente.id);
