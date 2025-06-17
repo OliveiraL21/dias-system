@@ -94,7 +94,8 @@ export class ClienteCadastroComponent {
       this.form.get('cpf')?.updateValueAndValidity();
       this.form.get('cnpj')?.updateValueAndValidity();
       this.changeViewCpfCnpj = "Pessoa Jurídica";
-    } else {
+    }
+    if (this.form.get('tipo')?.value === null) {
       this.form.get('cnpj')?.clearValidators();
       this.form.get('cpf')?.clearValidators();
       this.form.get('cnpj')?.updateValueAndValidity();
