@@ -12,7 +12,7 @@
         *ngIf="control.type === 'cnpj' || control.type === 'cpf' || control.type === 'telefone' || control.type === 'celular'">
         <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
         <p-inputMask [mask]="control.mask" [formControlName]="control.name" [id]="control.name"
-          [placeholder]="control.placeholder" styleClass="w-full mb-3"></p-inputMask>
+          [placeholder]="control.placeholder" styleClass="w-full mb-3" [showClear]="true"></p-inputMask>
       </div>
 
       <div *ngIf="control.type === 'dropdown'" class="lg:w-15rem">
