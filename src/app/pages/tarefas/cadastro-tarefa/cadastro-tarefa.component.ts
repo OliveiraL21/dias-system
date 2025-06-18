@@ -140,7 +140,7 @@ export class CadastroTarefaComponent {
         this.form.get('observacao')?.setValue(tarefa.observacao);
         this.form.get('horarioInicio')?.setValue(tarefa.horarioInicio.substr(11, 15));
         this.form.get('horarioFim')?.setValue(tarefa.horarioFim.substr(11, 15));
-        this.form.get('status')?.setValue(tarefa.status.id);
+        this.form.get('status')?.setValue(tarefa.statusId);
       },
       error: (error: any) => {
         this.loading = false;

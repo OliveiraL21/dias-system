@@ -68,7 +68,12 @@ export class CadastroProjetoComponent {
       this.service.details(this.id).subscribe({
         next: (response: Projeto) => {
           this.projeto = response;
-          this.tarefas = response.tarefas;
+          this.tarefas = response.tarefas.map((tarefa: Tarefa) => ({
+            ...tarefa,
+            horaInicio: tarefa.horarioInicio ? tarefa.horarioInicio.substring(11, 16) : '--:--',
+            horaFim: tarefa.horarioFim ? tarefa.horarioFim.substring(11, 16) : '--:--',
+            duracao: tarefa.duracao ? tarefa.duracao.substring(11, 16) : '--:--'
+          }));
           this.preencherFormulario();
           this.loading = false;
         },
@@ -155,6 +160,10 @@ export class CadastroProjetoComponent {
       });
       this.loading = false;
     }
+  }
+
+  editarTarefa(id: string) {
+    this.router.navigateByUrl(`tarefas/editar/${id}`);
   }
 
   cancelar() {
