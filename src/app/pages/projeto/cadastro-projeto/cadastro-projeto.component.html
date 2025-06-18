@@ -62,7 +62,8 @@
     </form>
 
     <div *ngIf="this.id" class="w-full my-4">
-      <p-table [value]="tarefas" styleClass="p-datatable-striped">
+      <p-table [value]="tarefas" styleClass="p-datatable-striped" [lazy]="true" [paginator]="true" [rows]="rows"
+        [totalRecords]="total" (onLazyLoad)="getTarefas($event)">
         <ng-template pTemplate="header">
           <tr>
             <th>Tarefa</th>

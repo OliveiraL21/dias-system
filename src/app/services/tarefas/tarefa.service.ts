@@ -21,7 +21,7 @@ export class TarefaService {
   }
 
   getByProjeto(pageNumber: number, pageSize: number, projeto: string): Observable<any> {
-    return this.http.get<any>(`${url}?pageNumber=${pageNumber}&pageSize=${pageSize}/${projeto}`);
+    return this.http.get<any>(`${url}/projeto/${projeto}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   filtrar(descricao?: string, dataInicio?: string, dataFim?: string, projeto?: string): Observable<TarefaListagem[]> {

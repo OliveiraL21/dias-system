@@ -10,6 +10,8 @@ import { Projeto } from 'src/app/models/projeto/projeto';
 import { Status } from 'src/app/models/status/status';
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
 import { Tarefa } from 'src/app/models/tarefa/tarefa';
+import { TarefaService } from 'src/app/services/tarefas/tarefa.service';
+import { TableLazyLoadEvent } from 'primeng/table';
 
 @Component({
   selector: 'app-cadastro-projeto',
@@ -29,10 +31,10 @@ export class CadastroProjetoComponent {
   tarefas: Tarefa[] = [];
   calcularButtonItems: MenuItem[];
   total: number = 0;
-  rows: number = 10;
+  rows?: number = 10;
 
 
-  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService) {
+  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService, private tarefaService: TarefaService) {
     this.calcularButtonItems = [
       {
         label: 'Calcular por periodo',
@@ -80,10 +82,26 @@ export class CadastroProjetoComponent {
     })
   }
 
-  getTarefas(lazyEvent: LazyLoadEvent) {
+  getTarefas(lazyEvent: TableLazyLoadEvent) {
     this.total = 0;
     let pageNumber = lazyEvent.first === 0 || lazyEvent.first === undefined ? 0 : lazyEvent.first / (lazyEvent.rows == undefined ? 1 : lazyEvent.rows) + 1;
-    this.rows = lazyEvent.rows === undefined ? 10 : lazyEvent.rows;
+    this.rows = lazyEvent.rows === null ? 10 : lazyEvent.rows;
+    this.tarefaService.getByProjeto(pageNumber, this.rows ?? 10, this.id).subscribe({
+      next: (response: any) => {
+        this.tarefas = response.data.map((tarefa: Tarefa) => ({
+          ...tarefa,
+          horaInicio: tarefa.horarioInicio ? tarefa.horarioInicio.substring(11, 16) : '--:--',
+          horaFim: tarefa.horarioFim ? tarefa.horarioFim.substring(11, 16) : '--:--',
+          duracao: tarefa.duracao ? tarefa.duracao.substring(11, 16) : '--:--'
+        }));
+        console.log(this.tarefas);
+        console.log(response);
+        this.total = response.total;
+      },
+      error: (error: any) => {
+        this.messageService.erro('Erro ao carregar tarefas', `${error.error.error}`);
+      }
+    })
 
   }
 
@@ -104,12 +122,6 @@ export class CadastroProjetoComponent {
       this.service.details(this.id).subscribe({
         next: (response: Projeto) => {
           this.projeto = response;
-          this.tarefas = response.tarefas.map((tarefa: Tarefa) => ({
-            ...tarefa,
-            horaInicio: tarefa.horarioInicio ? tarefa.horarioInicio.substring(11, 16) : '--:--',
-            horaFim: tarefa.horarioFim ? tarefa.horarioFim.substring(11, 16) : '--:--',
-            duracao: tarefa.duracao ? tarefa.duracao.substring(11, 16) : '--:--'
-          }));
           this.preencherFormulario();
           this.loading = false;
         },
@@ -140,6 +152,9 @@ export class CadastroProjetoComponent {
     this.getStatus();
     this.getDetail();
     this.id ? this.title = 'Editar Projeto' : 'Cadastro de Projeto';
+    if (this.id) {
+      this.getTarefas({ first: 0, rows: this.rows } as LazyLoadEvent);
+    }
   }
 
   save() {
