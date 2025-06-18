@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MenuItem, MessageService } from 'primeng/api';
+import { LazyLoadEvent, MenuItem, MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { StatusService } from 'src/app/services/status/status.service';
@@ -29,6 +29,7 @@ export class CadastroProjetoComponent {
   tarefas: Tarefa[] = [];
   calcularButtonItems: MenuItem[];
   total: number = 0;
+  rows: number = 10;
 
 
   constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService) {
@@ -79,7 +80,10 @@ export class CadastroProjetoComponent {
     })
   }
 
-  getTarefas() {
+  getTarefas(lazyEvent: LazyLoadEvent) {
+    this.total = 0;
+    let pageNumber = lazyEvent.first === 0 || lazyEvent.first === undefined ? 0 : lazyEvent.first / (lazyEvent.rows == undefined ? 1 : lazyEvent.rows) + 1;
+    this.rows = lazyEvent.rows === undefined ? 10 : lazyEvent.rows;
 
   }
 
