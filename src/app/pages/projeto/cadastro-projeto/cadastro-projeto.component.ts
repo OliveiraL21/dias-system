@@ -94,8 +94,6 @@ export class CadastroProjetoComponent {
           horaFim: tarefa.horarioFim ? tarefa.horarioFim.substring(11, 16) : '--:--',
           duracao: tarefa.duracao ? tarefa.duracao.substring(11, 16) : '--:--'
         }));
-        console.log(this.tarefas);
-        console.log(response);
         this.total = response.total;
       },
       error: (error: any) => {
