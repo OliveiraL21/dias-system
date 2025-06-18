@@ -100,10 +100,11 @@
       </p-table>
     </div>
 
-    <div class="flex mt-6">
+    <div class="flex mt-6 gap-3">
+      <p-button label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right" (onClick)="cancelar()"></p-button>
+      <p-splitButton label="Calcular Tarefas" severity="success" [model]="calcularButtonItems"
+        class="calculatorButton"></p-splitButton>
       <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
-      <p-button class="ml-2" label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right"
-        (onClick)="cancelar()"></p-button>
     </div>
   </p-card>
 </div>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { StatusService } from 'src/app/services/status/status.service';
@@ -27,8 +27,34 @@ export class CadastroProjetoComponent {
   status: Status[] = [];
   projeto: any;
   tarefas: Tarefa[] = [];
+  calcularButtonItems: MenuItem[];
 
-  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService) { }
+  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService) {
+    this.calcularButtonItems = [
+      {
+        label: 'Calcular por periodo',
+        icon: 'pi pi-calendar',
+        command: () => {
+          this.calculoPorPeriodo();
+        }
+      },
+      {
+        label: 'Calculo total do projeto',
+        icon: 'pi pi-calculator',
+        command: () => {
+          this.calculoTotalProjeto();
+        }
+      }
+    ]
+  }
+
+  calculoTotalProjeto() {
+
+  }
+
+  calculoPorPeriodo() {
+
+  }
 
   initForm() {
     this.form = this.fb.group({

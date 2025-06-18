@@ -27,6 +27,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { FilterComponent } from 'src/app/components/filter/filter.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ChartModule } from 'primeng/chart';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [FilterComponent],
@@ -58,7 +59,8 @@ import { ChartModule } from 'primeng/chart';
     ConfirmDialogModule,
     FileUploadModule,
     FieldsetModule,
-    ChartModule
+    ChartModule,
+    SplitButtonModule,
   ],
 
   exports: [
@@ -90,7 +92,8 @@ import { ChartModule } from 'primeng/chart';
     FileUploadModule,
     FilterComponent,
     FieldsetModule,
-    ChartModule
+    ChartModule,
+    SplitButtonModule,
   ]
 })
 export class ShareModuleModule { }
