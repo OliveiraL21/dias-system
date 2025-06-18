@@ -28,6 +28,8 @@ export class CadastroProjetoComponent {
   projeto: any;
   tarefas: Tarefa[] = [];
   calcularButtonItems: MenuItem[];
+  total: number = 0;
+
 
   constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService) {
     this.calcularButtonItems = [
@@ -75,6 +77,10 @@ export class CadastroProjetoComponent {
         console.log(error);
       }
     })
+  }
+
+  getTarefas() {
+
   }
 
   getStatus() {

@@ -20,6 +20,10 @@ export class TarefaService {
     return this.http.get<Tarefa[]>(`${url}/lista/projeto/${projeto}`);
   }
 
+  getByProjeto(pageNumber: number, pageSize: number, projeto: string): Observable<any> {
+    return this.http.get<any>(`${url}?pageNumber=${pageNumber}&pageSize=${pageSize}/${projeto}`);
+  }
+
   filtrar(descricao?: string, dataInicio?: string, dataFim?: string, projeto?: string): Observable<TarefaListagem[]> {
     return this.http.get<TarefaListagem[]>(`${url}/filtrar?descricao=${descricao}&dataInicio=${dataInicio}&dataFim=${dataFim}&projetoId=${projeto}`);
   }
