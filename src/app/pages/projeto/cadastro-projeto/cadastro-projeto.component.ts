@@ -12,6 +12,7 @@ import { MensagemService } from 'src/app/services/message/Mensagem.service';
 import { Tarefa } from 'src/app/models/tarefa/tarefa';
 import { TarefaService } from 'src/app/services/tarefas/tarefa.service';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { ReportService } from 'src/app/services/report/report.service';
 
 @Component({
   selector: 'app-cadastro-projeto',
@@ -34,7 +35,7 @@ export class CadastroProjetoComponent {
   rows?: number = 10;
 
 
-  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService, private tarefaService: TarefaService) {
+  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService, private tarefaService: TarefaService, private reportService: ReportService) {
     this.calcularButtonItems = [
       {
         label: 'Calcular por periodo',
@@ -54,7 +55,11 @@ export class CadastroProjetoComponent {
   }
 
   calculoTotalProjeto() {
-
+    this.reportService.servicosPrestados(this.id).subscribe({
+      next: (response: any) => {
+        console.log(response);
+      }
+    })
   }
 
   calculoPorPeriodo() {
