@@ -56,8 +56,15 @@ export class CadastroProjetoComponent {
 
   calculoTotalProjeto() {
     this.reportService.servicosPrestados(this.id).subscribe({
-      next: (response: any) => {
-        console.log(response);
+      next: (response: Blob) => {
+        const a = document.createElement('a');
+        const objectUrl = URL.createObjectURL(response);
+        a.href = objectUrl;
+        a.download = `servicos_prestados_${this.id}.pdf`;
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+        this.messageService.sucesso('Relatório de Serviços Prestados', 'Relatório gerado com sucesso!');
+
       }
     })
   }

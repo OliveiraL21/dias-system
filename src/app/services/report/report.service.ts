@@ -12,7 +12,7 @@ export class ReportService {
   constructor(private httpClient: HttpClient) { }
 
   servicosPrestados(projetoId: string): Observable<any> {
-    return this.httpClient.get(`${baseUrl}/ServicosPrestados/${projetoId}`);
+    return this.httpClient.get(`${baseUrl}/ServicosPrestados/${projetoId}`, { responseType: 'blob' });
   }
 
 }
