@@ -56,6 +56,7 @@ export class CadastroProjetoComponent {
   }
 
   calculoTotalProjeto() {
+    this.loading = true;
     this.reportService.servicosPrestados(this.id).subscribe({
       next: (response: Blob) => {
         const a = document.createElement('a');
@@ -65,7 +66,9 @@ export class CadastroProjetoComponent {
         a.click();
         URL.revokeObjectURL(objectUrl);
         this.messageService.sucesso('Relatório de Serviços Prestados', 'Relatório gerado com sucesso!');
-
+        this.loading = false;
+      }, error: (error: any) => {
+        this.loading = false;
       }
     })
   }

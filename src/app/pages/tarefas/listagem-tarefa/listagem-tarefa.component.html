@@ -14,7 +14,8 @@
         (onClick)="novo()"></p-button>
     </div>
 
-    <p-table [value]="tarefas" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+    <p-table [value]="tarefas" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}"
+      [scrollHeight]="'calc(100vh - 15rem)'">
       <ng-template pTemplate="header">
         <tr>
           <th>Descrição</th>
