@@ -40,6 +40,7 @@ export class CadastroProjetoComponent {
       {
         label: 'Calcular por periodo',
         icon: 'pi pi-calendar',
+        styleClass: 'calulatorButton',
         command: () => {
           this.calculoPorPeriodo();
         }
