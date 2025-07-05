@@ -87,23 +87,23 @@
         <ng-template pTemplate="header">
           <tr>
             <th>Tarefa</th>
-            <th>Data</th>
-            <th>Hora Inicio</th>
-            <th>Hora Fim</th>
-            <th>Duração</th>
-            <th>Status</th>
-            <th></th>
+            <th class="text-center">Data</th>
+            <th class="text-center">Hora Inicio</th>
+            <th class="text-center">Hora Fim</th>
+            <th class="text-center">Duração</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Ações</th>
           </tr>
         </ng-template>
 
         <ng-template pTemplate="body" let-tarefa>
           <tr>
-            <td class="w-5rem">{{tarefa.descricao}}</td>
-            <td>{{tarefa.data | date: 'dd/MM/yyyy'}}</td>
-            <td>{{tarefa.horaInicio }}</td>
-            <td>{{tarefa.horaFim}}</td>
-            <td>{{tarefa.duracao}}</td>
-            <td>
+            <td>{{tarefa.descricao}}</td>
+            <td class="text-center">{{tarefa.data | date: 'dd/MM/yyyy'}}</td>
+            <td class="text-center">{{tarefa.horaInicio }}</td>
+            <td class="text-center">{{tarefa.horaFim}}</td>
+            <td class="text-center">{{tarefa.duracao}}</td>
+            <td class="text-center lg:w-9rem">
               <p-tag *ngIf="tarefa.status.descricao == 'Em Andamento' " [value]="tarefa.status.descricao"></p-tag>
 
               <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " [value]="tarefa.status.descricao"
@@ -121,7 +121,7 @@
               <p-tag *ngIf="tarefa.status.descricao == 'Bloqueado' " [value]="tarefa.status.descricao"
                 [severity]="'danger'"></p-tag>
             </td>
-            <td>
+            <td class="text-center">
               <p-button pTooltip="Editar" icon="pi pi-pencil" [text]="true"
                 (onClick)="editarTarefa(tarefa.id)"></p-button>
             </td>
