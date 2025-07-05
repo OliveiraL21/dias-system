@@ -19,25 +19,25 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Descrição</th>
-          <th>Horário Inicio</th>
-          <th>Horário Fim</th>
-          <th>Duração</th>
-          <th>Data</th>
+          <th class="text-center">Horário Inicio</th>
+          <th class="text-center">Horário Fim</th>
+          <th class="text-center">Duração</th>
+          <th class="text-center">Data</th>
           <th>Projeto</th>
-          <th>Status</th>
-          <th></th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Ações</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-tarefa>
         <tr>
           <td>{{tarefa.descricao}}</td>
-          <td>{{tarefa.horarioInicio}}</td>
-          <td>{{tarefa.horarioFim}}</td>
-          <td>{{tarefa.duracao}}</td>
-          <td>{{ tarefa.data | date : "dd/MM/yyyy" }}</td>
-          <td>{{tarefa.projeto?.descricao}}</td>
-          <td>
-            <p-tag *ngIf="tarefa.status.descricao == 'Ativo' " [value]="tarefa.status.descricao"></p-tag>
+          <td class="text-center">{{tarefa.horarioInicio}}</td>
+          <td class="text-center">{{tarefa.horarioFim}}</td>
+          <td class="text-center">{{tarefa.duracao}}</td>
+          <td class="text-center">{{ tarefa.data | date : "dd/MM/yyyy" }}</td>
+          <td class="w-12rem">{{tarefa.projeto?.descricao}}</td>
+          <td class="text-center lg:w-7rem">
+            <p-tag *ngIf="tarefa.status.descricao == 'Em Andamento' " [value]="tarefa.status.descricao"></p-tag>
 
             <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " [value]="tarefa.status.descricao"
               [severity]="'warning'"></p-tag>
@@ -54,7 +54,7 @@
             <p-tag *ngIf="tarefa.status.descricao == 'Bloqueado' " [value]="tarefa.status.descricao"
               [severity]="'danger'"></p-tag>
           </td>
-          <td class="lg:w-2">
+          <td class=" text-center lg:w-8rem">
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(tarefa.id)"></p-button>
             <p-button icon="pi pi-trash" [text]="true" severity="danger"
               (onClick)="deletar($event, tarefa.id)"></p-button>
