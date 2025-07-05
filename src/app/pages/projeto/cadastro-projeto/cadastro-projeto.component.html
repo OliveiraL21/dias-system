@@ -98,13 +98,13 @@
 
         <ng-template pTemplate="body" let-tarefa>
           <tr>
-            <td>{{tarefa.descricao}}</td>
+            <td class="w-5rem">{{tarefa.descricao}}</td>
             <td>{{tarefa.data | date: 'dd/MM/yyyy'}}</td>
             <td>{{tarefa.horaInicio }}</td>
             <td>{{tarefa.horaFim}}</td>
             <td>{{tarefa.duracao}}</td>
             <td>
-              <p-tag *ngIf="tarefa.status.descricao == 'Ativo' " [value]="tarefa.status.descricao"></p-tag>
+              <p-tag *ngIf="tarefa.status.descricao == 'Em Andamento' " [value]="tarefa.status.descricao"></p-tag>
 
               <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " [value]="tarefa.status.descricao"
                 [severity]="'warning'"></p-tag>
