@@ -33,6 +33,8 @@ export class CadastroProjetoComponent {
   calcularButtonItems: MenuItem[];
   total: number = 0;
   rows?: number = 10;
+  showDialog: boolean = false;
+  formCalculoPeriodo!: FormGroup;
 
 
   constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService, private tarefaService: TarefaService, private reportService: ReportService) {
@@ -73,8 +75,53 @@ export class CadastroProjetoComponent {
     })
   }
 
-  calculoPorPeriodo() {
+  onCloseDialog() {
+    this.showDialog = false;
+    this.formCalculoPeriodo.reset();
+  }
 
+  calcularTarefasPorPeriodo() {
+    this.loading = true;
+    if (this.formCalculoPeriodo.valid) {
+      const data = this.formCalculoPeriodo.value;
+      this.reportService.servicosPrestadosPeriodo(this.id, data.dataInicio, data.dataFim).subscribe({
+        next: (response: Blob) => {
+          const a = document.createElement('a');
+          const objectUrl = URL.createObjectURL(response);
+          a.href = objectUrl;
+          a.download = `tarefas_por_periodo_${this.id}.pdf`;
+          a.click();
+          URL.revokeObjectURL(objectUrl);
+          this.messageService.sucesso('Relatório de Tarefas por Período', 'Relatório gerado com sucesso!');
+          this.loading = false;
+          this.onCloseDialog();
+        }, error: (error: any) => {
+          this.loading = false;
+          this.messageService.erro('Erro ao gerar relatório', `${error.error.error}`);
+        }
+      })
+    } else {
+      this.messageService.erro('Erro ao gerar relatório', 'Preencha todos os campos obrigatórios');
+      Object.values(this.formCalculoPeriodo.controls).forEach((control: AbstractControl) => {
+        if (control.hasError('required') && control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity();
+        }
+      });
+      this.loading = false;
+    }
+  }
+
+  calculoPorPeriodo() {
+    this.showDialog = true;
+    this.formCalculoPeriodo.reset();
+  }
+
+  initFormCalculoPeriodo() {
+    this.formCalculoPeriodo = this.fb.group({
+      dataInicio: [null, [Validators.required]],
+      dataFim: [null, [Validators.required]],
+    });
   }
 
   initForm() {
@@ -162,6 +209,7 @@ export class CadastroProjetoComponent {
 
   ngOnInit() {
     this.initForm();
+    this.initFormCalculoPeriodo();
     this.getClientes();
     this.getStatus();
     this.getDetail();

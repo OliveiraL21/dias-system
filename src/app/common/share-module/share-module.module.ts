@@ -28,6 +28,7 @@ import { FilterComponent } from 'src/app/components/filter/filter.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ChartModule } from 'primeng/chart';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [FilterComponent],
@@ -61,6 +62,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     FieldsetModule,
     ChartModule,
     SplitButtonModule,
+    DialogModule
   ],
 
   exports: [
@@ -94,6 +96,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     FieldsetModule,
     ChartModule,
     SplitButtonModule,
+    DialogModule
   ]
 })
 export class ShareModuleModule { }
