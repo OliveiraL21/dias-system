@@ -167,7 +167,7 @@
     </div>
   </form>
   <ng-template pTemplate="footer">
-    <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="onCloseDialog()" />
-    <p-button label="Save" [outlined]="true" severity="secondary" (onClick)="calcularTarefasPorPeriodo()" />
+    <p-button label="Cancelar" severity="danger" (onClick)="onCloseDialog()" />
+    <p-button label="Salvar" severity="primary" (onClick)="calcularTarefasPorPeriodo()" />
   </ng-template>
 </p-dialog>

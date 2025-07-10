@@ -64,7 +64,7 @@ export class CadastroProjetoComponent {
         const a = document.createElement('a');
         const objectUrl = URL.createObjectURL(response);
         a.href = objectUrl;
-        a.download = `servicos_prestados_${this.id}.pdf`;
+        a.download = `servicos_prestados.pdf`;
         a.click();
         URL.revokeObjectURL(objectUrl);
         this.messageService.sucesso('Relatório de Serviços Prestados', 'Relatório gerado com sucesso!');
@@ -84,12 +84,13 @@ export class CadastroProjetoComponent {
     this.loading = true;
     if (this.formCalculoPeriodo.valid) {
       const data = this.formCalculoPeriodo.value;
-      this.reportService.servicosPrestadosPeriodo(this.id, data.dataInicio, data.dataFim).subscribe({
+      console.log(`${data.dataInicio} - ${data.dataFim}`);
+      this.reportService.servicosPrestadosPeriodo(this.id, new Date(data.dataInicio).toISOString(), new Date(data.dataFim).toISOString()).subscribe({
         next: (response: Blob) => {
           const a = document.createElement('a');
           const objectUrl = URL.createObjectURL(response);
           a.href = objectUrl;
-          a.download = `tarefas_por_periodo_${this.id}.pdf`;
+          a.download = `servicos_por_periodo.pdf`;
           a.click();
           URL.revokeObjectURL(objectUrl);
           this.messageService.sucesso('Relatório de Tarefas por Período', 'Relatório gerado com sucesso!');
