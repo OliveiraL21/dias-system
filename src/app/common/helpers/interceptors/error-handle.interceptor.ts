@@ -30,6 +30,9 @@ export class errorHandleInterceptor implements HttpInterceptor {
             }
           });
         }
+        if (isLoginPage) {
+          this.messageService.erro("Erro", `${error.error ? error.error.error : 'Erro ao tentar realizar a operação, entre em contato com o suporte técnico'}`);
+        }
         return throwError("");
       })
     )
