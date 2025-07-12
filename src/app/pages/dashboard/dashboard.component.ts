@@ -37,9 +37,9 @@ export class DashboardComponent {
   }
 
   getProjetos() {
-    this.projetoService.listaSimples().subscribe({
+    this.projetoService.listaDashboardProjects().subscribe({
       next: (response: any[]) => {
-        this.projetos = response;
+        this.projetos = response.filter((projeto: Projeto) => projeto.status?.descricao == "Em Andamento");
       }
     })
   }

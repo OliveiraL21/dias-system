@@ -15,6 +15,11 @@ export class ProjetoService {
   listaTodos(): Observable<ProjetoListagem[]> {
     return this.http.get<ProjetoListagem[]>(`${url}lista/projetos`);
   }
+
+  listaDashboardProjects(): Observable<ProjetoListagem[]> {
+    return this.http.get<ProjetoListagem[]>(`${url}lista_dashboard`);
+  }
+
   listaSimples(): Observable<any[]> {
     return this.http.get<any[]>(`${url}lista_simples`);
   }
