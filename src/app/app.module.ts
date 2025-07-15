@@ -7,6 +7,8 @@ import { AuthenticateInterceptor } from './common/helpers/interceptors/authentic
 import { ShareModuleModule } from './common/share-module/share-module.module';
 import { errorHandleInterceptor } from './common/helpers/interceptors/error-handle.interceptor';
 import { MessageService } from 'primeng/api';
+import { OrcamentoHoraCadastroComponent } from './pages/orcamento-hora/orcamento-hora-cadastro/orcamento-hora-cadastro.component';
+import { OrcamentoHoraListagemComponent } from './pages/orcamento-hora/orcamento-hora-listagem/orcamento-hora-listagem.component';
 
 
 
@@ -14,7 +16,9 @@ import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    OrcamentoHoraCadastroComponent,
+    OrcamentoHoraListagemComponent
   ],
   imports: [
     AppRoutingModule,
