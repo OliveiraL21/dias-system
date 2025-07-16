@@ -19,7 +19,6 @@
           <th class="text-center">Cpf</th>
           <th class="text-center">E-mail</th>
           <th class="text-center">Celular</th>
-          <th class="text-center">Status</th>
           <th class="text-center">Ações</th>
         </tr>
       </ng-template>
@@ -29,25 +28,7 @@
           <td class="text-center">{{empresa.cpf}}</td>
           <td class="text-center">{{empresa.email}}</td>
           <td class="text-center">{{empresa.celular}}</td>
-          <td class="text-center lg:w-2">
-            <p-tag *ngIf="empresa.status.descricao == 'Em andamento' " [value]="empresa.status.descricao"></p-tag>
-
-            <p-tag *ngIf="empresa.status.descricao == 'Inatívo' " [value]="empresa.status.descricao"
-              [severity]="'warning'"></p-tag>
-
-            <p-tag *ngIf="empresa.status.descricao == 'Excluído' " [value]="empresa.status.descricao"
-              [severity]="'danger'"></p-tag>
-
-            <p-tag *ngIf="empresa.status.descricao == 'Finalizado' " [value]="empresa.status.descricao"
-              [severity]="'success'"></p-tag>
-
-            <p-tag *ngIf="empresa.status.descricao == 'Em pausa' " [value]="empresa.status.descricao"
-              [severity]="'warning'"></p-tag>
-
-            <p-tag *ngIf="empresa.status.descricao == 'Bloqueado' " [value]="empresa.status.descricao"
-              [severity]="'danger'"></p-tag>
-          </td>
-          <td class="lg:w-min">
+          <td class="text-center lg:w-min">
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(empresa.id)"></p-button>
             <p-button icon="pi pi-trash" [text]="true" severity="danger"
               (onClick)="deletar($event, empresa.id)"></p-button>
