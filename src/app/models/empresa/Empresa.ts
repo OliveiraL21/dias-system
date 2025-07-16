@@ -1,3 +1,5 @@
+import { Status } from "../status/status";
+
 export class Empresa {
   id!: string;
   razaoSocial: string = "";
@@ -11,4 +13,5 @@ export class Empresa {
   cidade: string = "";
   estado: string = "";
   cep: string = "";
+  status!: Status;
 }
