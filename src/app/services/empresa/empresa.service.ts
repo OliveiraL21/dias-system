@@ -32,4 +32,8 @@ export class EmpresaService {
   delete(id: string): Observable<boolean> {
     return this.http.delete<boolean>(`${baseUrl}/delete/${id}`);
   }
+
+  filtrar(razaoSocial: string, cpf: string): Observable<Empresa[]> {
+    return this.http.get<Empresa[]>(`${baseUrl}/filtrar?razaoSocial=${razaoSocial}&cpf=${cpf}`);
+  }
 }

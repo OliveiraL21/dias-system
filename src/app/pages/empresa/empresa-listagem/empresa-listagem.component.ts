@@ -53,10 +53,16 @@ export class EmpresaListagemComponent {
     this.router.navigateByUrl(`empresa/editar/${id}`);
   }
 
-  deletar(event: any, id: string) {
-    event.stopPropagation();
+  deletar(event: Event, id: string) {
     this.confirmationService.confirm({
+      target: event.target as EventTarget,
       message: 'Você tem certeza que deseja excluir esta empresa?',
+      header: 'Empresa',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      acceptButtonStyleClass: "p-button-danger",
+      rejectButtonStyleClass: "p-button-text p-button-text",
       accept: () => {
         this.service.delete(id).subscribe({
           next: () => {
@@ -71,7 +77,7 @@ export class EmpresaListagemComponent {
   }
 
   novo() {
-
+    this.router.navigateByUrl('empresa/cadastro');
   }
 
   ngOnInit() {
@@ -80,6 +86,17 @@ export class EmpresaListagemComponent {
   }
 
   filtrar(filtros: any) {
-
+    if (filtros) {
+      this.loading = true;
+      this.service.filtrar(filtros.razaoSocial, filtros.cpf).subscribe({
+        next: (response: Empresa[]) => {
+          this.empresas = response;
+          this.loading = false;
+        }, error: (error: HttpErrorResponse) => {
+          this.loading = false;
+          console.error('Erro ao filtrar empresas:', error);
+        }
+      });
+    }
   }
 }
