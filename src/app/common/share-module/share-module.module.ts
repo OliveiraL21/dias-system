@@ -62,7 +62,8 @@ import { DialogModule } from 'primeng/dialog';
     FieldsetModule,
     ChartModule,
     SplitButtonModule,
-    DialogModule
+    DialogModule,
+    MegaMenuModule,
   ],
 
   exports: [
@@ -96,7 +97,8 @@ import { DialogModule } from 'primeng/dialog';
     FieldsetModule,
     ChartModule,
     SplitButtonModule,
-    DialogModule
+    DialogModule,
+    MegaMenuModule
   ]
 })
 export class ShareModuleModule { }

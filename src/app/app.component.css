@@ -16,6 +16,18 @@
   color: #fff;
 }
 
+::ng-deep .menu-lateral .p-menuitem-icon {
+  color: #fff;
+}
+
+::ng-deep .p-submenu-list> ::ng-deep .p-menuitem> ::ng-deep .p-menuitem-content> ::ng-deep .p-menuitem-link> ::ng-deep .p-menuitem-text {
+  color: #000 !important;
+}
+
+::ng-deep .p-submenu-list> ::ng-deep .p-menuitem> ::ng-deep .p-menuitem-content> ::ng-deep .p-menuitem-link> ::ng-deep .p-menuitem-icon {
+  color: #000 !important;
+}
+
 ::ng-deep .p-menuitem-link:hover {
   background-color: tomato;
 }

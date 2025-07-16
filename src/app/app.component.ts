@@ -18,7 +18,7 @@ import Utils from './common/helpers/utils/utils';
 export class AppComponent {
   value: any = "teste";
   title = 'Gereciador Tarefas Dias';
-  items: MenuItem[] | undefined;
+  items: MegaMenuItem[] | undefined;
   authenticated: boolean = false;
   utils: Utils = new Utils();
   photo!: any;
@@ -66,31 +66,83 @@ export class AppComponent {
         label: 'Dashboard',
         icon: 'pi pi-chart-bar',
         iconClass: 'text-white',
-        routerLink: 'dashboard'
+        routerLink: 'dashboard',
+        root: true
       },
       {
         label: 'Minha Conta',
         icon: 'pi pi-user',
         iconClass: 'text-white',
-        routerLink: 'minha-conta/'
+        routerLink: 'minha-conta/',
+        root: true
+      },
+      {
+        label: 'Empresa',
+        iconClass: 'text-white',
+        icon: 'pi pi-building',
+        routerLink: 'empresa/',
+        root: true
       },
       {
         label: 'Clientes',
         icon: 'pi pi-users',
         iconClass: 'text-white',
-        routerLink: 'cliente/'
+        routerLink: 'cliente/',
+        root: true
       },
       {
         label: 'Projetos',
         icon: 'pi pi-chart-line',
         iconClass: 'text-white',
-        routerLink: 'projeto/listagem'
+        routerLink: 'projeto/listagem',
+        root: true
       },
       {
         label: 'Tarefas',
         icon: 'pi pi-check-square',
         iconClass: 'text-white',
-        routerLink: 'tarefas/listagem'
+        routerLink: 'tarefas/listagem',
+        root: true
+      },
+      {
+        label: 'Orçamentos',
+        icon: 'pi pi-money-bill',
+        iconClass: 'text-white',
+        root: true,
+        items: [
+          [{
+            label: 'Por Hora',
+            items: [{
+              label: 'orçamento por hora',
+              icon: 'pi pi-clock',
+              routerLink: 'orcamentoPorHora/',
+              root: false,
+            },
+            {
+              label: 'Serviços',
+              icon: 'pi pi-cog',
+              routerLink: 'orcamentoPorHora/listagem',
+              root: false,
+            },
+            ]
+          }],
+          [{
+            label: 'Por Projeto',
+            items: [{
+              label: 'orçamento por projeto',
+              icon: 'pi pi-folder',
+              routerLink: 'orcamentoPorProjeto/',
+              root: false,
+            },
+            {
+              label: 'Produtos',
+              icon: 'pi pi-box',
+              routerLink: 'orcamentoPorProjeto/listagem',
+              root: false,
+            }
+            ]
+          }]
+        ]
       },
       {
         label: 'Sair',
@@ -98,7 +150,8 @@ export class AppComponent {
         iconClass: 'text-white',
         command: () => {
           this.logout();
-        }
+        },
+        root: true
       }
     ];
 

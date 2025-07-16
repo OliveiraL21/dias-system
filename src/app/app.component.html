@@ -10,9 +10,9 @@
           styleClass="h-8rem w-8rem bg-cover"></p-avatar>
         <p-avatar *ngIf="!avatarImage" size="xlarge" icon="pi pi-user"></p-avatar>
       </div>
-      <p-menu #menu [model]="items" class="h-full menu-lateral"
+      <p-megaMenu #menu orientation="vertical" [model]="items" class="h-full menu-lateral"
         styleClass="h-full bg-bluegray-700 text-white border-round-right border-none border-noround-left">
-      </p-menu>
+      </p-megaMenu>
     </div>
   </div>
   <div [ngClass]="authenticated ? 'w-10 ml-7 h-full' : 'w-full h-full'">

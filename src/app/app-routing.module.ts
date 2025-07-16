@@ -12,6 +12,10 @@ const routes: Routes = [
   { path: 'projeto', loadChildren: () => import('./pages/projeto/projeto.module').then((m) => m.ProjetoModule) },
   { path: 'tarefas', loadChildren: () => import('./pages/tarefas/tarefas.module').then((m) => m.TarefasModule) },
   { path: 'minha-conta', loadChildren: () => import('./pages/minha-conta/minha-conta.module').then((m) => m.MinhaContaModule) },
+  { path: 'empresa', loadChildren: () => import('./pages/empresa/empresa.module').then((m) => m.EmpresaModule) },
+  { path: 'orcamentoPorHora', loadChildren: () => import('./pages/orcamento-hora/orcamento-hora.module').then((m) => m.OrcamentoHoraModule) },
+  { path: 'orcamentoPorProjeto', loadChildren: () => import('./pages/orcamento-por-projeto/orcamento-por-projeto.module').then((m) => m.OrcamentoPorProjetoModule) },
+
 
 
 ];
