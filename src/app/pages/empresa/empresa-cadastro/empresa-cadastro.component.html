@@ -20,7 +20,7 @@
 
         <div>
           <label for="cpf" class="block text-900 font-medium mb-2">CPF <span class="text-red-500">*</span></label>
-          <p-inputMask type="text" formControlName="cpf" placeholder="000.000.000-00" mask="000.000.000-00" id="cpf"
+          <p-inputMask type="text" formControlName="cpf" placeholder="000.000.000-00" mask="999.999.999-99" id="cpf"
             class="w-full mb-3"></p-inputMask>
           <small class="p-0 mb-4 p-error block"
             *ngIf="form.get('cpf')?.hasError('required') && form.get('cpf')?.dirty">Campo
@@ -96,16 +96,18 @@
         </div>
         <div>
           <label for="estado" class="block text-900 font-medium mb-2">Estado <span class="text-red-500">*</span></label>
-          <input type="text" formControlName="estado" placeholder="ex: São Paulo" id="estado" pInputText
-            class="w-full mb-3">
+          <input type="text" formControlName="estado" placeholder="ex: SP" id="estado" pInputText class="w-6rem mb-3">
           <small class="p-0 mb-4 p-error block"
             *ngIf="form.get('estado')?.hasError('required') && form.get('estado')?.dirty">Campo obrigatório</small>
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('estado')?.hasError('maxlength') && form.get('estado')?.dirty">O campo estado deve ter
+            no máximo 2 caracteres!</small>
         </div>
       </div>
     </form>
 
 
-    <div class="flex">
+    <div class="flex gap-2">
       <p-button class="ml-2" label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right"
         (onClick)="cancelar()"></p-button>
       <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
