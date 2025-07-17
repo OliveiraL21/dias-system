@@ -23,7 +23,7 @@ export class ProdutoService {
     return this.http.post<ProdutoCreate>(`${baseUrl}/create`, produto);
   }
 
-  update(produto: ProdutoUpdate): Observable<ProdutoUpdate> {
+  update(id: string, produto: ProdutoUpdate): Observable<ProdutoUpdate> {
     return this.http.put<ProdutoUpdate>(`${baseUrl}/update/${produto.id}`, produto);
   }
 

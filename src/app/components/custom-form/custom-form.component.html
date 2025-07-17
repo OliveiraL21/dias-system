@@ -20,10 +20,10 @@
     </div>
   </div>
 
-  <div class="w-full mt-8 flex justify-content-between">
+  <div class="w-full mt-8 flex gap-2">
     <app-custom-button [custom]="getCustomButton('Cancelar', false, '', 'danger')"
       (onClickEvent)="voltar()"></app-custom-button>
-    <app-custom-button [custom]="getCustomButton('Salvar', false, 'bg-indigo-600', 'primary')"
+    <app-custom-button [custom]="getCustomButton('Salvar', false, '', 'primary')"
       (onClickEvent)="submit()"></app-custom-button>
   </div>
 </form>
