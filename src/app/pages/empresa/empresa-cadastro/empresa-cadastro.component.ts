@@ -33,6 +33,14 @@ export class EmpresaCadastroComponent {
       estado: [null, [Validators.required]],
     });
   }
+  save() {
+    if (this.form.invalid) {
+      console.log(this.form.value);
+    }
+  }
+  cancelar() {
+    this.router.navigateByUrl('empresa');
+  }
 
   ngOnInit() {
     this.initForm();
