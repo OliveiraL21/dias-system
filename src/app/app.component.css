@@ -35,3 +35,11 @@
 ::ng-deep .p-menuitem-link:focus {
   background-color: tomato;
 }
+
+::ng-deep .p-menuitem-link:hover {
+  background-color: tomato;
+}
+
+::ng-deep .p-megamenu .p-menuitem.p-highlight>.p-menuitem-content {
+  background: tomato;
+}
