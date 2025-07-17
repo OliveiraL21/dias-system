@@ -1,0 +1,19 @@
+<div class="w-full mb-5" [formGroup]="form">
+  <p-floatLabel>
+    <p-inputNumber *ngIf="controlData.mode === 'currency'" [formControlName]="controlData.controlName"
+      [mode]="controlData.mode" locale="pt-BR" currency="BRL" class="w-full" styleClass="w-full"
+      [inputId]="controlData.forLabel">
+    </p-inputNumber>
+
+    <p-inputNumber *ngIf="controlData.mode !== 'currency'" class="w-full" styleClass="w-full"
+      [formControlName]="controlData.controlName" [inputId]="controlData.forLabel">
+    </p-inputNumber>
+
+    <label [for]="controlData.forLabel"><span *ngIf="controlData.required"
+        class="text-red-600 mr-1">*</span>{{controlData.label}}</label>
+  </p-floatLabel>
+  <small *ngIf="form.get(controlData.controlName)?.hasError('required') && form.get(controlData.controlName)?.dirty"
+    class="p-0 mb-4 mt-2 p-error block">
+    Campo obrigatório
+  </small>
+</div>

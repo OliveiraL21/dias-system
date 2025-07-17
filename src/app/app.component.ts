@@ -7,7 +7,8 @@ import { LogoutService } from './services/logout/logout.service';
 import { TokenService } from './services/token-service/token.service';
 import { UsersService } from './services/user-service/user.service';
 import { Usuario } from './models/usuario/usuario';
-import Utils from './common/helpers/utils/utils';
+import { Utils } from './common/helpers/utils/utils';
+
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,6 @@ export class AppComponent {
   title = 'Gereciador Tarefas Dias';
   items: MegaMenuItem[] | undefined;
   authenticated: boolean = false;
-  utils: Utils = new Utils();
   photo!: any;
   avatarImage: boolean = false;
   loading: boolean = false;
@@ -46,10 +46,10 @@ export class AppComponent {
       this.userService.details(id).subscribe({
         next: (response: Usuario) => {
           if (response.profileImageUrl) {
-            this.photo = this.utils.convertBase64ToBlob(response.profileImageUrl);
+            this.photo = Utils.convertBase64ToBlob(response.profileImageUrl);
             if (this.photo) {
               this.avatarImage = true;
-              this.utils.convertToBase64(this.photo).then(response => {
+              Utils.convertToBase64(this.photo).then(response => {
                 this.photo = response;
               });
             }
@@ -137,7 +137,7 @@ export class AppComponent {
             {
               label: 'Produtos',
               icon: 'pi pi-box',
-              routerLink: 'orcamentoPorProjeto/listagem',
+              routerLink: 'produto/',
               root: false,
             }
             ]

@@ -5,8 +5,9 @@ import { MessageService } from 'primeng/api';
 import { UsersService } from 'src/app/services/user-service/user.service';
 import { Usuario } from '../../models/usuario/usuario';
 import { FileUpload, UploadEvent } from 'primeng/fileupload';
-import Utils from '../../common/helpers/utils/utils';
+
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
+import { Utils } from 'src/app/common/helpers/utils/utils';
 
 @Component({
   selector: 'app-minha-conta',
@@ -21,7 +22,6 @@ export class MinhaContaComponent {
   loading: boolean = false;
   id: any = this.activatedRouter.snapshot.paramMap.get('id');
   usuario: Usuario = new Usuario();
-  utils: Utils = new Utils();
   files: any[] = [];
 
 
@@ -66,7 +66,7 @@ export class MinhaContaComponent {
           });
 
           if (response.profileImageUrl) {
-            let arquivo = this.utils.convertBase64ToBlob(response.profileImageUrl);
+            let arquivo = Utils.convertBase64ToBlob(response.profileImageUrl);
             if (arquivo) {
               let file = new File([arquivo], 'profileImage', { type: 'image/png' });
               this.files = [...this.files, file];
@@ -92,7 +92,7 @@ export class MinhaContaComponent {
       this.usuario.email = this.form.get('email')?.value;
       this.usuario.username = this.form.get('username')?.value;
       this.usuario.phoneNumber = this.form.get('phoneNumber')?.value;
-      this.usuario.profileImageUrl = await this.utils.convertToBase64(this.files[0]);
+      this.usuario.profileImageUrl = await Utils.convertToBase64(this.files[0]);
 
       this.service.update(this.id, this.usuario).subscribe({
         next: (response: Usuario) => {

@@ -1,5 +1,28 @@
-export default class Utils {
-  convertToBase64(file: File): Promise<any> {
+import { AbstractControl, FormGroup } from "@angular/forms";
+
+export class Utils {
+  static getRequiredFieldsInvalid(form: FormGroup) {
+    Object.values(form.controls).forEach((field: AbstractControl) => {
+      if (field.hasError('required')) {
+        field.markAsDirty();
+        field.updateValueAndValidity();
+      }
+    });
+  }
+
+  static isNumberString(number: string): boolean {
+    let result: any = parseInt(number);
+    return Number.isNaN(result) || typeof result != 'number' ? false : true;
+  }
+
+  static convertToDouble(number: string): number {
+    if (number) {
+      return parseFloat(number);
+    }
+    return 0;
+  }
+
+  static convertToBase64(file: File): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       const fileReader = new FileReader();
       let base64;
@@ -17,7 +40,7 @@ export default class Utils {
     });
   }
 
-  convertBase64ToBlob(base64: string) {
+  static convertBase64ToBlob(base64: string) {
     if (base64) {
       const byteString = window.atob(base64!.substring(base64.indexOf(",") + 1));
       const arrayBuffer = new ArrayBuffer(byteString.length);

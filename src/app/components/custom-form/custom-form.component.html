@@ -1,0 +1,29 @@
+<form [formGroup]="form">
+  <div *ngFor="let control of controls; let i = index; trackBy:trackByFn">
+    <div *ngIf="control.type === 'text'" class="w-25rem mt-5 mb-2">
+      <app-input-text [controlData]="control.data" [form]="form"></app-input-text>
+    </div>
+
+    <div *ngIf="control.type === 'number'" class="w-25rem mt-5 mb-2">
+      <app-input-number [form]="form" [controlData]="control.data"></app-input-number>
+    </div>
+    <div *ngIf="control.type === 'select'" class="w-25rem mt-5 mb-2">
+      <app-select [data]="control.data" [form]="form"></app-select>
+    </div>
+
+    <div *ngIf="control.type === 'password'" class="w-25rem mt-5 mb-2">
+      <app-input-password [controlData]="control.data" [form]="form"></app-input-password>
+    </div>
+
+    <div *ngIf="control.type === 'file'" class="w-25rem mt-5 mb-2">
+      <app-custom-file (FileEventEmitter)="fileChange($event)" [FileInput]="file"></app-custom-file>
+    </div>
+  </div>
+
+  <div class="w-full mt-8 flex justify-content-between">
+    <app-custom-button [custom]="getCustomButton('Cancelar', false, '', 'danger')"
+      (onClickEvent)="voltar()"></app-custom-button>
+    <app-custom-button [custom]="getCustomButton('Salvar', false, 'bg-indigo-600', 'primary')"
+      (onClickEvent)="submit()"></app-custom-button>
+  </div>
+</form>

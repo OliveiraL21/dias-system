@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'empresa', loadChildren: () => import('./pages/empresa/empresa.module').then((m) => m.EmpresaModule) },
   { path: 'orcamentoPorHora', loadChildren: () => import('./pages/orcamento-hora/orcamento-hora.module').then((m) => m.OrcamentoHoraModule) },
   { path: 'orcamentoPorProjeto', loadChildren: () => import('./pages/orcamento-por-projeto/orcamento-por-projeto.module').then((m) => m.OrcamentoPorProjetoModule) },
+  { path: 'produto', loadChildren: () => import('./pages/produto/produto.module').then((m) => m.ProdutoModule) },
 
 
 
