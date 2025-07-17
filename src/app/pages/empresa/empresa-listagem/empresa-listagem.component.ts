@@ -6,6 +6,7 @@ import { ConfirmationService } from 'primeng/api';
 import { CustomFilter } from 'src/app/models/customFilter/customFilter';
 import { Empresa } from 'src/app/models/empresa/Empresa';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
 @Component({
   selector: 'app-empresa-listagem',
@@ -18,7 +19,7 @@ export class EmpresaListagemComponent {
   formGroup!: FormGroup;
   empresas: Empresa[] = [];
 
-  constructor(private fb: FormBuilder, private confirmationService: ConfirmationService, private service: EmpresaService, private router: Router) {
+  constructor(private fb: FormBuilder, private confirmationService: ConfirmationService, private service: EmpresaService, private router: Router, private menssageService: MensagemService) {
     this.initForm();
   }
 
@@ -32,7 +33,7 @@ export class EmpresaListagemComponent {
   getCustomFilter(): CustomFilter[] {
     return [
       new CustomFilter('razaoSocial', 'text', 'Razão Social', 'Razão Social', '', [], '', '', true),
-      new CustomFilter('cpf', 'text', '000.000.000-00', 'Cpf', '000.000.000-00', [], '', '', true)
+      new CustomFilter('cpf', 'cpf', '000.000.000-00', 'Cpf', '999.999.999-99', [], '', '', true)
     ];
   }
 
@@ -67,6 +68,7 @@ export class EmpresaListagemComponent {
         this.service.delete(id).subscribe({
           next: () => {
             this.getEmpresas();
+            this.menssageService.sucesso('Empresa', 'Empresa excluída com sucesso!');
           },
           error: (error) => {
             console.error('Erro ao excluir empresa:', error);
@@ -88,6 +90,7 @@ export class EmpresaListagemComponent {
   filtrar(filtros: any) {
     if (filtros) {
       this.loading = true;
+      console.log(filtros);
       this.service.filtrar(filtros.razaoSocial, filtros.cpf).subscribe({
         next: (response: Empresa[]) => {
           this.empresas = response;

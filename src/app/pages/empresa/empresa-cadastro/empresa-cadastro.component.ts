@@ -1,3 +1,4 @@
+import { Empresa } from './../../../models/empresa/Empresa';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -38,10 +39,24 @@ export class EmpresaCadastroComponent {
     });
   }
 
+  details() {
+    this.loading = true;
+    this.service.details(this.id).subscribe({
+      next: (empresa: Empresa) => {
+        Object.keys(this.form.controls).forEach((key: string) => {
+          if (this.form.get(key)) {
+            this.form.get(key)?.setValue(empresa[key as keyof Empresa]);
+          }
+        });
+        this.loading = false;
+      }
+    })
+  }
+
   create(data: any) {
     this.loading = true;
     let empresa: EmpresaCreate = data;
-    empresa.cpf = empresa.cpf.replace(/\D/g, ''); // Remove non-numeric characters
+    empresa.cpf = empresa.cpf.replace(/\D/g, '');
     this.service.create(empresa).subscribe({
       next: (response: EmpresaCreate) => {
         this.loading = false;
@@ -96,7 +111,7 @@ export class EmpresaCadastroComponent {
     this.initForm();
     if (this.id) {
       this.title = 'Edição de Empresa';
-      console.log('Editando empresa com ID:', this.id);
+      this.details();
     }
   }
 }

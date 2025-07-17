@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Empresa } from 'src/app/models/empresa/Empresa';
@@ -34,6 +34,15 @@ export class EmpresaService {
   }
 
   filtrar(razaoSocial: string, cpf: string): Observable<Empresa[]> {
-    return this.http.get<Empresa[]>(`${baseUrl}/filtrar?razaoSocial=${razaoSocial}&cpf=${cpf}`);
+    let params = new HttpParams();
+    if (razaoSocial) {
+      params = params.set('razaoSocial', `%${razaoSocial}%`);
+    }
+
+    if (cpf) {
+      params = params.set('cpf', cpf);
+    }
+
+    return this.http.get<Empresa[]>(`${baseUrl}/filtrar`, { params });
   }
 }

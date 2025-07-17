@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import Cliente from 'src/app/models/cliente/cliente';
@@ -15,7 +15,16 @@ export class ClienteService {
   constructor(private http: HttpClient) { }
 
   filtrar(razaoSocial: string, cnpj: string): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${url}/filtrar?razaoSocial=${razaoSocial}&cnpj=${cnpj}`);
+    let param = new HttpParams();
+    if (razaoSocial) {
+      param = param.set('razaoSocial', razaoSocial);
+    }
+
+    if (cnpj) {
+      param = param.set('cnpj', cnpj);
+    }
+
+    return this.http.get<Cliente[]>(`${url}/filtrar`, { params: param });
   }
 
   listarTodos(): Observable<Cliente[]> {
