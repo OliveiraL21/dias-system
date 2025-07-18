@@ -6,12 +6,13 @@
   </p-blockUI>
 
   <p-card header="Produtos">
-    <app-filter [formControls]="getCustomFilter()"></app-filter>
+    <app-filter [formControls]="getCustomFilter()" (filtrarChange)="filter($event)"></app-filter>
     <div class="flex justify-content-end w-full mb-5">
       <app-custom-button [custom]="getCustomButton()" (onClickEvent)="novo($event)"></app-custom-button>
     </div>
 
     <app-custom-table [pageTitle]="'Produtos'" [pageName]="'Produto'" [listOfColumns]="getCustonColums()"
-      [addRoute]="'produto/cadastro'" [editRoute]="'produto/editar'" [listData]="produtos"></app-custom-table>
+      [addRoute]="'produto/cadastro'" [editRoute]="'produto/editar'" [listData]="produtos"
+      (deleteEvent)="deletar($event)"></app-custom-table>
   </p-card>
 </div>

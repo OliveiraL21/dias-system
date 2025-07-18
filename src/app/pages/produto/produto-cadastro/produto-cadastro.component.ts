@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CustomFormControls } from 'src/app/models/custonsModels/CustomFormData/CustomFormControls';
 import CustomInputNumberData from 'src/app/models/custonsModels/customInputNumberData/CustomInputNumberData';
 import { CustomInputText } from 'src/app/models/custonsModels/CustomTextInputData/CustomInputText';
+import { Produto } from 'src/app/models/produto/Produto';
 import { ProdutoCreate } from 'src/app/models/produto/ProdutoCreate';
 import { ProdutoUpdate } from 'src/app/models/produto/ProdutoUpdate';
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
@@ -31,10 +32,6 @@ export class ProdutoCadastroComponent {
       },
       {
         type: 'number',
-        data: new CustomInputNumberData('quantidade', 'Quantidade', 'quantidade', 'quantity', true)
-      },
-      {
-        type: 'number',
         data: new CustomInputNumberData('valor', 'Valor Unitário', 'valor', 'currency', true)
       }
     ]
@@ -43,8 +40,21 @@ export class ProdutoCadastroComponent {
   initForm() {
     this.form = this.fb.group({
       descricao: [null, [Validators.required]],
-      quantidade: [null, [Validators.required]],
       valor: [null, [Validators.required]]
+    })
+  }
+
+  getProduto() {
+    this.loading = true;
+    this.service.details(this.id).subscribe({
+      next: (response: Produto) => {
+        Object.keys(this.form.controls)?.forEach((key: string) => {
+          this.form.get(key)?.setValue(response[key as keyof Produto]);
+        });
+        this.loading = false;
+      }, error: (erro: HttpErrorResponse) => {
+        this.loading = false;
+      }
     })
   }
 
@@ -54,7 +64,7 @@ export class ProdutoCadastroComponent {
       next: (produto: ProdutoCreate) => {
         this.loading = false;
         this.menssageService.sucesso('Produto', 'Produto cadastrado com sucesso!');
-        this.router.navigateByUrl('produto/');
+        this.router.navigateByUrl('produto');
       },
       error: (error: HttpErrorResponse) => {
         this.loading = false;
@@ -69,16 +79,17 @@ export class ProdutoCadastroComponent {
       next: (produto: ProdutoUpdate) => {
         this.loading = false;
         this.menssageService.sucesso('Produto', 'Produto atualizado com sucesso!');
-        this.router.navigateByUrl('produto/');
+        this.router.navigateByUrl('produto');
       }, error: (error: HttpErrorResponse) => {
         this.loading = false;
       }
     })
   }
   cancel() {
-    this.router.navigateByUrl('produto/')
+    this.router.navigateByUrl('produto')
   }
   save(data: any) {
+    this.loading = true;
     if (this.id) {
       this.update(data);
     } else {
@@ -87,6 +98,10 @@ export class ProdutoCadastroComponent {
   }
   ngOnInit() {
     this.initForm();
+    if (this.id) {
+      this.title = "Editar Produto";
+      this.getProduto();
+    }
   }
 
 }

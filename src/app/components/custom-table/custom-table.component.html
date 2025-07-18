@@ -5,34 +5,34 @@
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let column of columns; let  i = index;">{{column.header}}</th>
-        <th style="width: 100px;"></th>
+        <th style="width: 100px;">Ações</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-data let-columns="columns">
       <tr>
         <td *ngFor="let col of columns">
-          <!-- <ng-content *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'Ativo' ">
+          <ng-container *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'Ativo' ">
             <p-tag class="p-4" severity="warning" [value]="generateTableValues(data, col.field)"></p-tag>
-          </ng-content>
-          <ng-content class="w-full"
+          </ng-container>
+          <ng-container class="w-full"
             *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'Em andamento'">
             <p-tag severity="info" class="p-4" [value]="generateTableValues(data, col.field)">
             </p-tag>
-          </ng-content>
+          </ng-container>
 
-          <ng-content *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'bloqueado'">
+          <ng-container *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'bloqueado'">
             <p-tag class="p-4" severity="danger" [value]="generateTableValues(data, col.field)">
             </p-tag>
-          </ng-content>
+          </ng-container>
 
-          <ng-content *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'Finalizado'">
+          <ng-container *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'Finalizado'">
             <p-tag class="p-4" severity="success" [value]="generateTableValues(data, col.field)">
             </p-tag>
-          </ng-content>
+          </ng-container>
 
-          <ng-content *ngIf="col.field !== 'status$descricao'">
+          <ng-container *ngIf="col.field !== 'status$descricao'">
             <span> {{ generateTableValues(data, col.field)}}</span>
-          </ng-content> -->
+          </ng-container>
         </td>
         <td class="flex">
           <p-button pTooltip="Editar" [tooltipOptions]="{tooltipPosition: 'bottom'}" icon="pi pi-pencil" severity="info"

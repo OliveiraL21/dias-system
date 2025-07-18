@@ -95,7 +95,7 @@ export class CustomTableComponent {
     return "success";
   }
 
-  generateTableValues(data: any, field: any) {
+  generateTableValues(data: any, field: any): any {
     if (data) {
       if (field.includes('valor') || field.includes('total') || field.includes('subTotal') || field.includes('desconto')) {
         return data[field].toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
