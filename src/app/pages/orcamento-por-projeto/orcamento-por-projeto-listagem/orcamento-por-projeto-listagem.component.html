@@ -1,0 +1,17 @@
+<div class="justify-content-center align-item-center h-full mt-5">
+  <p-confirmDialog></p-confirmDialog>
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
+
+  <p-card header="Orçamentos por projetos">
+    <app-filter [formControls]="getCustomFilters()" (filtrarChange)="filtrar($event)"></app-filter>
+    <div class="flex justify-content-end w-full mb-5">
+      <app-custom-button [custom]="getCustomButton()" (onClickEvent)="novo($event)"></app-custom-button>
+    </div>
+
+    <app-custom-table [addRoute]="'orcamentoPorProjeto/cadastro'" [editRoute]="'orcamentoPorProjeto/editar'"
+      [listOfColumns]="getColums()" [listData]="orcamentos"></app-custom-table>
+  </p-card>
+</div>

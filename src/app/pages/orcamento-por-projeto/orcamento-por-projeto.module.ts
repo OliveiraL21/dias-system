@@ -2,18 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { OrcamentoPorProjetoRoutingModule } from './orcamento-por-projeto-routing.module';
-import { OrcamentoPorHoraCadastroComponent } from './orcamento-por-hora-cadastro/orcamento-por-hora-cadastro.component';
-import { OrcamentoPorHoraListagemComponent } from './orcamento-por-hora-listagem/orcamento-por-hora-listagem.component';
+import { OrcamentoPorProjetoListagemComponent } from './orcamento-por-projeto-listagem/orcamento-por-projeto-listagem.component';
+import { OrcamentoPorProjetoCadastroComponent } from './orcamento-por-projeto-cadastro/orcamento-por-projeto-cadastro.component';
+import { ShareModuleModule } from 'src/app/common/share-module/share-module.module';
 
 
 @NgModule({
   declarations: [
-    OrcamentoPorHoraCadastroComponent,
-    OrcamentoPorHoraListagemComponent
+    OrcamentoPorProjetoListagemComponent,
+    OrcamentoPorProjetoCadastroComponent
   ],
   imports: [
     CommonModule,
-    OrcamentoPorProjetoRoutingModule
+    OrcamentoPorProjetoRoutingModule,
+    ShareModuleModule
   ]
 })
 export class OrcamentoPorProjetoModule { }

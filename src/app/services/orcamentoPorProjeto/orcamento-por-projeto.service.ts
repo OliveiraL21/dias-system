@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrcamentoPorProjeto } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjeto';
@@ -31,5 +31,22 @@ export class OrcamentoPorProjetoService {
 
   delete(id: string): Observable<boolean> {
     return this.http.delete<boolean>(`${baseUrl}/delete/${id}`);
+  }
+
+  filtrar(numero: string, cliente: string, produto: string): Observable<OrcamentoPorProjeto[]> {
+    let param = new HttpParams();
+
+    if (numero) {
+      param = param.set("numero", numero);
+    }
+
+    if (cliente) {
+      param = param.set("cliente", cliente);
+    }
+
+    if (produto) {
+      param = param.set("produto", produto);
+    }
+    return this.http.get<OrcamentoPorProjeto[]>(`${baseUrl}/Filtrar`, { params: param });
   }
 }
