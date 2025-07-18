@@ -1,5 +1,5 @@
 <div class="w-full mb-5" [formGroup]="form">
-  <p-floatLabel>
+  <p-floatLabel *ngIf="controlData.visible">
     <p-inputNumber *ngIf="controlData.mode === 'currency'" [formControlName]="controlData.controlName"
       [mode]="controlData.mode" locale="pt-BR" currency="BRL" class="w-full" styleClass="w-full"
       [inputId]="controlData.forLabel">

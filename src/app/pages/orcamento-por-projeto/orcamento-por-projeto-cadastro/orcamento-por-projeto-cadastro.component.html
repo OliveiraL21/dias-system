@@ -1,1 +1,11 @@
-<p>orcamento-por-projeto-cadastro works!</p>
+<div class="flex align-item-center mt-5">
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
+
+  <p-card [header]="title" class="w-11 -mt-3 p-0">
+    <app-custom-form [controls]="getCustomControls()" [form]="form" (SubmitEvent)="save($event)"
+      (BackEvent)="cancel()"></app-custom-form>
+  </p-card>
+</div>
