@@ -1,4 +1,5 @@
 <div class="flex align-item-center mt-5">
+  <p-confirmDialog></p-confirmDialog>
   <p-blockUI [blocked]="loading">
     <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
       animationDuration=".5s"></p-progressSpinner>
@@ -30,7 +31,8 @@
             <p-inputNumber [inputId]="'valorUnitario'" formControlName="valor"></p-inputNumber>
           </td>
           <td [formGroupName]="i">
-
+            <p-button icon="pi pi-trash" severity="danger" [text]="true" pTooltip="Excluir Produto"
+              (onClick)="removerProduto($event, i)"></p-button>
           </td>
         </tr>
       </ng-template>

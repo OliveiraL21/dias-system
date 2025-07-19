@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import Cliente from 'src/app/models/cliente/cliente';
 import { CustomFormControls } from 'src/app/models/custonsModels/CustomFormData/CustomFormControls';
 import CustomInputNumberData from 'src/app/models/custonsModels/customInputNumberData/CustomInputNumberData';
@@ -18,7 +19,8 @@ import { ProdutoService } from 'src/app/services/produto/produto.service';
 @Component({
   selector: 'app-orcamento-por-projeto-cadastro',
   templateUrl: './orcamento-por-projeto-cadastro.component.html',
-  styleUrl: './orcamento-por-projeto-cadastro.component.css'
+  styleUrl: './orcamento-por-projeto-cadastro.component.css',
+  providers: [ConfirmationService]
 })
 export class OrcamentoPorProjetoCadastroComponent {
 
@@ -31,7 +33,7 @@ export class OrcamentoPorProjetoCadastroComponent {
   produtos: Produto[] = [];
   listOfProdutos: any[] = [];
 
-  constructor(private fb: FormBuilder, private router: Router, private activeRouter: ActivatedRoute, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private empresaService: EmpresaService, private clienteService: ClienteService, private produtoService: ProdutoService) { }
+  constructor(private fb: FormBuilder, private router: Router, private activeRouter: ActivatedRoute, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private empresaService: EmpresaService, private clienteService: ClienteService, private produtoService: ProdutoService, private confirmationService: ConfirmationService) { }
 
   cancel() {
     this.router.navigateByUrl('orcamentoPorProjeto');
@@ -66,10 +68,22 @@ export class OrcamentoPorProjetoCadastroComponent {
     this.listOfProdutos = (<FormArray>this.form?.get('produtos'))?.controls;
   }
 
-  removerProduto(id: string, i: number) {
-    (<FormArray>this.form.get('produtos'))?.removeAt(i);
-    this.listOfProdutos = [];
-    this.listOfProdutos = (<FormArray>this.form.get('produtos'))?.controls;
+  removerProduto(event: Event, i: number) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: "Deseja realmente excluir o produto selecionado?",
+      header: 'Produto',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: 'none',
+      rejectIcon: 'none',
+      acceptButtonStyleClass: 'p-button-danger',
+      accept: () => {
+        (<FormArray>this.form.get('produtos'))?.removeAt(i);
+        this.listOfProdutos = [];
+        this.listOfProdutos = (<FormArray>this.form.get('produtos'))?.controls;
+      },
+    })
+
   }
 
   initForm() {
