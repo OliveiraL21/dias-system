@@ -14,6 +14,7 @@ export class CustomFormComponent {
   @Input() form!: FormGroup;
   @Input() controls?: CustomFormControls[];
   @Input() file?: any;
+  @Input() formButtonsVisible: boolean = true;
   @Output() FileEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() SubmitEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() BackEvent: EventEmitter<any> = new EventEmitter<any>();

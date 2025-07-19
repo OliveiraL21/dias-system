@@ -6,10 +6,10 @@
   </p-blockUI>
 
   <p-card [header]="title" class="w-11 -mt-3 p-0">
-    <app-custom-form [controls]="getCustomControls()" [form]="form" (SubmitEvent)="save($event)"
+    <app-custom-form [controls]="getCustomControls()" [formButtonsVisible]="false" [form]="form"
       (BackEvent)="cancel()"></app-custom-form>
 
-    <p-table [value]="listOfProdutos" [tableStyle]="{'min-width': '50rem', 'min-heigth': '20rem'}">
+    <p-table [value]="listOfProdutos" [tableStyle]="{'min-width': '50rem'}" [scrollHeight]="'calc(100vh - 15rem)'">
       <ng-template pTemplate="header">
         <tr>
           <th>Produto</th>
@@ -20,7 +20,7 @@
       </ng-template>
       <ng-template [formGroup]="form" pTemplate="body">
         <tr *ngFor="let produto of listOfProdutos; let i = index;" formArrayName="produtos">
-          <td [formGroupName]="i" class="p-4">
+          <td [formGroupName]="i">
             <p-dropdown formControlName="descricao" placeholder="Selecione o produto" [options]="produtos"
               [optionLabel]="'descricao'" [optionValue]="'id'" [showClear]="true"></p-dropdown>
           </td>
@@ -42,5 +42,10 @@
         (onClick)="adicionarProduto()"></p-button>
     </div>
 
+    <div class="w-full flex gap-2">
+      <p-button class="ml-2" label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right"
+        (onClick)="cancelar()"></p-button>
+      <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
+    </div>
   </p-card>
 </div>

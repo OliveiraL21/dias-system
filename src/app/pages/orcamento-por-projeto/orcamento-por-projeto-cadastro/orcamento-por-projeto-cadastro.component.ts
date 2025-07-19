@@ -40,7 +40,7 @@ export class OrcamentoPorProjetoCadastroComponent {
   }
 
 
-  save($data: any) {
+  save() {
     throw new Error('Method not implemented.');
   }
 
@@ -143,5 +143,9 @@ export class OrcamentoPorProjetoCadastroComponent {
     this.getClientes();
     this.getEmpresas();
     this.getProdutos();
+  }
+
+  cancelar() {
+    this.router.navigateByUrl("orcamentoPorProjeto");
   }
 }
