@@ -3,12 +3,14 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
+import { Utils } from 'src/app/common/helpers/utils/utils';
 import Cliente from 'src/app/models/cliente/cliente';
 import { CustomFormControls } from 'src/app/models/custonsModels/CustomFormData/CustomFormControls';
 import CustomInputNumberData from 'src/app/models/custonsModels/customInputNumberData/CustomInputNumberData';
 import CustomSelectData from 'src/app/models/custonsModels/CustomSelect/CustomSelectData';
 import { CustomInputText } from 'src/app/models/custonsModels/CustomTextInputData/CustomInputText';
 import { Empresa } from 'src/app/models/empresa/Empresa';
+import { OrcamentoPorProjetoCreate } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoCreate';
 import { Produto } from 'src/app/models/produto/Produto';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
@@ -36,31 +38,74 @@ export class OrcamentoPorProjetoCadastroComponent {
 
   constructor(private fb: FormBuilder, private router: Router, private activeRouter: ActivatedRoute, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private empresaService: EmpresaService, private clienteService: ClienteService, private produtoService: ProdutoService, private confirmationService: ConfirmationService) { }
 
+  createOrcamento(data: any) {
+    let orcamento: OrcamentoPorProjetoCreate = new OrcamentoPorProjetoCreate();
+    orcamento.clienteId = data.clienteId;
+    orcamento.empresaId = data.empresaId;
+    orcamento.produtos = data.produtos.map((produto: any) => ({
+      empresaId: data.empresaId,
+      produtoId: produto.descricao,
+      valorTotalVenda: produto.valor,
+      quantidade: produto.quantidade,
+    }));
+
+    this.service.create(orcamento).subscribe({
+      next: (response: OrcamentoPorProjetoCreate) => {
+        this.loading = true;
+        this.messageService.sucesso('Orçamento Por Projeto', 'Orçamento criado com sucesso!');
+        this.router.navigateByUrl('orcamentoPorProjeto');
+      }, error: (error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
+  }
+
+  updateOrcamento(data: any) {
+
+  }
 
   save() {
-    throw new Error('Method not implemented.');
+    this.loading = true;
+    if (this.form.valid) {
+      let data = this.form.getRawValue();
+      if (!this.id) {
+        this.createOrcamento(data);
+      } else {
+        this.updateOrcamento(data);
+      }
+    } else {
+      Utils.getRequiredFieldsInvalid(this.form);
+      this.loading = false;
+      this.messageService.erro('Erro', 'Por favor preencha todos os campos obrigatórios.');
+    }
   }
 
   setProdutoValue(id: string, i: number) {
-    if (id) {
-      let produto = this.produtos.find(x => x.id == id);
-      this.produtoSelecionado = produto;
-      (<FormArray>this.form.get('produtos'))?.controls[i]?.get('valor')?.setValue(produto!.valor);
-    }
-    if (!id) {
-      (<FormArray>this.form.get('produtos'))?.controls[i]?.get('valor')?.setValue(null);
+    const produto = this.produtos.find(x => x.id === id);
+
+    const formArray = this.form.get('produtos') as FormArray;
+    const grupo = formArray.at(i);
+
+    if (produto) {
+      // Guarda o valor unitário "real" para não sobrescrever depois com o total
+      grupo.get('valor')?.setValue(produto.valor);
+      grupo.get('valorUnitario')?.setValue(produto.valor); // novo campo para preservar valor original
+    } else {
+      grupo.get('valor')?.setValue(null);
+      grupo.get('valorUnitario')?.setValue(null);
     }
   }
 
   calcularValorUnitarioTotal(quantidade: number, index: number) {
-    if (quantidade && quantidade > 1) {
-      let valor = (<FormArray>this.form.get('produtos'))?.controls[index]?.get('valor')?.value;
-      let total = valor * quantidade;
-      (<FormArray>this.form.get('produtos'))?.controls[index]?.get('valor')?.setValue(total);
+    const formArray = this.form.get('produtos') as FormArray;
+    const grupo = formArray.at(index);
+
+    const valorUnitario = grupo.get('valorUnitario')?.value ?? 0;
+
+    if (quantidade && quantidade > 0) {
+      grupo.get('valor')?.setValue(valorUnitario * quantidade);
     } else {
-      (<FormArray>this.form.get('produtos'))?.controls[index]?.get('valor')?.setValue(0);
-      let valor = this.produtoSelecionado?.valor ?? 0;
-      (<FormArray>this.form.get('produtos'))?.controls[index]?.get('valor')?.setValue(valor);
+      grupo.get('valor')?.setValue(valorUnitario);
     }
 
   }
@@ -81,7 +126,8 @@ export class OrcamentoPorProjetoCadastroComponent {
       id: [null, null],
       descricao: [null, [Validators.required]],
       quantidade: [null, [Validators.required]],
-      valor: [{ disabled: true, value: null }, [Validators.required]]
+      valor: [{ disabled: true, value: null }, [Validators.required]],
+      valorUnitario: [null, null]
     });
 
     (<FormArray>this.form.get('produtos'))?.push(formG);
