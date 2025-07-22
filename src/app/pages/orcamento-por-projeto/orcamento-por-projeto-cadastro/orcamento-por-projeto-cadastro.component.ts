@@ -32,6 +32,7 @@ export class OrcamentoPorProjetoCadastroComponent {
   clientes: Cliente[] = [];
   produtos: Produto[] = [];
   listOfProdutos: any[] = [];
+  produtoSelecionado?: Produto;
 
   constructor(private fb: FormBuilder, private router: Router, private activeRouter: ActivatedRoute, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private empresaService: EmpresaService, private clienteService: ClienteService, private produtoService: ProdutoService, private confirmationService: ConfirmationService) { }
 
@@ -43,8 +44,25 @@ export class OrcamentoPorProjetoCadastroComponent {
   setProdutoValue(id: string, i: number) {
     if (id) {
       let produto = this.produtos.find(x => x.id == id);
+      this.produtoSelecionado = produto;
       (<FormArray>this.form.get('produtos'))?.controls[i]?.get('valor')?.setValue(produto!.valor);
     }
+    if (!id) {
+      (<FormArray>this.form.get('produtos'))?.controls[i]?.get('valor')?.setValue(null);
+    }
+  }
+
+  calcularValorUnitarioTotal(quantidade: number, index: number) {
+    if (quantidade && quantidade > 1) {
+      let valor = (<FormArray>this.form.get('produtos'))?.controls[index]?.get('valor')?.value;
+      let total = valor * quantidade;
+      (<FormArray>this.form.get('produtos'))?.controls[index]?.get('valor')?.setValue(total);
+    } else {
+      (<FormArray>this.form.get('produtos'))?.controls[index]?.get('valor')?.setValue(0);
+      let valor = this.produtoSelecionado?.valor ?? 0;
+      (<FormArray>this.form.get('produtos'))?.controls[index]?.get('valor')?.setValue(valor);
+    }
+
   }
 
   getProdutos() {

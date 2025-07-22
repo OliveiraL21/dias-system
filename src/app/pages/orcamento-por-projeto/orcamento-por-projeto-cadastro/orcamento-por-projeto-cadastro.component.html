@@ -26,10 +26,12 @@
                   [optionLabel]="'descricao'" [optionValue]="'id'" [showClear]="true"
                   (ngModelChange)="setProdutoValue($event, rowIndex)" appendTo="body"></p-dropdown>
                 <small class="p-0 mb-4 p-error block"
-                  *ngIf="form.get('produtos')?.get('descricao')?.hasError('required') && form.get('produtos')?.get('descricao')?.dirty"></small>
+                  *ngIf="form.get('produtos')?.get('descricao')?.hasError('required') && form.get('produtos')?.get('descricao')?.dirty">Campo
+                  obrigatório</small>
               </td>
               <td>
-                <p-inputNumber [inputId]="'quantidade'" formControlName="quantidade"></p-inputNumber>
+                <p-inputNumber [inputId]="'quantidade'" formControlName="quantidade"
+                  (ngModelChange)="calcularValorUnitarioTotal($event, rowIndex)"></p-inputNumber>
               </td>
               <td>
                 <p-inputNumber mode="currency" currency="BRL" [disabled]="true" [inputId]="'valorUnitario'"
