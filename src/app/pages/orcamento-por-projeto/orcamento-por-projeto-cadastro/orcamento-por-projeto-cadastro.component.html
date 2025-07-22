@@ -6,11 +6,9 @@
   </p-blockUI>
 
   <p-card [header]="title" class="w-11 -mt-3 p-0">
-    <app-custom-form [controls]="getCustomControls()" [formButtonsVisible]="false" [form]="form"
-      (BackEvent)="cancel()"></app-custom-form>
+    <app-custom-form [controls]="getCustomControls()" [formButtonsVisible]="false" [form]="form"></app-custom-form>
 
-    <p-table [value]="listOfProdutos" [tableStyle]="{'min-width': '50rem', 'height': '30rem'}"
-      [scrollHeight]="'calc(100vh - 15rem)'">
+    <p-table [value]="listOfProdutos" [tableStyle]="{'min-width': '50rem'}" [scrollHeight]="'calc(100vh - 8rem)'">
       <ng-template pTemplate="header">
         <tr>
           <th>Produto</th>
@@ -19,25 +17,33 @@
           <th>Ações</th>
         </tr>
       </ng-template>
-      <ng-template [formGroup]="form" pTemplate="body">
-        <tr *ngFor="let produto of listOfProdutos; let i = index;" formArrayName="produtos">
-          <td [formGroupName]="i">
-            <p-dropdown formControlName="descricao" placeholder="Selecione o produto" [options]="produtos"
-              [optionLabel]="'descricao'" [optionValue]="'id'" [showClear]="true"></p-dropdown>
-            <small class="p-0 mb-4 p-error block"
-              *ngIf="form.get('produtos')?.get('descricao')?.hasError('required') && form.get('produtos')?.get('descricao')?.dirty"></small>
-          </td>
-          <td [formGroupName]="i">
-            <p-inputNumber [inputId]="'quantidade'" formControlName="quantidade"></p-inputNumber>
-          </td>
-          <td [formGroupName]="i">
-            <p-inputNumber [inputId]="'valorUnitario'" formControlName="valor"></p-inputNumber>
-          </td>
-          <td [formGroupName]="i">
-            <p-button icon="pi pi-trash" severity="danger" [text]="true" pTooltip="Excluir Produto"
-              (onClick)="removerProduto($event, i)"></p-button>
-          </td>
-        </tr>
+      <ng-template pTemplate="body" let-produto let-rowIndex="rowIndex">
+        <ng-container [formGroup]="form">
+          <ng-container formArrayName="produtos">
+            <tr [formGroupName]="rowIndex">
+              <td>
+                <p-dropdown formControlName="descricao" placeholder="Selecione o produto" [options]="produtos"
+                  [optionLabel]="'descricao'" [optionValue]="'id'" [showClear]="true"
+                  (ngModelChange)="setProdutoValue($event, rowIndex)" appendTo="body"></p-dropdown>
+                <small class="p-0 mb-4 p-error block"
+                  *ngIf="form.get('produtos')?.get('descricao')?.hasError('required') && form.get('produtos')?.get('descricao')?.dirty"></small>
+              </td>
+              <td>
+                <p-inputNumber [inputId]="'quantidade'" formControlName="quantidade"></p-inputNumber>
+              </td>
+              <td>
+                <p-inputNumber mode="currency" currency="BRL" [disabled]="true" [inputId]="'valorUnitario'"
+                  formControlName="valor"></p-inputNumber>
+              </td>
+              <td>
+                <p-button icon="pi pi-trash" severity="danger" [text]="true" pTooltip="Excluir Produto"
+                  (onClick)="removerProduto($event, rowIndex)"></p-button>
+              </td>
+            </tr>
+          </ng-container>
+
+        </ng-container>
+
       </ng-template>
     </p-table>
     <div class="w-full mt-5 flex justify-content-end">

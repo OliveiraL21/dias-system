@@ -35,13 +35,16 @@ export class OrcamentoPorProjetoCadastroComponent {
 
   constructor(private fb: FormBuilder, private router: Router, private activeRouter: ActivatedRoute, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private empresaService: EmpresaService, private clienteService: ClienteService, private produtoService: ProdutoService, private confirmationService: ConfirmationService) { }
 
-  cancel() {
-    this.router.navigateByUrl('orcamentoPorProjeto');
-  }
-
 
   save() {
     throw new Error('Method not implemented.');
+  }
+
+  setProdutoValue(id: string, i: number) {
+    if (id) {
+      let produto = this.produtos.find(x => x.id == id);
+      (<FormArray>this.form.get('produtos'))?.controls[i]?.get('valor')?.setValue(produto!.valor);
+    }
   }
 
   getProdutos() {
@@ -60,7 +63,7 @@ export class OrcamentoPorProjetoCadastroComponent {
       id: [null, null],
       descricao: [null, [Validators.required]],
       quantidade: [null, [Validators.required]],
-      valor: [null, [Validators.required]]
+      valor: [{ disabled: true, value: null }, [Validators.required]]
     });
 
     (<FormArray>this.form.get('produtos'))?.push(formG);
