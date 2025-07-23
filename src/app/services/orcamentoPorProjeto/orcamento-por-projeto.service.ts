@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrcamentoPorProjeto } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjeto';
 import { OrcamentoPorProjetoCreate } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoCreate';
+import { OrcamentoPorProjetoList } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoList';
 import { OrcamentoPorProjetoUpdate } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoUpdate';
 import { environment } from 'src/environments/environment';
 const baseUrl = `${environment.api_url}/OrcamentoPorProjeto`;
@@ -13,12 +14,12 @@ export class OrcamentoPorProjetoService {
 
   constructor(private http: HttpClient) { }
 
-  details(id: string): Observable<OrcamentoPorProjeto> {
-    return this.http.get<any>(`${baseUrl}/details/${id}`);
+  details(id: string): Observable<OrcamentoPorProjetoUpdate> {
+    return this.http.get<OrcamentoPorProjetoUpdate>(`${baseUrl}/details/${id}`);
   }
 
-  list(): Observable<OrcamentoPorProjeto[]> {
-    return this.http.get<any[]>(`${baseUrl}/list`);
+  list(): Observable<OrcamentoPorProjetoList[]> {
+    return this.http.get<OrcamentoPorProjetoList[]>(`${baseUrl}/list`);
   }
 
   create(data: any): Observable<OrcamentoPorProjetoCreate> {
@@ -33,7 +34,7 @@ export class OrcamentoPorProjetoService {
     return this.http.delete<boolean>(`${baseUrl}/delete/${id}`);
   }
 
-  filtrar(numero: string, cliente: string, produto: string): Observable<OrcamentoPorProjeto[]> {
+  filtrar(numero: string, cliente: string, produto: string): Observable<OrcamentoPorProjetoList[]> {
     let param = new HttpParams();
 
     if (numero) {
@@ -47,6 +48,6 @@ export class OrcamentoPorProjetoService {
     if (produto) {
       param = param.set("produto", produto);
     }
-    return this.http.get<OrcamentoPorProjeto[]>(`${baseUrl}/Filtrar`, { params: param });
+    return this.http.get<OrcamentoPorProjetoList[]>(`${baseUrl}/Filtrar`, { params: param });
   }
 }

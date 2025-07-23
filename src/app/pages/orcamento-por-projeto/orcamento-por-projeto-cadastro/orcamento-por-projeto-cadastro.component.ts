@@ -12,6 +12,7 @@ import { CustomInputText } from 'src/app/models/custonsModels/CustomTextInputDat
 import { Empresa } from 'src/app/models/empresa/Empresa';
 import { OrcamentoPorProjeto } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjeto';
 import { OrcamentoPorProjetoCreate } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoCreate';
+import { OrcamentoPorProjetoUpdate } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoUpdate';
 import { Produto } from 'src/app/models/produto/Produto';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
@@ -68,29 +69,27 @@ export class OrcamentoPorProjetoCadastroComponent {
   getOrcamento() {
     this.loading = true;
     this.service.details(this.id ?? "")?.subscribe({
-      next: (orcamento: any) => {
+      next: (orcamento: OrcamentoPorProjetoUpdate) => {
         this.loading = false;
-        console.log(orcamento)
-        Object.keys(orcamento)?.forEach((key: string) => {
-          if (key === 'empresa') {
-            this.form.get('empresaId')?.setValue(orcamento.empresa.id);
-          }
-          if (key === 'cliente') {
-            this.form.get('clienteId')?.setValue(orcamento.cliente.id);
-          }
-          if (key !== 'cliente' && key !== 'empresa') {
-            this.form.get(key)?.setValue(orcamento[key as keyof OrcamentoPorProjeto]);
-          }
-        })
 
-        orcamento.produtos?.foreach((produto: Produto, i: number) => {
-          this.adicionarProduto();
-          (<FormArray>this.form.get('produtos'))?.controls[i]?.get('descricao')?.setValue(produto.id);
-          (<FormArray>this.form.get('produtos'))?.controls[i]?.get('quantidade')?.setValue(produto.quantidade);
-          (<FormArray>this.form.get('produtos'))?.controls[i]?.get('valor')?.setValue(produto.valor);
+        Object.keys(orcamento)?.forEach((key: string) => {
+          this.form.get(key)?.setValue(orcamento[key as keyof OrcamentoPorProjeto]);
         })
-        this.listOfProdutos = [];
-        this.listOfProdutos = (<FormArray>this.form.get('produtos'))?.controls;
+        var formArray = this.ProdutoOrcamento;
+        formArray.clear();
+
+        orcamento.produtos?.forEach((produto: Produto) => {
+          formArray.push(this.fb.group({
+            id: null,
+            descricao: produto.id,
+            quantidade: produto.quantidade,
+            valor: { disabled: true, value: produto.quantidade },
+            valorUnitario: null,
+          }))
+        });
+
+        console.log(this.ProdutoOrcamento.value);
+
       }
     })
   }
@@ -151,6 +150,11 @@ export class OrcamentoPorProjetoCadastroComponent {
     })
   }
 
+  get ProdutoOrcamento(): FormArray {
+    return this.form.get('produtos') as FormArray;
+  }
+
+
 
   adicionarProduto() {
     var formG = this.fb.group({
@@ -160,10 +164,7 @@ export class OrcamentoPorProjetoCadastroComponent {
       valor: [{ disabled: true, value: null }, [Validators.required]],
       valorUnitario: [null, null]
     });
-
-    (<FormArray>this.form.get('produtos'))?.push(formG);
-    this.listOfProdutos = [];
-    this.listOfProdutos = (<FormArray>this.form?.get('produtos'))?.controls;
+    this.ProdutoOrcamento?.push(formG);
   }
 
   removerProduto(event: Event, i: number) {
@@ -176,9 +177,7 @@ export class OrcamentoPorProjetoCadastroComponent {
       rejectIcon: 'none',
       acceptButtonStyleClass: 'p-button-danger',
       accept: () => {
-        (<FormArray>this.form.get('produtos'))?.removeAt(i);
-        this.listOfProdutos = [];
-        this.listOfProdutos = (<FormArray>this.form.get('produtos'))?.controls;
+        this.ProdutoOrcamento?.removeAt(i);
       },
     })
 

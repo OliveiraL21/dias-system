@@ -8,7 +8,8 @@
   <p-card [header]="title" class="w-11 -mt-3 p-0">
     <app-custom-form [controls]="getCustomControls()" [formButtonsVisible]="false" [form]="form"></app-custom-form>
 
-    <p-table [value]="listOfProdutos" [tableStyle]="{'min-width': '50rem'}" [scrollHeight]="'calc(100vh - 8rem)'">
+    <p-table [value]="ProdutoOrcamento.controls" [tableStyle]="{'min-width': '50rem'}"
+      [scrollHeight]="'calc(100vh - 8rem)'">
       <ng-template pTemplate="header">
         <tr>
           <th>Produto</th>
@@ -25,8 +26,8 @@
                 <p-dropdown formControlName="descricao" placeholder="Selecione o produto" [options]="produtos"
                   [optionLabel]="'descricao'" [optionValue]="'id'" [showClear]="true"
                   (ngModelChange)="setProdutoValue($event, rowIndex)" appendTo="body"></p-dropdown>
-                <small class="p-0 mb-4 p-error block"
-                  *ngIf="form.get('produtos')?.get('descricao')?.hasError('required') && form.get('produtos')?.get('descricao')?.dirty">Campo
+                <small class="p-0 p-error block"
+                  *ngIf="ProdutoOrcamento.at(rowIndex)?.get('descricao')?.hasError('required') && ProdutoOrcamento.at(rowIndex)?.get('descricao')?.dirty">Campo
                   obrigatório</small>
               </td>
               <td>

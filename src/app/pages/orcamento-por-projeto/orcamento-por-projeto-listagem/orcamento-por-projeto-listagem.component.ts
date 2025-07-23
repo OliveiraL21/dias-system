@@ -12,6 +12,7 @@ import { OrcamentoPorProjetoService } from 'src/app/services/orcamentoPorProjeto
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { OrcamentoPorProjeto } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjeto';
 import Column from 'src/app/models/custonsModels/CustomTable/CustomColumn';
+import { OrcamentoPorProjetoList } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoList';
 
 @Component({
   selector: 'app-orcamento-por-projeto-listagem',
@@ -24,7 +25,7 @@ export class OrcamentoPorProjetoListagemComponent {
   loading: boolean = false;
   clientes: Cliente[] = [];
   produtos: Produto[] = [];
-  orcamentos: OrcamentoPorProjeto[] = [];
+  orcamentos: OrcamentoPorProjetoList[] = [];
 
   constructor(private router: Router, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private clienteService: ClienteService, private ProdutoService: ProdutoService) { }
 
@@ -80,7 +81,7 @@ export class OrcamentoPorProjetoListagemComponent {
   filtrar(data: any) {
     if (data) {
       this.service.filtrar(data.numero, data.cliente, data.produto).subscribe({
-        next: (response: OrcamentoPorProjeto[]) => {
+        next: (response: OrcamentoPorProjetoList[]) => {
           this.orcamentos = response;
           this.loading = false;
         }, error: (error: HttpErrorResponse) => {
@@ -92,8 +93,8 @@ export class OrcamentoPorProjetoListagemComponent {
 
   getOrcamentos() {
     this.service.list().subscribe({
-      next: (response: OrcamentoPorProjeto[]) => {
-        this.orcamentos = response.map((orcamento: OrcamentoPorProjeto) => ({
+      next: (response: OrcamentoPorProjetoList[]) => {
+        this.orcamentos = response.map((orcamento: OrcamentoPorProjetoList) => ({
           ...orcamento,
           createAt: new Date(parseInt(orcamento.createAt?.toString()?.split('-')[0] ?? '2025'), parseInt(orcamento.createAt?.toString().split('-')[1] ?? '07') - 1, parseInt(orcamento.createAt?.toString()?.split('-')[2] ?? '22')).toLocaleDateString(),
         }));
