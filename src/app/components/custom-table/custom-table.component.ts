@@ -40,10 +40,6 @@ export class CustomTableComponent {
     return index;
   }
 
-  teste() {
-    console.log('click');
-  }
-
   editar(id: string) {
     this.router.navigateByUrl(`${this.editRoute}/${id}`);
   }
@@ -101,7 +97,7 @@ export class CustomTableComponent {
         return data[field].toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
       }
 
-      if (field.includes('data')) {
+      if (field.includes('data') || field.includes('createAt')) {
         return data[field];
       }
 

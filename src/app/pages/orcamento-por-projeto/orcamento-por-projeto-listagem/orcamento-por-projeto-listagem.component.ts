@@ -93,7 +93,10 @@ export class OrcamentoPorProjetoListagemComponent {
   getOrcamentos() {
     this.service.list().subscribe({
       next: (response: OrcamentoPorProjeto[]) => {
-        this.orcamentos = response;
+        this.orcamentos = response.map((orcamento: OrcamentoPorProjeto) => ({
+          ...orcamento,
+          createAt: new Date(parseInt(orcamento.createAt?.toString()?.split('-')[0] ?? '2025'), parseInt(orcamento.createAt?.toString().split('-')[1] ?? '07') - 1, parseInt(orcamento.createAt?.toString()?.split('-')[2] ?? '22')).toLocaleDateString(),
+        }));
         this.loading = false;
       }, error: (error: HttpErrorResponse) => {
         this.loading = false;

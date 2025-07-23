@@ -6,6 +6,6 @@ export class OrcamentoPorProjeto {
   clienteId: string = "";
   numero: string = "";
   valorTotal: number = 0;
-  createAt?: Date;
+  createAt?: string;
   produtos: Produto[] = [];
 }
