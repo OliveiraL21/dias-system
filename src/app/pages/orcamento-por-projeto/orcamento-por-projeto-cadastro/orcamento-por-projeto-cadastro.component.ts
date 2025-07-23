@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, Form } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Utils } from 'src/app/common/helpers/utils/utils';
@@ -10,6 +10,7 @@ import CustomInputNumberData from 'src/app/models/custonsModels/customInputNumbe
 import CustomSelectData from 'src/app/models/custonsModels/CustomSelect/CustomSelectData';
 import { CustomInputText } from 'src/app/models/custonsModels/CustomTextInputData/CustomInputText';
 import { Empresa } from 'src/app/models/empresa/Empresa';
+import { OrcamentoPorProjeto } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjeto';
 import { OrcamentoPorProjetoCreate } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoCreate';
 import { Produto } from 'src/app/models/produto/Produto';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
@@ -62,6 +63,36 @@ export class OrcamentoPorProjetoCadastroComponent {
 
   updateOrcamento(data: any) {
 
+  }
+
+  getOrcamento() {
+    this.loading = true;
+    this.service.details(this.id ?? "")?.subscribe({
+      next: (orcamento: any) => {
+        this.loading = false;
+        console.log(orcamento)
+        Object.keys(orcamento)?.forEach((key: string) => {
+          if (key === 'empresa') {
+            this.form.get('empresaId')?.setValue(orcamento.empresa.id);
+          }
+          if (key === 'cliente') {
+            this.form.get('clienteId')?.setValue(orcamento.cliente.id);
+          }
+          if (key !== 'cliente' && key !== 'empresa') {
+            this.form.get(key)?.setValue(orcamento[key as keyof OrcamentoPorProjeto]);
+          }
+        })
+
+        orcamento.produtos?.foreach((produto: Produto, i: number) => {
+          this.adicionarProduto();
+          (<FormArray>this.form.get('produtos'))?.controls[i]?.get('descricao')?.setValue(produto.id);
+          (<FormArray>this.form.get('produtos'))?.controls[i]?.get('quantidade')?.setValue(produto.quantidade);
+          (<FormArray>this.form.get('produtos'))?.controls[i]?.get('valor')?.setValue(produto.valor);
+        })
+        this.listOfProdutos = [];
+        this.listOfProdutos = (<FormArray>this.form.get('produtos'))?.controls;
+      }
+    })
   }
 
   save() {
@@ -210,6 +241,9 @@ export class OrcamentoPorProjetoCadastroComponent {
     this.getClientes();
     this.getEmpresas();
     this.getProdutos();
+    if (this.id) {
+      this.getOrcamento();
+    }
   }
 
   cancelar() {
