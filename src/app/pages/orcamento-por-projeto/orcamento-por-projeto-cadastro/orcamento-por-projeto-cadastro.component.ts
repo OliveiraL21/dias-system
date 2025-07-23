@@ -63,7 +63,31 @@ export class OrcamentoPorProjetoCadastroComponent {
   }
 
   updateOrcamento(data: any) {
-
+    this.loading = true;
+    let orcamento: OrcamentoPorProjetoUpdate = {
+      id: this.id ?? undefined,
+      empresaId: data.empresaId,
+      clienteId: data.clienteId,
+      createAt: data.createAt,
+      numero: data.numero,
+      valorTotal: data.valorTotal,
+      produtos: data.produtos?.map((produto: Produto) => ({
+        id: produto.id,
+        orcamentoId: this.id,
+        produtoId: produto.descricao,
+        valorTotalVenda: produto.valor,
+        quantidade: produto.quantidade
+      }))
+    }
+    this.service.update(this.id ?? "", orcamento).subscribe({
+      next: (response: OrcamentoPorProjetoUpdate) => {
+        this.messageService.sucesso('Orçamento por projeto', 'Orçamento atualizado com sucesso!');
+        this.loading = false;
+        this.router.navigateByUrl('orcamentoPorProjeto');
+      }, error: (error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
   }
 
   getOrcamento() {
@@ -73,23 +97,21 @@ export class OrcamentoPorProjetoCadastroComponent {
         this.loading = false;
 
         Object.keys(orcamento)?.forEach((key: string) => {
-          this.form.get(key)?.setValue(orcamento[key as keyof OrcamentoPorProjeto]);
+          if (key !== 'produtos')
+            this.form.get(key)?.setValue(orcamento[key as keyof OrcamentoPorProjeto]);
         })
         var formArray = this.ProdutoOrcamento;
         formArray.clear();
 
-        orcamento.produtos?.forEach((produto: Produto) => {
+        orcamento.produtos?.forEach((produto: any) => {
           formArray.push(this.fb.group({
-            id: null,
-            descricao: produto.id,
+            id: produto.id,
+            descricao: produto.produtoId,
             quantidade: produto.quantidade,
-            valor: { disabled: true, value: produto.quantidade },
-            valorUnitario: null,
+            valor: { disabled: true, value: produto.valorTotalVenda },
+            valorUnitario: produto.valor,
           }))
         });
-
-        console.log(this.ProdutoOrcamento.value);
-
       }
     })
   }
@@ -185,7 +207,7 @@ export class OrcamentoPorProjetoCadastroComponent {
 
   initForm() {
     this.form = this.fb.group({
-      numero: [null, null],
+      numero: [{ disabled: true, value: null }, null],
       empresaId: [null, [Validators.required]],
       clienteId: [null, [Validators.required]],
       valorTotal: [null, null],
@@ -196,6 +218,10 @@ export class OrcamentoPorProjetoCadastroComponent {
 
   getCustomControls(): CustomFormControls[] {
     return [
+      {
+        type: 'number',
+        data: new CustomInputNumberData('numero', 'Número', 'numero', '', true, this.id ? true : false)
+      },
       {
         type: 'select',
         data: new CustomSelectData('razaoSocial', 'id', false, "", true, "ex: Dias System", "empresaId", "Empresa", this.empresas, true),
@@ -240,6 +266,7 @@ export class OrcamentoPorProjetoCadastroComponent {
     this.getClientes();
     this.getEmpresas();
     this.getProdutos();
+    this.adicionarProduto();
     if (this.id) {
       this.getOrcamento();
     }

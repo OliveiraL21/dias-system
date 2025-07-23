@@ -1,7 +1,7 @@
 import { Produto } from "../produto/Produto";
 
 export class OrcamentoPorProjetoUpdate {
-  id!: string;
+  id?: string;
   empresaId: string = "";
   clienteId: string = "";
   numero: string = "";

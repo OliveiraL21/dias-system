@@ -6,7 +6,8 @@
   </p-blockUI>
 
   <p-card [header]="title" class="w-11 -mt-3 p-0">
-    <app-custom-form [controls]="getCustomControls()" [formButtonsVisible]="false" [form]="form"></app-custom-form>
+    <app-custom-form [controls]="getCustomControls()" [formButtonsVisible]="false" [form]="form">
+    </app-custom-form>
 
     <p-table [value]="ProdutoOrcamento.controls" [tableStyle]="{'min-width': '50rem'}"
       [scrollHeight]="'calc(100vh - 8rem)'">
@@ -18,8 +19,8 @@
           <th>Ações</th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-produto let-rowIndex="rowIndex">
-        <ng-container [formGroup]="form">
+      <ng-template pTemplate="body" let-produto let-rowIndex="rowIndex" [formGroup]="form">
+        <ng-container>
           <ng-container formArrayName="produtos">
             <tr [formGroupName]="rowIndex">
               <td>
@@ -35,7 +36,7 @@
                   (ngModelChange)="calcularValorUnitarioTotal($event, rowIndex)"></p-inputNumber>
               </td>
               <td>
-                <p-inputNumber mode="currency" currency="BRL" [inputId]="'valorUnitario'"
+                <p-inputNumber mode="currency" currency="BRL" [inputId]="'valor'"
                   formControlName="valor"></p-inputNumber>
               </td>
               <td>
