@@ -52,7 +52,6 @@ export class OrcamentoPorProjetoListagemComponent {
     return [
       new CustomFilter("numero", "text", "ex: 12345", "Número"),
       new CustomFilter("cliente", "dropdown", "ex: cliente ltda", "Cliente", "", this.clientes, "id", "razaoSocial", true, ""),
-      new CustomFilter("produto", 'dropdown', "ex: formatação", "Produto", "", this.produtos, "id", "descricao", true, ""),
     ]
   }
 
@@ -80,9 +79,12 @@ export class OrcamentoPorProjetoListagemComponent {
 
   filtrar(data: any) {
     if (data) {
-      this.service.filtrar(data.numero, data.cliente, data.produto).subscribe({
+      this.service.filtrar(data.numero, data.cliente).subscribe({
         next: (response: OrcamentoPorProjetoList[]) => {
-          this.orcamentos = response;
+          this.orcamentos = response.map((orcamento: OrcamentoPorProjetoList) => ({
+            ...orcamento,
+            createAt: new Date(parseInt(orcamento.createAt?.toString()?.split('-')[0] ?? '2025'), parseInt(orcamento.createAt?.toString().split('-')[1] ?? '07') - 1, parseInt(orcamento.createAt?.toString()?.split('-')[2] ?? '22')).toLocaleDateString(),
+          }));
           this.loading = false;
         }, error: (error: HttpErrorResponse) => {
           this.loading = false;

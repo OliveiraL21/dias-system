@@ -34,7 +34,7 @@ export class OrcamentoPorProjetoService {
     return this.http.delete<boolean>(`${baseUrl}/delete/${id}`);
   }
 
-  filtrar(numero: string, cliente: string, produto: string): Observable<OrcamentoPorProjetoList[]> {
+  filtrar(numero: string, cliente: string): Observable<OrcamentoPorProjetoList[]> {
     let param = new HttpParams();
 
     if (numero) {
@@ -44,10 +44,6 @@ export class OrcamentoPorProjetoService {
     if (cliente) {
       param = param.set("cliente", cliente);
     }
-
-    if (produto) {
-      param = param.set("produto", produto);
-    }
-    return this.http.get<OrcamentoPorProjetoList[]>(`${baseUrl}/Filtrar`, { params: param });
+    return this.http.get<OrcamentoPorProjetoList[]>(`${baseUrl}/filtrar`, { params: param });
   }
 }
