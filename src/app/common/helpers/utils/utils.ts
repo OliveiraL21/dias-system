@@ -10,6 +10,15 @@ export class Utils {
     });
   }
 
+  static downloadFile(file: Blob, fileName: string) {
+    const a = document.createElement('a');
+    const objectUrl = URL.createObjectURL(file);
+    a.href = objectUrl;
+    a.download = fileName;
+    a.click();
+    URL.revokeObjectURL(objectUrl);
+  }
+
   static isNumberString(number: string): boolean {
     let result: any = parseInt(number);
     return Number.isNaN(result) || typeof result != 'number' ? false : true;

@@ -77,6 +77,10 @@ export class OrcamentoPorProjetoListagemComponent {
     })
   }
 
+  export(data: any) {
+    // this.service.export()
+  }
+
   filtrar(data: any) {
     if (data) {
       this.service.filtrar(data.numero, data.cliente).subscribe({

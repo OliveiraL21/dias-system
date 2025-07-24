@@ -118,12 +118,6 @@ export class AppComponent {
               routerLink: 'orcamentoPorHora/',
               root: false,
             },
-            {
-              label: 'Serviços',
-              icon: 'pi pi-cog',
-              routerLink: 'orcamentoPorHora/listagem',
-              root: false,
-            },
             ]
           }],
           [{

@@ -12,6 +12,7 @@
     </div>
 
     <app-custom-table [addRoute]="'orcamentoPorProjeto/cadastro'" [editRoute]="'orcamentoPorProjeto/editar'"
-      [listOfColumns]="getColums()" [listData]="orcamentos" (deleteEvent)="deletar($event)"></app-custom-table>
+      [listOfColumns]="getColums()" [listData]="orcamentos" (deleteEvent)="deletar($event)" [haveExportFile]="true"
+      (exportEvent)="export($event)"></app-custom-table>
   </p-card>
 </div>

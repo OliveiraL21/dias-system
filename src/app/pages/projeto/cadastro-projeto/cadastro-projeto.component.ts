@@ -13,6 +13,7 @@ import { Tarefa } from 'src/app/models/tarefa/tarefa';
 import { TarefaService } from 'src/app/services/tarefas/tarefa.service';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ReportService } from 'src/app/services/report/report.service';
+import { Utils } from 'src/app/common/helpers/utils/utils';
 
 @Component({
   selector: 'app-cadastro-projeto',
@@ -84,7 +85,7 @@ export class CadastroProjetoComponent {
     this.loading = true;
     if (this.formCalculoPeriodo.valid) {
       const data = this.formCalculoPeriodo.value;
-      console.log(`${data.dataInicio} - ${data.dataFim}`);
+
       this.reportService.servicosPrestadosPeriodo(this.id, new Date(data.dataInicio).toISOString(), new Date(data.dataFim).toISOString()).subscribe({
         next: (response: Blob) => {
           const a = document.createElement('a');
@@ -103,12 +104,7 @@ export class CadastroProjetoComponent {
       })
     } else {
       this.messageService.erro('Erro ao gerar relatório', 'Preencha todos os campos obrigatórios');
-      Object.values(this.formCalculoPeriodo.controls).forEach((control: AbstractControl) => {
-        if (control.hasError('required') && control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity();
-        }
-      });
+      Utils.getRequiredFieldsInvalid(this.formCalculoPeriodo);
       this.loading = false;
     }
   }
@@ -266,12 +262,7 @@ export class CadastroProjetoComponent {
       }
     } else {
       this.messageService.erro('Cadastro de Projeto', 'Preencha todos os campos obrigatórios');
-      Object.values(this.form.controls).forEach((control: AbstractControl) => {
-        if (control.hasError('required') && control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity();
-        }
-      });
+      Utils.getRequiredFieldsInvalid(this.form);
       this.loading = false;
     }
   }

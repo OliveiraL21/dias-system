@@ -40,6 +40,11 @@
           <p-button pTooltip="Remover" [tooltipOptions]="{tooltipPosition: 'bottom'}" icon="pi pi-trash" [text]="true"
             severity="danger" size="small" class="mx-2" [style]="{'max-width.px': 30}"
             (onClick)="openDialog($event, data.id)"></p-button>
+          <p-button *ngIf="haveExportFile" pTooltip="Exportar" [tooltipOptions]="{tooltipPosition: 'bottom'}"
+            icon="pi pi-file-export" [text]="true" size="small" class="mx-2" [style]="{'max-width': 30 }"
+            (onClick)="exportar()">
+
+          </p-button>
         </td>
       </tr>
     </ng-template>
