@@ -19,6 +19,7 @@ import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
 import { OrcamentoPorProjetoService } from 'src/app/services/orcamentoPorProjeto/orcamento-por-projeto.service';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
+import { ProdutoOrcamentoService } from 'src/app/services/produtoOrcamento/ProdutoOrcamento.service';
 
 @Component({
   selector: 'app-orcamento-por-projeto-cadastro',
@@ -38,7 +39,7 @@ export class OrcamentoPorProjetoCadastroComponent {
   listOfProdutos: any[] = [];
   produtoSelecionado?: Produto;
 
-  constructor(private fb: FormBuilder, private router: Router, private activeRouter: ActivatedRoute, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private empresaService: EmpresaService, private clienteService: ClienteService, private produtoService: ProdutoService, private confirmationService: ConfirmationService) { }
+  constructor(private fb: FormBuilder, private router: Router, private activeRouter: ActivatedRoute, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private empresaService: EmpresaService, private clienteService: ClienteService, private produtoService: ProdutoService, private confirmationService: ConfirmationService, private produtoOrcamentoService: ProdutoOrcamentoService) { }
 
   createOrcamento(data: any) {
     let orcamento: OrcamentoPorProjetoCreate = new OrcamentoPorProjetoCreate();
@@ -199,7 +200,22 @@ export class OrcamentoPorProjetoCadastroComponent {
       rejectIcon: 'none',
       acceptButtonStyleClass: 'p-button-danger',
       accept: () => {
-        this.ProdutoOrcamento?.removeAt(i);
+        this.loading = true;
+        let id = this.ProdutoOrcamento.at(i)?.get('id')?.value;
+        console.log(id);
+        if (id) {
+          this.produtoOrcamentoService.delete(id).subscribe({
+            next: (response: boolean) => {
+              this.ProdutoOrcamento?.removeAt(i);
+              this.loading = false;
+            }, error: (error: HttpErrorResponse) => {
+              this.loading = false;
+            }
+          })
+        } else {
+          this.ProdutoOrcamento?.removeAt(i);
+          this.loading = false;
+        }
       },
     })
 
