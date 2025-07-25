@@ -10,5 +10,5 @@ export class OrcamentoHora {
   servicos: Servico[] = [];
   cliente?: Cliente;
   empresa?: Empresa;
-  createAt!: Date;
+  createAt!: string;
 }

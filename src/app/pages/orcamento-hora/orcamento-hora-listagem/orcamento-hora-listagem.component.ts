@@ -38,7 +38,10 @@ export class OrcamentoHoraListagemComponent {
   getOrcamentos() {
     this.service.list().subscribe({
       next: (response: OrcamentoHora[]) => {
-        this.orcamentos = response;
+        this.orcamentos = response.map((orcamento: OrcamentoHora) => ({
+          ...orcamento,
+          createAt: new Date(parseInt(orcamento.createAt?.toString()?.split('-')[0] ?? '2025'), parseInt(orcamento.createAt?.toString().split('-')[1] ?? '07') - 1, parseInt(orcamento.createAt?.toString()?.split('-')[2] ?? '22')).toLocaleDateString(),
+        }));
         this.loading = false;
       }, error: (error: HttpErrorResponse) => {
         this.loading = false;
@@ -83,6 +86,22 @@ export class OrcamentoHoraListagemComponent {
 
   novo(data: any) {
     this.router.navigateByUrl('orcamentoPorHora/cadastro');
+  }
+
+  deletar(id: string) {
+    this.loading = true;
+    this.service.delete(id).subscribe({
+      next: (response: boolean) => {
+        if (response) {
+          this.messageService.sucesso('Orçamento por Hora', 'Orçamento deletado com sucesso!');
+          this.getOrcamentos();
+          this.loading = false;
+        } else {
+          this.messageService.erro('Error', 'Erro ao excluir o orçamento, tente novamente mais tarde!');
+          this.loading = false;
+        }
+      }
+    })
   }
 
   ngOnInit() {

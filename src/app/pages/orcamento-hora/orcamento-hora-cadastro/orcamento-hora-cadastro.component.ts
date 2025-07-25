@@ -9,7 +9,9 @@ import { CustomFormControls } from 'src/app/models/custonsModels/CustomFormData/
 import CustomInputNumberData from 'src/app/models/custonsModels/customInputNumberData/CustomInputNumberData';
 import CustomSelectData from 'src/app/models/custonsModels/CustomSelect/CustomSelectData';
 import { Empresa } from 'src/app/models/empresa/Empresa';
+import { OrcamentoHora } from 'src/app/models/orcamentoHora/OrcamentoHora';
 import { OrcamentoHoraCreate } from 'src/app/models/orcamentoHora/OrcamentoHoraCreate';
+import { Servico } from 'src/app/models/servico/Servico';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
@@ -79,7 +81,7 @@ export class OrcamentoHoraCadastroComponent {
 
   initForm() {
     this.form = this.fb.group({
-      numero: [null, null],
+      numero: [{ disabled: true, value: null }, null],
       empresaId: [null, [Validators.required]],
       clienteId: [null, [Validators.required]],
       valorTotal: [null, null],
@@ -121,12 +123,49 @@ export class OrcamentoHoraCadastroComponent {
     })
   }
 
+  loadOrcamentoFields(orcamento: OrcamentoHora) {
+    Object.keys(orcamento).forEach((key: string) => {
+      if (key !== 'servicos' && key !== 'empresa' && key !== 'cliente')
+        this.form.get(key)?.setValue(orcamento[key as keyof OrcamentoHora]);
+
+      if (key == 'empresa')
+        this.form.get('empresaId')?.setValue(orcamento!.empresa!.id);
+
+      if (key == 'cliente')
+        this.form.get('clienteId')?.setValue(orcamento?.cliente?.id);
+    });
+
+
+    orcamento.servicos.forEach((servico: Servico) => {
+      this.servicosFormArray.push(this.fb.group({
+        id: [servico.id, null],
+        descricao: [servico.descricao, [Validators.required]],
+        quantidadeHora: [servico.quantidadeHora, [Validators.required]]
+      }))
+    });
+
+    console.log(this.servicosFormArray);
+  }
+
+  getOrcamento() {
+    this.loading = true;
+    this.service.details(this.id ?? '').subscribe({
+      next: (orcamento: OrcamentoHora) => {
+        this.loadOrcamentoFields(orcamento);
+        this.loading = false;
+      }, error: (error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
+  }
+
   ngOnInit() {
     this.initForm();
     this.getClientes();
     this.getEmpresas();
     if (this.id) {
       this.title = 'Editar Orçamento';
+      this.getOrcamento();
     }
   }
 
