@@ -17,23 +17,27 @@
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-servico let-rowIndex="rowIndex" [formGroup]="form">
-        <ng-container formArrayName="servicos">
-          <tr [formGroupName]="rowIndex">
-            <td>
-              <input type="text" formControlName="descricao" pInputText id="descricao" placeholder="ex: Desenvolvimento"
-                class="w-full">
-              <small class="p-0 p-error block"
-                *ngIf="servicosFormArray.at(rowIndex)?.get('descricao')?.hasError('required') && servicosFormArray.at(rowIndex)?.get('descricao')?.dirty">Campo
-                obrigatório</small>
-            </td>
-            <td class=" flex justify-content-center">
-              <p-inputNumber formControlName="quantidadeHora" inputId="quantidadeHora"></p-inputNumber>
-            </td>
-            <td class="text-center">
-              <p-button icon="pi pi-trash" severity="danger" [text]="true" pTooltip="Excluir Produto"
-                (onClick)="removerServico($event, rowIndex, servico.id)"></p-button>
-            </td>
-          </tr>
+        <ng-container>
+
+
+          <ng-container formArrayName="servicos">
+            <tr [formGroupName]="rowIndex">
+              <td>
+                <input type="text" formControlName="descricao" pInputText id="descricao"
+                  placeholder="ex: Desenvolvimento" class="w-full">
+                <small class="p-0 p-error block"
+                  *ngIf="servicosFormArray.at(rowIndex)?.get('descricao')?.hasError('required') && servicosFormArray.at(rowIndex)?.get('descricao')?.dirty">Campo
+                  obrigatório</small>
+              </td>
+              <td class=" flex justify-content-center">
+                <p-inputNumber formControlName="quantidadeHora" inputId="quantidadeHora"></p-inputNumber>
+              </td>
+              <td class="text-center">
+                <p-button icon="pi pi-trash" severity="danger" [text]="true" pTooltip="Excluir Produto"
+                  (onClick)="removerServico($event, rowIndex, servico.id)"></p-button>
+              </td>
+            </tr>
+          </ng-container>
         </ng-container>
       </ng-template>
     </p-table>

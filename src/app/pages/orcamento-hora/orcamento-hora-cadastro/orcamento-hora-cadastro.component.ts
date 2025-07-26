@@ -137,6 +137,7 @@ export class OrcamentoHoraCadastroComponent {
 
 
     orcamento.servicos.forEach((servico: Servico) => {
+      console.log(servico);
       this.servicosFormArray.push(this.fb.group({
         id: [servico.id, null],
         descricao: [servico.descricao, [Validators.required]],
