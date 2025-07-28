@@ -40,7 +40,7 @@ export class OrcamentoHoraCadastroComponent {
     return [
       {
         type: 'number',
-        data: new CustomInputNumberData('numero', 'Número', 'numero', '', true, this.id ? true : false)
+        data: new CustomInputNumberData('numero', 'Número', 'numero', '', true, this.id ? true : false, false)
       },
       {
         type: 'select',
@@ -52,11 +52,11 @@ export class OrcamentoHoraCadastroComponent {
       },
       {
         type: 'number',
-        data: new CustomInputNumberData('valorHora', 'Valor da Hora', 'valorHora', '', true, true)
+        data: new CustomInputNumberData('valorHora', 'Valor da Hora', 'valorHora', 'currency', true, true)
       },
       {
         type: 'number',
-        data: new CustomInputNumberData('valorTotal', 'Valor Total', 'valorTotal', '', true, this.id ? true : false)
+        data: new CustomInputNumberData('valorTotal', 'Valor Total', 'valorTotal', 'currency', true, this.id ? true : false)
       },
     ]
   }
