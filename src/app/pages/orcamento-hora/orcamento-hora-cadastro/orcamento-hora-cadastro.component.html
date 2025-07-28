@@ -8,7 +8,7 @@
     <app-custom-form [controls]="getCustomFormControls()" [form]="form" [formButtonsVisible]="false"></app-custom-form>
 
     <p-table [value]="servicosFormArray.controls" [tableStyle]="{'min-width': '50rem'}"
-      [scrollHeight]="'calc(100vh - 8rem)'">
+      [scrollHeight]="'calc(100vh - 15rem)'">
       <ng-template pTemplate="header">
         <tr>
           <th>Serviço</th>
@@ -18,8 +18,6 @@
       </ng-template>
       <ng-template pTemplate="body" let-servico let-rowIndex="rowIndex" [formGroup]="form">
         <ng-container>
-
-
           <ng-container formArrayName="servicos">
             <tr [formGroupName]="rowIndex">
               <td>
@@ -34,7 +32,7 @@
               </td>
               <td class="text-center">
                 <p-button icon="pi pi-trash" severity="danger" [text]="true" pTooltip="Excluir Produto"
-                  (onClick)="removerServico($event, rowIndex, servico.id)"></p-button>
+                  (onClick)="removerServico($event, rowIndex)"></p-button>
               </td>
             </tr>
           </ng-container>

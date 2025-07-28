@@ -36,6 +36,7 @@ export class OrcamentoHoraListagemComponent {
   }
 
   getOrcamentos() {
+    this.loading = true;
     this.service.list().subscribe({
       next: (response: OrcamentoHora[]) => {
         this.orcamentos = response.map((orcamento: OrcamentoHora) => ({

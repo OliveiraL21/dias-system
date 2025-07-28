@@ -11,11 +11,13 @@ import CustomSelectData from 'src/app/models/custonsModels/CustomSelect/CustomSe
 import { Empresa } from 'src/app/models/empresa/Empresa';
 import { OrcamentoHora } from 'src/app/models/orcamentoHora/OrcamentoHora';
 import { OrcamentoHoraCreate } from 'src/app/models/orcamentoHora/OrcamentoHoraCreate';
+import { OrcamentoHoraUpdate } from 'src/app/models/orcamentoHora/OrcamentoHoraUpdate';
 import { Servico } from 'src/app/models/servico/Servico';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { EmpresaService } from 'src/app/services/empresa/empresa.service';
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
 import { OrcamentoHoraService } from 'src/app/services/orcamentoHora/orcamento-hora.service';
+import { ServicoService } from 'src/app/services/servicos/Servico.service';
 
 @Component({
   selector: 'app-orcamento-hora-cadastro',
@@ -32,7 +34,7 @@ export class OrcamentoHoraCadastroComponent {
   empresas: Empresa[] = [];
 
 
-  constructor(private fb: FormBuilder, private service: OrcamentoHoraService, private clienteService: ClienteService, private empresaService: EmpresaService, private router: Router, private activatedRouter: ActivatedRoute, private confirmationService: ConfirmationService, private messageService: MensagemService) { }
+  constructor(private fb: FormBuilder, private service: OrcamentoHoraService, private clienteService: ClienteService, private empresaService: EmpresaService, private router: Router, private activatedRouter: ActivatedRoute, private confirmationService: ConfirmationService, private messageService: MensagemService, private servicoService: ServicoService) { }
 
   getCustomFormControls(): CustomFormControls[] {
     return [
@@ -81,7 +83,7 @@ export class OrcamentoHoraCadastroComponent {
 
   initForm() {
     this.form = this.fb.group({
-      numero: [{ disabled: true, value: null }, null],
+      numero: [null, null],
       empresaId: [null, [Validators.required]],
       clienteId: [null, [Validators.required]],
       valorTotal: [null, null],
@@ -106,7 +108,7 @@ export class OrcamentoHoraCadastroComponent {
     this.servicosFormArray?.push(this.createServico());
   }
 
-  removerServico(event: Event, i: number, id: string) {
+  removerServico(event: Event, i: number) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: "Deseja realmente excluir o serviço selecionado?",
@@ -117,8 +119,19 @@ export class OrcamentoHoraCadastroComponent {
       acceptButtonStyleClass: 'p-button-danger',
       accept: () => {
         this.loading = true;
-        this.servicosFormArray.removeAt(i),
-          this.loading = false;
+        let id = this.servicosFormArray.controls.at(i)?.get('id')?.value;
+        if (id) {
+          this.servicoService.delete(id).subscribe({
+            next: (response: boolean) => {
+              this.messageService.sucesso('Serviço', 'Serviço excluido com sucesso!');
+              this.servicosFormArray.removeAt(i);
+              this.loading = false;
+            }
+          })
+        } else {
+          this.servicosFormArray.removeAt(i),
+            this.loading = false;
+        }
       },
     })
   }
@@ -137,7 +150,6 @@ export class OrcamentoHoraCadastroComponent {
 
 
     orcamento.servicos.forEach((servico: Servico) => {
-      console.log(servico);
       this.servicosFormArray.push(this.fb.group({
         id: [servico.id, null],
         descricao: [servico.descricao, [Validators.required]],
@@ -145,7 +157,6 @@ export class OrcamentoHoraCadastroComponent {
       }))
     });
 
-    console.log(this.servicosFormArray);
   }
 
   getOrcamento() {
@@ -192,7 +203,26 @@ export class OrcamentoHoraCadastroComponent {
   }
 
   update(data: any) {
+    let orcamento: OrcamentoHoraUpdate = {
+      id: this.id ?? "",
+      numero: data.numero,
+      valorHora: data.valorHora,
+      valorTotal: data.valorTotal,
+      empresaId: data.empresaId,
+      clienteId: data.clienteId,
+      servicos: data.servicos,
+      createAt: data.createAt
+    }
 
+    this.service.update(this.id ?? "", orcamento).subscribe({
+      next: (response: OrcamentoHoraUpdate) => {
+        this.messageService.sucesso("Orçamento Hora", "Orçamento atualizado com sucesso!");
+        this.router.navigateByUrl('orcamentoPorHora');
+        this.loading = false;
+      }, error: (error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
   }
   salvar() {
     this.loading = true;
