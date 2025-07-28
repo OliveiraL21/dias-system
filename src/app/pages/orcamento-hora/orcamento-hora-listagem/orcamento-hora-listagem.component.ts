@@ -82,7 +82,18 @@ export class OrcamentoHoraListagemComponent {
   }
 
   filtrar(data: any) {
-    console.log(data);
+    this.loading = true;
+    this.service.filtrar(data.numero, data.cliente).subscribe({
+      next: (response: OrcamentoHora[]) => {
+        this.orcamentos = response.map((orcamento: OrcamentoHora) => ({
+          ...orcamento,
+          createAt: new Date(parseInt(orcamento.createAt?.toString()?.split('-')[0] ?? '2025'), parseInt(orcamento.createAt?.toString().split('-')[1] ?? '07') - 1, parseInt(orcamento.createAt?.toString()?.split('-')[2] ?? '22')).toLocaleDateString(),
+        }));
+        this.loading = false;
+      }, error: (error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
   }
 
   novo(data: any) {
