@@ -41,6 +41,10 @@ export class OrcamentoPorProjetoCadastroComponent {
 
   constructor(private fb: FormBuilder, private router: Router, private activeRouter: ActivatedRoute, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private empresaService: EmpresaService, private clienteService: ClienteService, private produtoService: ProdutoService, private confirmationService: ConfirmationService, private produtoOrcamentoService: ProdutoOrcamentoService) { }
 
+  getProdutoDescrition(id: string): string {
+    return this.produtos.find(x => x.id == id)?.descricao ?? "";
+  }
+
   createOrcamento(data: any) {
     let orcamento: OrcamentoPorProjetoCreate = new OrcamentoPorProjetoCreate();
     orcamento.clienteId = data.clienteId;
@@ -48,6 +52,7 @@ export class OrcamentoPorProjetoCadastroComponent {
     orcamento.produtos = data.produtos.map((produto: any) => ({
       empresaId: data.empresaId,
       produtoId: produto.descricao,
+      descricao: this.getProdutoDescrition(produto.descricao),
       valorTotalVenda: produto.valor,
       quantidade: produto.quantidade,
     }));
@@ -76,6 +81,7 @@ export class OrcamentoPorProjetoCadastroComponent {
         id: produto.id,
         orcamentoId: this.id,
         produtoId: produto.descricao,
+        descricao: this.getProdutoDescrition(produto.descricao),
         valorTotalVenda: produto.valor,
         quantidade: produto.quantidade
       }))
