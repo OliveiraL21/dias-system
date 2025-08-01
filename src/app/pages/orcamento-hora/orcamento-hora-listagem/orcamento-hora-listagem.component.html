@@ -16,6 +16,6 @@
 
     <app-custom-table [addRoute]="'orcamentoPorHora/cadastro'" [editRoute]="'orcamentoPorHora/editar'"
       [listOfColumns]="getCustomColumns()" [listData]="orcamentos" [haveExportFile]="true"
-      (deleteEvent)="deletar($event)"></app-custom-table>
+      (deleteEvent)="deletar($event)" (exportEvent)="export($event)"></app-custom-table>
   </p-card>
 </div>

@@ -23,4 +23,7 @@ export class ReportService {
     return this.httpClient.get(`${baseUrl}/orcamentoPorProjeto/${orcamentoId}`, { responseType: 'blob' });
   }
 
+  orcamentoHora(id: string): Observable<any> {
+    return this.httpClient.get(`${baseUrl}/orcamentoHora/${id}`, { responseType: 'blob' });
+  }
 }

@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Observable } from 'rxjs';
+import { Utils } from 'src/app/common/helpers/utils/utils';
 import Cliente from 'src/app/models/cliente/cliente';
 import { CustomFilter } from 'src/app/models/customFilter/customFilter';
 import { CustomButton } from 'src/app/models/custonsModels/CustomButtonData/CustomButton';
@@ -13,6 +14,7 @@ import { OrcamentoHora } from 'src/app/models/orcamentoHora/OrcamentoHora';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
 import { OrcamentoHoraService } from 'src/app/services/orcamentoHora/orcamento-hora.service';
+import { ReportService } from 'src/app/services/report/report.service';
 
 @Component({
   selector: 'app-orcamento-hora-listagem',
@@ -26,7 +28,7 @@ export class OrcamentoHoraListagemComponent {
   clientes: Cliente[] = [];
   orcamentos: OrcamentoHora[] = [];
 
-  constructor(private fb: FormBuilder, private service: OrcamentoHoraService, private messageService: MensagemService, private router: Router, private clienteService: ClienteService) { }
+  constructor(private fb: FormBuilder, private service: OrcamentoHoraService, private messageService: MensagemService, private router: Router, private clienteService: ClienteService, private reportService: ReportService) { }
 
   initForm() {
     this.form = this.fb.group({
@@ -112,6 +114,19 @@ export class OrcamentoHoraListagemComponent {
           this.messageService.erro('Error', 'Erro ao excluir o orçamento, tente novamente mais tarde!');
           this.loading = false;
         }
+      }
+    })
+  }
+
+  export(id: any) {
+    this.loading = true;
+    this.reportService.orcamentoHora(id).subscribe({
+      next: (response: any) => {
+        this.messageService.sucesso('Orçamento Hora', 'Orçamento exportado com sucesso');
+        Utils.downloadFile(response, "orcamentoHora");
+        this.loading = false;
+      }, error: (error: HttpErrorResponse) => {
+        this.loading = false;
       }
     })
   }
