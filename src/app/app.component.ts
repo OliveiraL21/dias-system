@@ -46,13 +46,8 @@ export class AppComponent {
       this.userService.details(id).subscribe({
         next: (response: Usuario) => {
           if (response.profileImageUrl) {
-            this.photo = Utils.convertBase64ToBlob(response.profileImageUrl);
-            if (this.photo) {
-              this.avatarImage = true;
-              Utils.convertToBase64(this.photo).then(response => {
-                this.photo = response;
-              });
-            }
+            this.photo = response.profileImageUrl;
+            this.avatarImage = true;
           }
         }
       })

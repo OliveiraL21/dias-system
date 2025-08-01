@@ -4,7 +4,7 @@
       animationDuration=".5s"></p-progressSpinner>
   </p-blockUI>
   <div *ngIf="authenticated == true" class="w-auto h-full bg-bluegray-700 text-white border-round-right">
-    <div *ngIf="avatarImage" class="h-full">
+    <div class="h-full">
       <div class="avatar-container">
         <img *ngIf="avatarImage" [src]="photo" alt="Foto de perfil" class="avatar-large" />
         <p-avatar *ngIf="!avatarImage" size="xlarge" icon="pi pi-user"></p-avatar>

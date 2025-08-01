@@ -41,7 +41,10 @@ export class EmpresaListagemComponent {
     this.loading = true;
     this.service.list().subscribe({
       next: (response: Empresa[]) => {
-        this.empresas = response;
+        this.empresas = response.map((empresa: Empresa) => ({
+          ...empresa,
+          cpf: empresa.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "\$1.\$2.\$3\-\$4")
+        }));
         this.loading = false;
       },
       error: (error: HttpErrorResponse) => {
