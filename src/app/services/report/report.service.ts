@@ -19,4 +19,8 @@ export class ReportService {
     return this.httpClient.get(`${baseUrl}/ServicosPrestadosPeriodo/${projetoId}/${dataInicio}/${dataFim}`, { responseType: 'blob' });
   }
 
+  orcamentoPorProjeto(orcamentoId: string): Observable<any> {
+    return this.httpClient.get(`${baseUrl}/orcamentoPorProjeto/${orcamentoId}`, { responseType: 'blob' });
+  }
+
 }

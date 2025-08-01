@@ -78,8 +78,8 @@ export class CustomTableComponent {
   }
 
 
-  exportar() {
-    this.exportEvent.emit();
+  exportar(id: string) {
+    this.exportEvent.emit(id);
   }
 
   deletar(id: string) {

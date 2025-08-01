@@ -13,6 +13,8 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { OrcamentoPorProjeto } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjeto';
 import Column from 'src/app/models/custonsModels/CustomTable/CustomColumn';
 import { OrcamentoPorProjetoList } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoList';
+import { ReportService } from 'src/app/services/report/report.service';
+import { Utils } from 'src/app/common/helpers/utils/utils';
 
 @Component({
   selector: 'app-orcamento-por-projeto-listagem',
@@ -27,7 +29,7 @@ export class OrcamentoPorProjetoListagemComponent {
   produtos: Produto[] = [];
   orcamentos: OrcamentoPorProjetoList[] = [];
 
-  constructor(private router: Router, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private clienteService: ClienteService, private ProdutoService: ProdutoService) { }
+  constructor(private router: Router, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private clienteService: ClienteService, private ProdutoService: ProdutoService, private reportService: ReportService) { }
 
   novo($event: any) {
     this.router.navigateByUrl('orcamentoPorProjeto/cadastro');
@@ -78,7 +80,16 @@ export class OrcamentoPorProjetoListagemComponent {
   }
 
   export(data: any) {
-    // this.service.export()
+    this.loading = true;
+    this.reportService.orcamentoPorProjeto(data).subscribe({
+      next: (response: any) => {
+        this.messageService.sucesso('Orçamento Por Projeto', 'Orçamento criado com sucesso!');
+        Utils.downloadFile(response, 'orcamento-projeto');
+        this.loading = false;
+      }, error: (error: HttpErrorResponse) => {
+        this.loading = false;
+      }
+    })
   }
 
   filtrar(data: any) {
