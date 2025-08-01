@@ -4,12 +4,12 @@
       animationDuration=".5s"></p-progressSpinner>
   </p-blockUI>
   <div *ngIf="authenticated == true" class="w-auto h-full bg-bluegray-700 text-white border-round-right">
-    <div class="h-full">
-      <div class="flex justify-content-center p-5">
-        <p-avatar *ngIf="avatarImage" size="xlarge" [image]="photo" shape="circle"
-          styleClass="h-8rem w-8rem bg-cover"></p-avatar>
+    <div *ngIf="avatarImage" class="h-full">
+      <div class="avatar-container">
+        <img [src]="photo" alt="Foto de perfil" class="avatar-large" />
         <p-avatar *ngIf="!avatarImage" size="xlarge" icon="pi pi-user"></p-avatar>
       </div>
+
       <p-megaMenu #menu orientation="vertical" [model]="items" class="h-full menu-lateral"
         styleClass="h-full bg-bluegray-700 text-white border-round-right border-none border-noround-left">
       </p-megaMenu>
