@@ -106,9 +106,9 @@ export class AppComponent {
         root: true,
         items: [
           [{
-            label: 'Por Hora',
+            label: 'Por Serviço',
             items: [{
-              label: 'orçamento por hora',
+              label: 'orçamento por Serviço',
               icon: 'pi pi-clock',
               routerLink: 'orcamentoPorHora/',
               root: false,

@@ -33,6 +33,7 @@ export class OrcamentoHoraCadastroComponent {
   id?: string = this.activatedRouter.snapshot.paramMap.get('id') ?? undefined;
   clientes: Cliente[] = [];
   empresas: Empresa[] = [];
+  isCalculated: boolean = false;
 
 
   constructor(private fb: FormBuilder, private service: OrcamentoHoraService, private clienteService: ClienteService, private empresaService: EmpresaService, private router: Router, private activatedRouter: ActivatedRoute, private confirmationService: ConfirmationService, private messageService: MensagemService, private servicoService: ServicoService) { }
@@ -245,6 +246,21 @@ export class OrcamentoHoraCadastroComponent {
       Utils.getRequiredFieldsInvalid(this.form);
       this.messageService.erro('Error', 'Por favor preencha todos os campos obrigatórios.');
       this.loading = false;
+    }
+  }
+
+  calcularTempoDeEntrega() {
+    if (this.servicosFormArray.getRawValue().length > 0) {
+      let servicos = this.servicosFormArray.getRawValue();
+      let total = 0;
+      servicos.forEach((servico: Servico) => {
+        total += parseFloat(servico.quantidadeHora);
+      });
+
+      this.form.get('tempoDeEntrega')?.setValue(`${total / 4} dias`);
+      this.isCalculated = true;
+    } else {
+      this.isCalculated = false;
     }
   }
 

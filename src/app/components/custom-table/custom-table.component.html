@@ -5,7 +5,7 @@
     <ng-template pTemplate="header" let-columns>
       <tr>
         <th *ngFor="let column of columns; let  i = index;">{{column.header}}</th>
-        <th style="width: 100px;">Ações</th>
+        <th style="width: 100px;" class="text-center">Ações</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-data let-columns="columns">
@@ -34,7 +34,7 @@
             <span> {{ generateTableValues(data, col.field)}}</span>
           </ng-container>
         </td>
-        <td class="flex">
+        <td class="flex justify-content-center">
           <p-button pTooltip="Editar" [tooltipOptions]="{tooltipPosition: 'bottom'}" icon="pi pi-pencil" severity="info"
             size="small" [style]="{'max-width.px': 30}" [text]="true" (onClick)="editar(data.id)"></p-button>
           <p-button pTooltip="Remover" [tooltipOptions]="{tooltipPosition: 'bottom'}" icon="pi pi-trash" [text]="true"
