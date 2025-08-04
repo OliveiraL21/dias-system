@@ -9,4 +9,5 @@ export class OrcamentoHoraUpdate {
   empresaId: string = "";
   clienteId: string = "";
   createAt!: Date;
+  tempoDeEntrega!: string;
 }

@@ -49,6 +49,7 @@ export class OrcamentoPorProjetoCadastroComponent {
     let orcamento: OrcamentoPorProjetoCreate = new OrcamentoPorProjetoCreate();
     orcamento.clienteId = data.clienteId;
     orcamento.empresaId = data.empresaId;
+    orcamento.tempoDeEntrega = data.tempoDeEntrega;
     orcamento.produtos = data.produtos.map((produto: any) => ({
       empresaId: data.empresaId,
       produtoId: produto.descricao,
@@ -75,6 +76,7 @@ export class OrcamentoPorProjetoCadastroComponent {
       empresaId: data.empresaId,
       clienteId: data.clienteId,
       createAt: data.createAt,
+      tempoDeEntrega: data.tempoDeEntrega,
       numero: data.numero,
       valorTotal: data.valorTotal,
       produtos: data.produtos?.map((produto: Produto) => ({
@@ -234,6 +236,7 @@ export class OrcamentoPorProjetoCadastroComponent {
       clienteId: [null, [Validators.required]],
       valorTotal: [null, null],
       createAt: [null, null],
+      tempoDeEntrega: [null, null],
       produtos: this.fb.array([]),
     })
   }
@@ -242,7 +245,7 @@ export class OrcamentoPorProjetoCadastroComponent {
     return [
       {
         type: 'number',
-        data: new CustomInputNumberData('numero', 'Número', 'numero', '', true, this.id ? true : false)
+        data: new CustomInputNumberData('numero', 'Número', 'numero', '', true, this.id ? true : false, false)
       },
       {
         type: 'select',
@@ -259,6 +262,10 @@ export class OrcamentoPorProjetoCadastroComponent {
       {
         type: 'data',
         data: new CustomInputText('createAt', "Informe a data", "createAt", "Data", "createAt", false, true, "dd/MM/yyyy", this.id ? true : false),
+      },
+      {
+        type: 'text',
+        data: new CustomInputText('tempoDeEntrega', 'Ex: 30 dias', 'tempoDeEntrega', 'Tempo De Entrega', 'tempoDeEntrega', false, false, '', true),
       }
     ]
   }

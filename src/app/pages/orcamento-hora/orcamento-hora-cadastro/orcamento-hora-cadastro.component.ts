@@ -8,6 +8,7 @@ import Cliente from 'src/app/models/cliente/cliente';
 import { CustomFormControls } from 'src/app/models/custonsModels/CustomFormData/CustomFormControls';
 import CustomInputNumberData from 'src/app/models/custonsModels/customInputNumberData/CustomInputNumberData';
 import CustomSelectData from 'src/app/models/custonsModels/CustomSelect/CustomSelectData';
+import { CustomInputText } from 'src/app/models/custonsModels/CustomTextInputData/CustomInputText';
 import { Empresa } from 'src/app/models/empresa/Empresa';
 import { OrcamentoHora } from 'src/app/models/orcamentoHora/OrcamentoHora';
 import { OrcamentoHoraCreate } from 'src/app/models/orcamentoHora/OrcamentoHoraCreate';
@@ -58,6 +59,10 @@ export class OrcamentoHoraCadastroComponent {
         type: 'number',
         data: new CustomInputNumberData('valorTotal', 'Valor Total', 'valorTotal', 'currency', true, this.id ? true : false)
       },
+      {
+        type: 'text',
+        data: new CustomInputText('tempoDeEntrega', 'Ex: 30 dias', 'tempoDeEntrega', 'Tempo De Entrega', 'tempoDeEntrega', false, false, '', true),
+      }
     ]
   }
 
@@ -88,6 +93,7 @@ export class OrcamentoHoraCadastroComponent {
       clienteId: [null, [Validators.required]],
       valorTotal: [null, null],
       valorHora: [null, [Validators.required]],
+      tempoDeEntrega: [null, null],
       servicos: this.fb.array([])
     })
   }
@@ -186,6 +192,7 @@ export class OrcamentoHoraCadastroComponent {
       empresaId: data.empresaId,
       clienteId: data.clienteId,
       valorHora: data.valorHora,
+      tempoDeEntrega: data.tempoDeEntrega,
       servicos: data.servicos.map((servico: any) => ({
         descricao: servico.descricao,
         quantidadeHora: servico.quantidadeHora,
@@ -211,7 +218,8 @@ export class OrcamentoHoraCadastroComponent {
       empresaId: data.empresaId,
       clienteId: data.clienteId,
       servicos: data.servicos,
-      createAt: data.createAt
+      createAt: data.createAt,
+      tempoDeEntrega: data.tempoDeEntrega,
     }
 
     this.service.update(this.id ?? "", orcamento).subscribe({

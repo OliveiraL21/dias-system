@@ -6,6 +6,7 @@ export class OrcamentoPorProjetoUpdate {
   clienteId: string = "";
   numero: string = "";
   valorTotal: number = 0;
+  tempoDeEntrega!: string;
   createAt?: Date;
   produtos: Produto[] = [];
 }

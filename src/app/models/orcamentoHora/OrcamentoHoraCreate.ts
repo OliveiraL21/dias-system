@@ -5,4 +5,5 @@ export class OrcamentoHoraCreate {
   servicos: Servico[] = [];
   empresaId: string = "";
   clienteId: string = "";
+  tempoDeEntrega!: string;
 }

@@ -11,4 +11,5 @@ export class OrcamentoHora {
   cliente?: Cliente;
   empresa?: Empresa;
   createAt!: string;
+  tempoDeEntrega!: string;
 }
