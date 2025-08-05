@@ -250,6 +250,7 @@ export class OrcamentoHoraCadastroComponent {
   }
 
   calcularTempoDeEntrega() {
+    this.loading = true;
     if (this.servicosFormArray.getRawValue().length > 0) {
       let servicos = this.servicosFormArray.getRawValue();
       let total = 0;
@@ -258,9 +259,7 @@ export class OrcamentoHoraCadastroComponent {
       });
 
       this.form.get('tempoDeEntrega')?.setValue(`${total / 4} dias`);
-      this.isCalculated = true;
-    } else {
-      this.isCalculated = false;
+      this.loading = false;
     }
   }
 
