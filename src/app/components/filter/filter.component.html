@@ -1,21 +1,21 @@
 <div class="w-full">
   <p-toast position="top-right"></p-toast>
-  <form [formGroup]="form" class="w-full flex gap-3">
+  <form [formGroup]="form" class="w-full flex gap-3 lg:gap-2">
     <div *ngFor="let control of formControls; let i = index;trackBy:trackByFn">
       <div *ngIf="control.type === 'text' || control.type === 'email'">
         <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
         <input type="text" [id]="control.name" [name]="control.name" [placeholder]="control.placeholder"
-          [formControlName]="control.name" pInputText class="w-20rem mb-3">
+          [formControlName]="control.name" pInputText class="w-20rem mb-3 lg:w-12rem ">
       </div>
 
       <div
         *ngIf="control.type === 'cnpj' || control.type === 'cpf' || control.type === 'telefone' || control.type === 'celular'">
         <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
         <p-inputMask [mask]="control.mask" [formControlName]="control.name" [id]="control.name"
-          [placeholder]="control.placeholder" styleClass="w-full mb-3"></p-inputMask>
+          [placeholder]="control.placeholder" styleClass="w-full mb-3" [showClear]="true"></p-inputMask>
       </div>
 
-      <div *ngIf="control.type === 'dropdown'">
+      <div *ngIf="control.type === 'dropdown'" class="lg:w-15rem">
         <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
         <p-dropdown [placeholder]="control.placeholder" [options]="control.dropdownList"
           [optionLabel]="control.dropdownLabel" [optionValue]="control.dropdownValue" [formControlName]="control.name"
@@ -23,15 +23,11 @@
           styleClass="w-full mb-3"></p-dropdown>
       </div>
 
-      <div *ngIf="control.type === 'date'">
+      <div *ngIf="control.type === 'date'" class="lg:w-10rem">
         <label [for]="control.name" class="block text-900 font-medium mb-2">{{control.label}}</label>
-        <p-calendar dateFormat="dd/mm/yy" selectionMode="single" [formControlName]="control.name" [id]="control.name"
-          [readonlyInput]="false" [placeholder]="control.placeholder" [iconDisplay]="'input'" [showIcon]="true"
-          inputId="templatedisplay">
-          <ng-template #inputicon let-clickDate>
-            <i class="pi pi-times" (click)="resetDateField()"></i>
-          </ng-template>
-        </p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" selectionMode="single" styleClass="w-full mb-2"
+          [formControlName]="control.name" [id]="control.name" [readonlyInput]="false"
+          [placeholder]="control.placeholder" [showClear]="true"></p-calendar>
       </div>
 
     </div>

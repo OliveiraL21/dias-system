@@ -1,0 +1,43 @@
+<div class="justify-content-center align-item-center h-full mt-5">
+  <p-confirmDialog></p-confirmDialog>
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
+  <p-card>
+    <app-filter [formControls]="getCustomFilter()" (filtrarChange)="filtrar($event)"></app-filter>
+
+    <div class="flex justify-content-end w-full mb-5">
+      <p-button label="Nova Empresa" icon="pi pi-plus" [rounded]="true" size="small" iconPos="right"
+        (onClick)="novo()"></p-button>
+    </div>
+
+    <p-table [value]="empresas" styleClass="p-datatable-striped" [tableStyle]="{'min-width': '50rem'}">
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-center">Razão Social</th>
+          <th class="text-center">Cpf</th>
+          <th class="text-center">E-mail</th>
+          <th class="text-center">Celular</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-empresa>
+        <tr>
+          <td class="text-center">{{empresa.razaoSocial}}</td>
+          <td class="text-center">{{empresa.cpf}}</td>
+          <td class="text-center">{{empresa.email}}</td>
+          <td class="text-center">{{empresa.celular}}</td>
+          <td class="text-center lg:w-min">
+            <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(empresa.id)"></p-button>
+            <p-button icon="pi pi-trash" [text]="true" severity="danger"
+              (onClick)="deletar($event, empresa.id)"></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+
+  </p-card>
+
+</div>

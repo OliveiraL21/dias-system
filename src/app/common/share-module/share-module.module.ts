@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -27,9 +27,32 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { FilterComponent } from 'src/app/components/filter/filter.component';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ChartModule } from 'primeng/chart';
+import { SplitButtonModule } from 'primeng/splitbutton';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextComponent } from 'src/app/components/input-text/input-text.component';
+import { CustomButtonComponent } from 'src/app/components/custom-button/custom-button.component';
+import { CustomFileComponent } from 'src/app/components/custom-file/custom-file.component';
+import { CustomFormComponent } from 'src/app/components/custom-form/custom-form.component';
+import { CustomTableComponent } from 'src/app/components/custom-table/custom-table.component';
+import { InputNumberComponent } from 'src/app/components/input-number/input-number.component';
+import { InputPasswordComponent } from 'src/app/components/input-password/input-password.component';
+import { SelectComponent } from 'src/app/components/select/select.component';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
-  declarations: [FilterComponent],
+  declarations: [
+    FilterComponent,
+    InputTextComponent,
+    SelectComponent,
+    InputPasswordComponent,
+    CustomButtonComponent,
+    CustomTableComponent,
+    CustomFormComponent,
+    InputNumberComponent,
+    CustomFileComponent,
+
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -58,7 +81,12 @@ import { ChartModule } from 'primeng/chart';
     ConfirmDialogModule,
     FileUploadModule,
     FieldsetModule,
-    ChartModule
+    ChartModule,
+    SplitButtonModule,
+    DialogModule,
+    MegaMenuModule,
+    FloatLabelModule,
+    InputNumberModule
   ],
 
   exports: [
@@ -90,7 +118,20 @@ import { ChartModule } from 'primeng/chart';
     FileUploadModule,
     FilterComponent,
     FieldsetModule,
-    ChartModule
+    ChartModule,
+    SplitButtonModule,
+    DialogModule,
+    MegaMenuModule,
+    InputTextComponent,
+    SelectComponent,
+    InputPasswordComponent,
+    CustomButtonComponent,
+    CustomTableComponent,
+    CustomFormComponent,
+    InputNumberComponent,
+    CustomFileComponent,
+    FloatLabelModule,
+    InputNumberModule
   ]
 })
 export class ShareModuleModule { }

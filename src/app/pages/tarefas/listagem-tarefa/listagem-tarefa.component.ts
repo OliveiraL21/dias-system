@@ -8,6 +8,8 @@ import { TarefaService } from 'src/app/services/tarefas/tarefa.service';
 import { ProjetoListagem } from 'src/app/models/projeto/projeto';
 import { Tarefa, TarefaListagem } from 'src/app/models/tarefa/tarefa';
 import { CustomFilter } from 'src/app/models/customFilter/customFilter';
+import { formatDate } from 'date-fns';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
 @Component({
   selector: 'app-listagem-tarefa',
@@ -19,20 +21,16 @@ export class ListagemTarefaComponent {
   loading: boolean = false;
   tarefas: TarefaListagem[] = [];
   projetos: ProjetoListagem[] = [];
-  form!: FormGroup;
 
-  constructor(private fb: FormBuilder, private clienteService: ClienteService, private projetoService: ProjetoService, private service: TarefaService, private messageService: MessageService, private confirmationService: ConfirmationService, private router: Router) { }
+  constructor(private projetoService: ProjetoService, private service: TarefaService, private messageService: MensagemService, private confirmationService: ConfirmationService, private router: Router) { }
 
-  show(type: string, title: string, message: string) {
-    this.messageService.add({ severity: type, summary: title, detail: message });
-  }
 
   getCustomFilter(): CustomFilter[] {
     return [
       new CustomFilter('descricao', 'text', 'Informe a descrição da tarefa', 'Tarefa'),
       new CustomFilter('dataInicio', 'date', 'Selecione a data inicial', 'Inicio'),
       new CustomFilter('dataFim', 'date', 'Selecione a data fim', 'Fim'),
-      new CustomFilter('projetoId', 'dropdown', 'Selecione o projeto', 'Projeto', '', this.projetos, 'id', 'descricao', true, ""),
+      new CustomFilter('projetoId', 'dropdown', 'Selecione o projeto', 'Projeto', '', this.projetos, 'id', 'descricao', true),
     ]
   }
 
@@ -77,7 +75,7 @@ export class ListagemTarefaComponent {
     this.router.navigateByUrl(`tarefas/editar/${id}`)
   }
 
-  deletar(event: Event, id: number) {
+  deletar(event: Event, id: string) {
     if (event) {
       this.loading = true;
       this.confirmationService.confirm({
@@ -93,23 +91,23 @@ export class ListagemTarefaComponent {
           this.service.excluirTarefa(id).subscribe({
             next: (response: any) => {
               if (response) {
-                this.show('success', 'Excluir Tarefa', 'Tarefa excluido com sucesso!');
+                this.messageService.sucesso('Excluir Tarefa', 'Tarefa excluido com sucesso!');
                 this.listarTarefas();
                 this.loading = false;
               } else {
-                this.show('error', 'Excluir Tarefa', 'Não foi possível excluir o Tarefa, tente novamente mais tarde');
+                this.messageService.erro('Excluir Tarefa', 'Não foi possível excluir o Tarefa, tente novamente mais tarde');
                 this.loading = false;
               }
 
             },
             error: (error: any) => {
-              this.show('error', 'Excluir Tarefa', `${error.error.error ? error.error.error : 'Não foi possível excluir o Tarefa, tente novamente mais tarde'}`);
+              this.messageService.erro('Excluir Tarefa', `${error.error.error ? error.error.error : 'Não foi possível excluir o Tarefa, tente novamente mais tarde'}`);
               this.loading = false;
             }
           })
         },
         reject: () => {
-          this.show('error', 'Excluir Tarefa', 'O processo de exclusão foi rejeitado!');
+          this.messageService.erro('Excluir Tarefa', 'O processo de exclusão foi rejeitado!');
           this.loading = false;
         }
       })
@@ -118,17 +116,30 @@ export class ListagemTarefaComponent {
     }
   }
 
+  createDateToRequest(date: any): string | null {
+    if (typeof date === 'string') {
+      date = new Date(date);
+      return formatDate(date, 'yyyy-MM-dd');
+    }
+
+    if (date instanceof Date && !isNaN(date.getTime())) {
+      return formatDate(date, 'yyyy-MM-dd');
+    }
+
+    return null;
+  }
+
   filtrar(data: any) {
     if (data) {
       this.loading = true;
 
       data.descricao = data.descricao === '' || data.descricao === undefined || data.descricao === null ? null : data.descricao;
-      data.projetoId = data.projetoId === null || data.projetoId === undefined ? data.projetoId = 0 : data.projetoId;
-      data.dataInicio = data.dataInicio === null || data.dataInicio === undefined ? null : data.dataInicio.toDateString();
-      data.dataFim = data.dataFim === null || data.dataFim === undefined ? null : data.dataFim.toDateString();
+      data.projetoId = data.projetoId === null || data.projetoId === undefined ? data.projetoId = "" : data.projetoId;
+      data.dataInicio = data.dataInicio === null || data.dataInicio === undefined ? null : this.createDateToRequest(data.dataInicio);
+      data.dataFim = data.dataFim === null || data.dataFim === undefined ? null : this.createDateToRequest(data.dataFim);
 
       if (data.dataInicio && !data.dataFim || !data.dataInicio && data.dataFim) {
-        this.show('error', 'Tarefas', 'É necessário preencher a data inicio e data fim');
+        this.messageService.erro('Tarefas', 'É necessário preencher a data inicio e data fim');
         this.loading = false;
         return;
       }
@@ -146,17 +157,9 @@ export class ListagemTarefaComponent {
     }
   }
 
-  initForm() {
-    this.form = this.fb.group({
-      descricao: [null, null],
-      periodo: [null, null],
-      projetoId: [null, null],
-    });
-  }
 
   ngOnInit() {
     this.listarTarefas();
     this.getProjetos();
-    this.initForm();
   }
 }

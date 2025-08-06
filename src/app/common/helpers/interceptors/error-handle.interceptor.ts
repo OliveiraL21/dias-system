@@ -25,10 +25,13 @@ export class errorHandleInterceptor implements HttpInterceptor {
             },
             error: () => {
               this.tokenService.clearStorage();
-              this.router.navigateByUrl("");
+              this.router.navigateByUrl("login");
               return throwError("");
             }
           });
+        }
+        if (isLoginPage) {
+          this.messageService.erro("Erro", `${error.error ? error.error.error : 'Erro ao tentar realizar a operação, entre em contato com o suporte técnico'}`);
         }
         return throwError("");
       })

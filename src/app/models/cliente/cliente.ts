@@ -1,5 +1,5 @@
 export default class Cliente {
-  id: number | null = null;
+  id: string | null = null;
   razaoSocial!: string;
   cnpj!: string;
   email!: string;

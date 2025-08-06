@@ -1,0 +1,57 @@
+<div class="flex align-item-center mt-5">
+  <p-confirmDialog></p-confirmDialog>
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
+  <p-card [header]="title" class="w-11 -mt-3 p-0">
+    <app-custom-form [controls]="getCustomFormControls()" [form]="form" [formButtonsVisible]="false"></app-custom-form>
+
+    <p-table [value]="servicosFormArray.controls" [tableStyle]="{'min-width': '50rem'}"
+      [scrollHeight]="'calc(100vh - 15rem)'">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Serviço</th>
+          <th class="text-center">Quantidade de Horas</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-servico let-rowIndex="rowIndex" [formGroup]="form">
+        <ng-container>
+          <ng-container formArrayName="servicos">
+            <tr [formGroupName]="rowIndex">
+              <td>
+                <input type="text" formControlName="descricao" pInputText id="descricao"
+                  placeholder="ex: Desenvolvimento" class="w-full">
+                <small class="p-0 p-error block"
+                  *ngIf="servicosFormArray.at(rowIndex)?.get('descricao')?.hasError('required') && servicosFormArray.at(rowIndex)?.get('descricao')?.dirty">Campo
+                  obrigatório</small>
+              </td>
+              <td class=" flex justify-content-center">
+                <p-inputNumber formControlName="quantidadeHora" inputId="quantidadeHora"></p-inputNumber>
+              </td>
+              <td class="text-center">
+                <p-button icon="pi pi-trash" severity="danger" [text]="true" pTooltip="Excluir Produto"
+                  (onClick)="removerServico($event, rowIndex)"></p-button>
+              </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </ng-template>
+    </p-table>
+
+    <div class="w-full mt-5 flex justify-content-end">
+      <p-button label="Adicionar" size="small" [severity]="'primary'" icon="pi pi-plus"
+        (onClick)="adicionarServico()"></p-button>
+    </div>
+
+    <div class="w-full flex gap-2">
+      <p-button class="ml-2" label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right"
+        (onClick)="cancelar()"></p-button>
+      <p-button label="Calcular Entrega" icon="pi pi-calculator" iconPos="right" (onClick)="calcularTempoDeEntrega()"
+        severity="success"></p-button>
+      <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="salvar()"></p-button>
+
+    </div>
+  </p-card>
+</div>

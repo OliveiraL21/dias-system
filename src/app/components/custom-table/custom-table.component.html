@@ -1,0 +1,52 @@
+<div class="w-full h-full">
+
+  <p-table [value]="listData" [columns]="listOfColumns" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true" class="w-full">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let column of columns; let  i = index;">{{column.header}}</th>
+        <th style="width: 100px;" class="text-center">Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'Ativo' ">
+            <p-tag class="p-4" severity="warning" [value]="generateTableValues(data, col.field)"></p-tag>
+          </ng-container>
+          <ng-container class="w-full"
+            *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'Em andamento'">
+            <p-tag severity="info" class="p-4" [value]="generateTableValues(data, col.field)">
+            </p-tag>
+          </ng-container>
+
+          <ng-container *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'bloqueado'">
+            <p-tag class="p-4" severity="danger" [value]="generateTableValues(data, col.field)">
+            </p-tag>
+          </ng-container>
+
+          <ng-container *ngIf="col.field == 'status$descricao' && data['status']['descricao'] === 'Finalizado'">
+            <p-tag class="p-4" severity="success" [value]="generateTableValues(data, col.field)">
+            </p-tag>
+          </ng-container>
+
+          <ng-container *ngIf="col.field !== 'status$descricao'">
+            <span> {{ generateTableValues(data, col.field)}}</span>
+          </ng-container>
+        </td>
+        <td class="flex justify-content-center">
+          <p-button pTooltip="Editar" [tooltipOptions]="{tooltipPosition: 'bottom'}" icon="pi pi-pencil" severity="info"
+            size="small" [style]="{'max-width.px': 30}" [text]="true" (onClick)="editar(data.id)"></p-button>
+          <p-button pTooltip="Remover" [tooltipOptions]="{tooltipPosition: 'bottom'}" icon="pi pi-trash" [text]="true"
+            severity="danger" size="small" class="mx-2" [style]="{'max-width.px': 30}"
+            (onClick)="openDialog($event, data.id)"></p-button>
+          <p-button *ngIf="haveExportFile" pTooltip="Exportar" [tooltipOptions]="{tooltipPosition: 'bottom'}"
+            icon="pi pi-file-export" [text]="true" size="small" class="mx-2" [style]="{'max-width': 30 }"
+            (onClick)="exportar(data.id)">
+
+          </p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

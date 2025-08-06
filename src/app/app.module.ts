@@ -12,9 +12,10 @@ import { MessageService } from 'primeng/api';
 
 
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     AppRoutingModule,

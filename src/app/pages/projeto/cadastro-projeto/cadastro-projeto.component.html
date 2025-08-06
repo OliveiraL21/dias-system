@@ -5,8 +5,8 @@
       animationDuration=".5s"></p-progressSpinner>
   </p-blockUI>
 
-  <p-card [header]="title" class="w-full">
-    <form class="w-4" [formGroup]="form">
+  <p-card [header]="title" class="w-11 -mt-3 p-0">
+    <form class="w-full h-full" [formGroup]="form">
       <label for="descricao" class="block text-900 font-medium mb-2">Projeto <span class="text-red-500">*</span></label>
       <input type="text" name="descricao" placeholder="Informe o nome do projeto" id="descricao"
         formControlName="descricao" pInputText class="w-full mb-3">
@@ -14,49 +14,160 @@
         class="p-0 mb-4 p-error block">Campo obrigatório
       </small>
 
-
-      <label for="dataInicio" class="block text-900 font-medium mb-2">Data de Início <span
-          class="text-red-500">*</span></label>
-      <p-calendar formControlName="dataInicio" dateFormat="dd/mm/yy" id="dataInicio" name="dataInicio"
-        styleClass="w-full mb-3" placeholder="Selecione a data"></p-calendar>
-      <small *ngIf="form.get('dataInicio')?.hasError('required') && form.get('dataInicio')?.dirty">Campo
-        obrigatório</small>
-
-
-
-      <label for="dataFim" class="block text-900 font-medium mb-2">Data Final Prevista <span
-          class="text-red-500">*</span></label>
-      <p-calendar formControlName="dataFim" dateFormat="dd/mm/yy" id="dataFim" name="dataFim" styleClass="w-full mb-3"
-        placeholder="Selecione a data"></p-calendar>
-      <small *ngIf="form.get('dataFim')?.hasError('required') && form.get('dataFim')?.dirty"
-        class="p-0 mb-4 p-error block">Campo obrigatório
-      </small>
-
-
-      <label for="cliente" class="block text-900 font-medium mb-2">Cliente <span class="text-red-500">*</span></label>
-      <p-dropdown formControlName="cliente" [options]="clientes" optionLabel="razaoSocial" optionValue="id"
-        placeholder="Selecione um cliente" styleClass="w-full mb-3"></p-dropdown>
-
-      <small *ngIf="form.get('cliente')?.hasError('required') && form.get('cliente')?.dirty"
-        class="p-0 mb-4 p-error block">Campo obrigatório
-      </small>
+      <div class="w-full flex gap-3">
+        <div class="w-6">
+          <label for="dataInicio" class="block text-900 font-medium mb-2">Data de Início <span
+              class="text-red-500">*</span></label>
+          <p-calendar [showButtonBar]="true" formControlName="dataInicio" dateFormat="dd/mm/yy" id="dataInicio"
+            name="dataInicio" styleClass="w-full mb-3" placeholder="Selecione a data"></p-calendar>
+          <small *ngIf="form.get('dataInicio')?.hasError('required') && form.get('dataInicio')?.dirty">Campo
+            obrigatório</small>
+        </div>
 
 
 
-      <label for="status" class="block text-900 font-medium mb-2">Status <span class="text-red-500">*</span></label>
-      <p-dropdown formControlName="status" [options]="status" optionValue="id" optionLabel="descricao"
-        placeholder="Selecione o status" styleClass="w-full mb-3"></p-dropdown>
-      <small *ngIf="form.get('status')?.hasError('required') && form.get('status')?.dirty"
-        class="p-0 mb-4 p-error block">Campo obrigatório
-      </small>
+        <div class="w-6">
+          <label for="dataFim" class="block text-900 font-medium mb-2">Data Final Prevista <span
+              class="text-red-500">*</span></label>
+          <p-calendar formControlName="dataFim" dateFormat="dd/mm/yy" id="dataFim" name="dataFim"
+            styleClass="w-full mb-3" placeholder="Selecione a data"></p-calendar>
+          <small *ngIf="form.get('dataFim')?.hasError('required') && form.get('dataFim')?.dirty"
+            class="p-0 mb-4 p-error block">Campo obrigatório
+          </small>
 
+        </div>
 
-      <div class="flex">
-        <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
-        <p-button class="ml-2" label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right"
-          (onClick)="cancelar()"></p-button>
+        <div *ngIf="id" class="w-6">
+          <label for="cliente" class="block text-900 font-medium mb-2">Cliente <span
+              class="text-red-500">*</span></label>
+          <p-dropdown formControlName="cliente" [options]="clientes" optionLabel="razaoSocial" optionValue="id"
+            placeholder="Selecione um cliente" styleClass="w-full mb-3"></p-dropdown>
+
+          <small *ngIf="form.get('cliente')?.hasError('required') && form.get('cliente')?.dirty"
+            class="p-0 mb-4 p-error block">Campo obrigatório
+          </small>
+        </div>
+        <div *ngIf="id" class="w-6">
+          <label for="status" class="block text-900 font-medium mb-2">Status <span class="text-red-500">*</span></label>
+          <p-dropdown formControlName="status" [options]="status" optionValue="id" optionLabel="descricao"
+            placeholder="Selecione o status" styleClass="w-full mb-3"></p-dropdown>
+          <small *ngIf="form.get('status')?.hasError('required') && form.get('status')?.dirty"
+            class="p-0 mb-4 p-error block">Campo obrigatório
+          </small>
+        </div>
+
       </div>
 
+      <div *ngIf="!id" class="w-full flex gap-3">
+        <div class="w-6">
+          <label for="cliente" class="block text-900 font-medium mb-2">Cliente <span
+              class="text-red-500">*</span></label>
+          <p-dropdown formControlName="cliente" [options]="clientes" optionLabel="razaoSocial" optionValue="id"
+            placeholder="Selecione um cliente" styleClass="w-full mb-3"></p-dropdown>
+
+          <small *ngIf="form.get('cliente')?.hasError('required') && form.get('cliente')?.dirty"
+            class="p-0 mb-4 p-error block">Campo obrigatório
+          </small>
+        </div>
+        <div class="w-6">
+          <label for="status" class="block text-900 font-medium mb-2">Status <span class="text-red-500">*</span></label>
+          <p-dropdown formControlName="status" [options]="status" optionValue="id" optionLabel="descricao"
+            placeholder="Selecione o status" styleClass="w-full mb-3"></p-dropdown>
+          <small *ngIf="form.get('status')?.hasError('required') && form.get('status')?.dirty"
+            class="p-0 mb-4 p-error block">Campo obrigatório
+          </small>
+        </div>
+
+      </div>
     </form>
+
+    <div *ngIf="this.id" class="w-full my-4">
+      <p-table [value]="tarefas" styleClass="p-datatable-striped" [lazy]="true" [paginator]="true" [rows]="rows"
+        [totalRecords]="total" (onLazyLoad)="getTarefas($event)" [scrollHeight]="'calc(100vh - 300px)'">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Tarefa</th>
+            <th class="text-center">Data</th>
+            <th class="text-center">Hora Inicio</th>
+            <th class="text-center">Hora Fim</th>
+            <th class="text-center">Duração</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Ações</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-tarefa>
+          <tr>
+            <td>{{tarefa.descricao}}</td>
+            <td class="text-center">{{tarefa.data | date: 'dd/MM/yyyy'}}</td>
+            <td class="text-center">{{tarefa.horaInicio }}</td>
+            <td class="text-center">{{tarefa.horaFim}}</td>
+            <td class="text-center">{{tarefa.duracao}}</td>
+            <td class="text-center lg:w-9rem">
+              <p-tag *ngIf="tarefa.status.descricao == 'Em Andamento' " [value]="tarefa.status.descricao"></p-tag>
+
+              <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " [value]="tarefa.status.descricao"
+                [severity]="'warning'"></p-tag>
+
+              <p-tag *ngIf="tarefa.status.descricao == 'Excluído' " [value]="tarefa.status.descricao"
+                [severity]="'danger'"></p-tag>
+
+              <p-tag *ngIf="tarefa.status.descricao == 'Finalizado' " [value]="tarefa.status.descricao"
+                [severity]="'success'"></p-tag>
+
+              <p-tag *ngIf="tarefa.status.descricao == 'Em pausa' " [value]="tarefa.status.descricao"
+                [severity]="'warning'"></p-tag>
+
+              <p-tag *ngIf="tarefa.status.descricao == 'Bloqueado' " [value]="tarefa.status.descricao"
+                [severity]="'danger'"></p-tag>
+            </td>
+            <td class="text-center">
+              <p-button pTooltip="Editar" icon="pi pi-pencil" [text]="true"
+                (onClick)="editarTarefa(tarefa.id)"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+    </div>
+
+    <div class="flex mt-6 gap-2">
+      <p-button label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right" (onClick)="cancelar()"></p-button>
+      <p-splitButton *ngIf="id" label="Calcular Tarefas" severity="success" [model]="calcularButtonItems"
+        class="calculatorButton"></p-splitButton>
+      <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
+    </div>
   </p-card>
 </div>
+
+<p-dialog header="Calcular Tarefas Por Periodo" [modal]="true" [(visible)]="showDialog"
+  [style]="{ width: '50vw', height: '80vh' }" [baseZIndex]="10000" [dismissableMask]="true" [closeOnEscape]="true"
+  [resizable]="false" [draggable]="false" [closable]="true">
+  <form [formGroup]="formCalculoPeriodo">
+    <div class="w-full mb-4 flex gap-3">
+      <div class="w-5">
+        <label for="dataInicio" class="block text-900 font-medium mb-2">Data Inicio <span
+            class="text-red-500">*</span></label>
+        <p-calendar formControlName="dataInicio" dateFormat="dd/mm/yy" id="dataInicio" name="dataInicio"
+          styleClass="w-full mb-3" placeholder="Selecione a data"></p-calendar>
+        <small
+          *ngIf="formCalculoPeriodo.get('dataInicio')?.hasError('required') && formCalculoPeriodo.get('dataInicio')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório</small>
+      </div>
+      <div class="w-5">
+        <label for="dataInicio" class="block text-900 font-medium mb-2">Data Fim <span
+            class="text-red-500">*</span></label>
+        <p-calendar formControlName="dataFim" dateFormat="dd/mm/yy" id="dataFim" name="dataFim" styleClass="w-full mb-3"
+          placeholder="Selecione a data"></p-calendar>
+        <small
+          *ngIf="formCalculoPeriodo.get('dataFim')?.hasError('required') && formCalculoPeriodo.get('dataFim')?.dirty"
+          class="p-0 mb-4 p-error block">Campo obrigatório</small>
+      </div>
+
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <p-button label="Cancelar" severity="danger" (onClick)="onCloseDialog()" />
+    <p-button label="Salvar" severity="primary" (onClick)="calcularTarefasPorPeriodo()" />
+  </ng-template>
+</p-dialog>

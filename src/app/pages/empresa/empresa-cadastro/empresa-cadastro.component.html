@@ -1,0 +1,116 @@
+<div class="flex align-item-center mt-5">
+  <p-blockUI [blocked]="loading">
+    <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
+      animationDuration=".5s"></p-progressSpinner>
+  </p-blockUI>
+
+  <p-card [header]="title" class="w-11 -mt-3 p-0">
+    <form class="w-full h-full" [formGroup]="form">
+      <div class="w-full  flex gap-2">
+        <div class="w-4">
+          <label for="razaoSocial" class="block text-900 font-medium mb-2">Razão Social <span
+              class="text-red-500">*</span></label>
+          <input type="text" formControlName="razaoSocial" placeholder="Digite a razão social" id="razaoSocial"
+            pInputText class="w-full mb-3">
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('razaoSocial')?.hasError('required') && form.get('razaoSocial')?.dirty">Campo
+            obrigatório</small>
+        </div>
+
+
+        <div>
+          <label for="cpf" class="block text-900 font-medium mb-2">CPF <span class="text-red-500">*</span></label>
+          <p-inputMask type="text" formControlName="cpf" placeholder="000.000.000-00" mask="999.999.999-99" id="cpf"
+            class="w-full mb-3"></p-inputMask>
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('cpf')?.hasError('required') && form.get('cpf')?.dirty">Campo
+            obrigatório</small>
+        </div>
+      </div>
+
+      <div class="w-full flex gap-3">
+        <div>
+          <label for="email" class="block text-900 font-medium mb-2">E-mail <span class="text-red-500">*</span></label>
+          <input type="text" formControlName="email" placeholder="exemplo@exemplo" id="email" pInputText
+            class="w-17rem mb-3">
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('email')?.hasError('required') && form.get('email')?.dirty">Campo obrigatório</small>
+        </div>
+        <div>
+          <label for="telefone" class="block text-900 font-medium mb-2">Telefone <span
+              class="text-red-500">*</span></label>
+          <p-inputMask class="mb-3" styleClass="w-12rem" mask="(99) 9999-9999" formControlName="telefone" id="telefone"
+            placeholder="(00) 0000-0000"></p-inputMask>
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('telefone')?.hasError('required') && form.get('telefone')?.dirty">Campo Obrigatório</small>
+        </div>
+        <div>
+          <label for="celular" class="block text-900 font-medium mb-2">Celular <span
+              class="text-red-500">*</span></label>
+          <p-inputMask formControlName="celular" placeholder="(99) 99999-9999" mask="(99) 99999-9999" id="celular"
+            class="mb-3" styleClass="w-12rem"></p-inputMask>
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('celular')?.hasError('required') && form.get('celular')?.dirty">Campo Obrigatório</small>
+        </div>
+      </div>
+      <div class="w-full flex gap-2">
+        <div>
+          <label for="cep" class="block text-900 font-medium mb-2">Cep <span class="text-red-500">*</span></label>
+          <p-inputMask formControlName="cep" placeholder="99999-999" mask="99999-999" id="cep" class="mb-3"
+            styleClass="w-10rem"></p-inputMask>
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('cep')?.hasError('required') && form.get('cep')?.dirty">Campo Obrigatório</small>
+        </div>
+        <div class="w-4">
+          <label for="logradouro" class="block text-900 font-medium mb-2">Logradouro <span
+              class="text-red-500">*</span></label>
+          <input formControlName="logradouro" placeholder="rua brasileira" pInputText class="w-full mb-3"
+            id="logradouro">
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('logradouro')?.hasError('required') && form.get('logradouro')?.dirty">Campo
+            Obrigatório</small>
+        </div>
+        <div>
+          <label for="numero" class="block text-900 font-medium mb-2">Número <span class="text-red-500">*</span></label>
+          <input type="text" formControlName="numero" placeholder="123" id="numero" pInputText class="w-6rem mb-3">
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('numero')?.hasError('required') && form.get('numero')?.dirty">Campo obrigatório</small>
+        </div>
+      </div>
+
+      <div class="w-full flex gap-2">
+
+        <div class="w-3">
+          <label for="bairro" class="block text-900 font-medium mb-2">Bairro <span class="text-red-500">*</span></label>
+          <input type="text" formControlName="bairro" placeholder="ex: Centro" id="bairro" pInputText
+            class="w-full mb-3">
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('bairro')?.hasError('required') && form.get('bairro')?.dirty">Campo obrigatório</small>
+        </div>
+        <div>
+          <label for="cidade" class="block text-900 font-medium mb-2">Cidade <span class="text-red-500">*</span></label>
+          <input type="text" formControlName="cidade" placeholder="ex: São Paulo" id="cidade" pInputText
+            class="w-full mb-3">
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('cidade')?.hasError('required') && form.get('cidade')?.dirty">Campo obrigatório</small>
+        </div>
+        <div>
+          <label for="estado" class="block text-900 font-medium mb-2">Estado <span class="text-red-500">*</span></label>
+          <input type="text" formControlName="estado" placeholder="ex: SP" id="estado" pInputText class="w-6rem mb-3">
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('estado')?.hasError('required') && form.get('estado')?.dirty">Campo obrigatório</small>
+          <small class="p-0 mb-4 p-error block"
+            *ngIf="form.get('estado')?.hasError('maxlength') && form.get('estado')?.dirty">O campo estado deve ter
+            no máximo 2 caracteres!</small>
+        </div>
+      </div>
+    </form>
+
+
+    <div class="flex gap-2">
+      <p-button class="ml-2" label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right"
+        (onClick)="cancelar()"></p-button>
+      <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="save()"></p-button>
+    </div>
+  </p-card>
+</div>

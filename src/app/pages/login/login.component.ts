@@ -42,7 +42,6 @@ export class LoginComponent {
     this.initForm();
   }
 
-
   changeVisibility() {
     this.setPasswordVisibleIcon == 'pi pi-eye' ? this.setPasswordVisibleIcon = 'pi pi-eye-slash' : this.setPasswordVisibleIcon = 'pi pi-eye';
     this.passwordRef.nativeElement.type = this.setPasswordVisibleIcon == 'pi pi-eye' ? 'text' : 'password';
@@ -67,12 +66,9 @@ export class LoginComponent {
           } else {
             this.messageService.erro('Login', 'Não foi possivel realizar o login, tente novamente mais tarde!');
             this.loading = false;
-            console.log("dentro")
           }
         }, error: (error: HttpErrorResponse) => {
           this.loading = false;
-          this.messageService.erro('Login', `${error ? error.error.error : 'Erro ao tentar realizar o login, entre em contato com o suporte técnico'}`);
-          console.log(error.error.error);
         }
       })
 

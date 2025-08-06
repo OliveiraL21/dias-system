@@ -1,5 +1,6 @@
 <div class="justify-content-center align-item-center h-full mt-5">
   <p-toast position="top-right"></p-toast>
+  <p-confirmDialog></p-confirmDialog>
   <p-blockUI [blocked]="loading">
     <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
       animationDuration=".5s"></p-progressSpinner>
@@ -17,22 +18,21 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Descrição</th>
-          <th>Cliente</th>
-          <th>Data Inicio</th>
-          <th>Data Fim</th>
-          <th>Status</th>
-          <th></th>
+          <th class="text-center">Cliente</th>
+          <th class="text-center">Data Inicio</th>
+          <th class="text-center">Data Fim</th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Ações</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-projeto>
         <tr>
           <td>{{projeto.descricao}}</td>
-          <td>{{projeto.cliente.razaoSocial}}</td>
-          <td>{{projeto.data_Inicio}}</td>
-          <td>{{projeto.data_Fim}}</td>
-          <td>
-            <p-tag *ngIf="projeto.status.descricao == 'Ativo' " [value]="projeto.status.descricao"
-              [severity]="'primary'"></p-tag>
+          <td class="text-center">{{projeto.cliente.razaoSocial}}</td>
+          <td class="text-center">{{projeto.dataInicio | date: 'dd/MM/yyyy'}}</td>
+          <td class="text-center">{{projeto.dataFim | date: 'dd/MM/yyyy'}}</td>
+          <td class="text-center lg:w-2">
+            <p-tag *ngIf="projeto.status.descricao == 'Em andamento' " [value]="projeto.status.descricao"></p-tag>
 
             <p-tag *ngIf="projeto.status.descricao == 'Inatívo' " [value]="projeto.status.descricao"
               [severity]="'warning'"></p-tag>
@@ -49,9 +49,10 @@
             <p-tag *ngIf="projeto.status.descricao == 'Bloqueado' " [value]="projeto.status.descricao"
               [severity]="'danger'"></p-tag>
           </td>
-          <td>
+          <td class="text-center lg:w-2">
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(projeto.id)"></p-button>
-            <p-button icon="pi pi-trash" [text]="true" severity="danger" (onClick)="deletar(projeto.id)"></p-button>
+            <p-button icon="pi pi-trash" [text]="true" severity="danger"
+              (onClick)="deletar($event, projeto.id)"></p-button>
           </td>
         </tr>
       </ng-template>

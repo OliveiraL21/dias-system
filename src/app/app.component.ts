@@ -7,7 +7,8 @@ import { LogoutService } from './services/logout/logout.service';
 import { TokenService } from './services/token-service/token.service';
 import { UsersService } from './services/user-service/user.service';
 import { Usuario } from './models/usuario/usuario';
-import Utils from './common/helpers/utils/utils';
+import { Utils } from './common/helpers/utils/utils';
+
 
 @Component({
   selector: 'app-root',
@@ -18,9 +19,8 @@ import Utils from './common/helpers/utils/utils';
 export class AppComponent {
   value: any = "teste";
   title = 'Gereciador Tarefas Dias';
-  items: MenuItem[] | undefined;
+  items: MegaMenuItem[] | undefined;
   authenticated: boolean = false;
-  utils: Utils = new Utils();
   photo!: any;
   avatarImage: boolean = false;
   loading: boolean = false;
@@ -41,18 +41,13 @@ export class AppComponent {
   }
 
   getUser() {
-    const id = parseInt(localStorage.getItem("Id") ?? "");
+    const id = localStorage.getItem("Id") ?? null;
     if (id) {
       this.userService.details(id).subscribe({
         next: (response: Usuario) => {
           if (response.profileImageUrl) {
-            this.photo = this.utils.convertBase64ToBlob(response.profileImageUrl);
-            if (this.photo) {
-              this.avatarImage = true;
-              this.utils.convertToBase64(this.photo).then(response => {
-                this.photo = response;
-              });
-            }
+            this.photo = response.profileImageUrl;
+            this.avatarImage = true;
           }
         }
       })
@@ -66,31 +61,77 @@ export class AppComponent {
         label: 'Dashboard',
         icon: 'pi pi-chart-bar',
         iconClass: 'text-white',
-        routerLink: 'dashboard'
+        routerLink: 'dashboard',
+        root: true
       },
       {
         label: 'Minha Conta',
         icon: 'pi pi-user',
         iconClass: 'text-white',
-        routerLink: 'minha-conta/'
+        routerLink: 'minha-conta/',
+        root: true
+      },
+      {
+        label: 'Empresa',
+        iconClass: 'text-white',
+        icon: 'pi pi-building',
+        routerLink: 'empresa/',
+        root: true
       },
       {
         label: 'Clientes',
         icon: 'pi pi-users',
         iconClass: 'text-white',
-        routerLink: 'cliente/'
+        routerLink: 'cliente/',
+        root: true
       },
       {
         label: 'Projetos',
         icon: 'pi pi-chart-line',
         iconClass: 'text-white',
-        routerLink: 'projeto/listagem'
+        routerLink: 'projeto/listagem',
+        root: true
       },
       {
         label: 'Tarefas',
         icon: 'pi pi-check-square',
         iconClass: 'text-white',
-        routerLink: 'tarefas/listagem'
+        routerLink: 'tarefas/listagem',
+        root: true
+      },
+      {
+        label: 'Orçamentos',
+        icon: 'pi pi-money-bill',
+        iconClass: 'text-white',
+        root: true,
+        items: [
+          [{
+            label: 'Por Serviço',
+            items: [{
+              label: 'orçamento por Serviço',
+              icon: 'pi pi-clock',
+              routerLink: 'orcamentoPorHora/',
+              root: false,
+            },
+            ]
+          }],
+          [{
+            label: 'Por Projeto',
+            items: [{
+              label: 'orçamento por projeto',
+              icon: 'pi pi-folder',
+              routerLink: 'orcamentoPorProjeto/',
+              root: false,
+            },
+            {
+              label: 'Produtos',
+              icon: 'pi pi-box',
+              routerLink: 'produto/',
+              root: false,
+            }
+            ]
+          }]
+        ]
       },
       {
         label: 'Sair',
@@ -98,7 +139,8 @@ export class AppComponent {
         iconClass: 'text-white',
         command: () => {
           this.logout();
-        }
+        },
+        root: true
       }
     ];
 

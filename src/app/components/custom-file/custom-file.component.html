@@ -1,0 +1,5 @@
+<div class="w-full mt-2 mb-2">
+  <p-fileUpload [multiple]="false" accept="image/*" maxFileSize="10000000" name="profileUserPhoto" chooseLabel="Choose"
+    [showUploadButton]="false" [files]="files" (onSelect)="upload($event)" (onClear)="clear()" (onRemove)="clear()">
+  </p-fileUpload>
+</div>

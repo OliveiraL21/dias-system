@@ -1,5 +1,6 @@
 <div class="justify-content-center align-item-center h-full mt-5">
   <p-toast position="top-right"></p-toast>
+  <p-confirmDialog></p-confirmDialog>
   <p-blockUI [blocked]="loading">
     <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
       animationDuration=".5s"></p-progressSpinner>
@@ -16,7 +17,7 @@
       <ng-template pTemplate="header">
         <tr>
           <th>Razão Social</th>
-          <th>Cnpj</th>
+          <th>Cnpj | Cpf</th>
           <th>Telefone</th>
           <th></th>
         </tr>
@@ -24,12 +25,12 @@
       <ng-template pTemplate="body" let-cliente>
         <tr>
           <td>{{cliente.razaoSocial}}</td>
-          <td>{{cliente.cnpj}}</td>
+          <td>{{cliente.tipo == 'Pessoa Jurídica' ? cliente.cnpj : cliente.cpf}}</td>
           <td>{{cliente.telefone}}</td>
           <td>
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editarCliente(cliente.id)"></p-button>
             <p-button icon="pi pi-trash" [text]="true" severity="danger"
-              (onClick)="deletarCliente(cliente.id)"></p-button>
+              (onClick)="deletarCliente($event, cliente.id)"></p-button>
           </td>
         </tr>
       </ng-template>

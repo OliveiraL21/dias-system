@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { LazyLoadEvent, MenuItem, MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { StatusService } from 'src/app/services/status/status.service';
 import Cliente from 'src/app/models/cliente/cliente';
 import { Projeto } from 'src/app/models/projeto/projeto';
 import { Status } from 'src/app/models/status/status';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
+import { Tarefa } from 'src/app/models/tarefa/tarefa';
+import { TarefaService } from 'src/app/services/tarefas/tarefa.service';
+import { TableLazyLoadEvent } from 'primeng/table';
+import { ReportService } from 'src/app/services/report/report.service';
+import { Utils } from 'src/app/common/helpers/utils/utils';
 
 @Component({
   selector: 'app-cadastro-projeto',
@@ -24,11 +30,95 @@ export class CadastroProjetoComponent {
   clientes: Cliente[] = [];
   status: Status[] = [];
   projeto: any;
+  tarefas: Tarefa[] = [];
+  calcularButtonItems: MenuItem[];
+  total: number = 0;
+  rows?: number = 10;
+  showDialog: boolean = false;
+  formCalculoPeriodo!: FormGroup;
 
-  constructor(private fb: FormBuilder, private messageService: MessageService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService) { }
 
-  show(type: string, title: string, message: string) {
-    this.messageService.add({ severity: type, summary: title, detail: message });
+  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService, private service: ProjetoService, private statusService: StatusService, private tarefaService: TarefaService, private reportService: ReportService) {
+    this.calcularButtonItems = [
+      {
+        label: 'Calcular por periodo',
+        icon: 'pi pi-calendar',
+        styleClass: 'calulatorButton',
+        command: () => {
+          this.calculoPorPeriodo();
+        }
+      },
+      {
+        label: 'Calculo total do projeto',
+        icon: 'pi pi-calculator',
+        command: () => {
+          this.calculoTotalProjeto();
+        }
+      }
+    ]
+  }
+
+  calculoTotalProjeto() {
+    this.loading = true;
+    this.reportService.servicosPrestados(this.id).subscribe({
+      next: (response: Blob) => {
+        const a = document.createElement('a');
+        const objectUrl = URL.createObjectURL(response);
+        a.href = objectUrl;
+        a.download = `servicos_prestados.pdf`;
+        a.click();
+        URL.revokeObjectURL(objectUrl);
+        this.messageService.sucesso('Relatório de Serviços Prestados', 'Relatório gerado com sucesso!');
+        this.loading = false;
+      }, error: (error: any) => {
+        this.loading = false;
+      }
+    })
+  }
+
+  onCloseDialog() {
+    this.showDialog = false;
+    this.formCalculoPeriodo.reset();
+  }
+
+  calcularTarefasPorPeriodo() {
+    this.loading = true;
+    if (this.formCalculoPeriodo.valid) {
+      const data = this.formCalculoPeriodo.value;
+
+      this.reportService.servicosPrestadosPeriodo(this.id, new Date(data.dataInicio).toISOString(), new Date(data.dataFim).toISOString()).subscribe({
+        next: (response: Blob) => {
+          const a = document.createElement('a');
+          const objectUrl = URL.createObjectURL(response);
+          a.href = objectUrl;
+          a.download = `servicos_por_periodo.pdf`;
+          a.click();
+          URL.revokeObjectURL(objectUrl);
+          this.messageService.sucesso('Relatório de Tarefas por Período', 'Relatório gerado com sucesso!');
+          this.loading = false;
+          this.onCloseDialog();
+        }, error: (error: any) => {
+          this.loading = false;
+          this.messageService.erro('Erro ao gerar relatório', `${error.error.error}`);
+        }
+      })
+    } else {
+      this.messageService.erro('Erro ao gerar relatório', 'Preencha todos os campos obrigatórios');
+      Utils.getRequiredFieldsInvalid(this.formCalculoPeriodo);
+      this.loading = false;
+    }
+  }
+
+  calculoPorPeriodo() {
+    this.showDialog = true;
+    this.formCalculoPeriodo.reset();
+  }
+
+  initFormCalculoPeriodo() {
+    this.formCalculoPeriodo = this.fb.group({
+      dataInicio: [null, [Validators.required]],
+      dataFim: [null, [Validators.required]],
+    });
   }
 
   initForm() {
@@ -52,6 +142,27 @@ export class CadastroProjetoComponent {
     })
   }
 
+  getTarefas(lazyEvent: TableLazyLoadEvent) {
+    this.total = 0;
+    let pageNumber = lazyEvent.first === 0 || lazyEvent.first === undefined ? 0 : lazyEvent.first / (lazyEvent.rows == undefined ? 1 : lazyEvent.rows) + 1;
+    this.rows = lazyEvent.rows === null ? 10 : lazyEvent.rows;
+    this.tarefaService.getByProjeto(pageNumber, this.rows ?? 10, this.id).subscribe({
+      next: (response: any) => {
+        this.tarefas = response.data.map((tarefa: Tarefa) => ({
+          ...tarefa,
+          horaInicio: tarefa.horarioInicio ? tarefa.horarioInicio.substring(11, 16) : '--:--',
+          horaFim: tarefa.horarioFim ? tarefa.horarioFim.substring(11, 16) : '--:--',
+          duracao: tarefa.duracao ? tarefa.duracao.substring(11, 16) : '--:--'
+        }));
+        this.total = response.total;
+      },
+      error: (error: any) => {
+        this.messageService.erro('Erro ao carregar tarefas', `${error.error.error}`);
+      }
+    })
+
+  }
+
   getStatus() {
     this.statusService.listaTodos().subscribe({
       next: (response: Status[]) => {
@@ -73,8 +184,9 @@ export class CadastroProjetoComponent {
           this.loading = false;
         },
         error: (error: any) => {
-          this.show('error', this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do projeto, tente novamente mais tarde!'}`);
           this.loading = false;
+          this.messageService.erro(this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do projeto, tente novamente mais tarde!'}`);
+
         }
       });
     }
@@ -83,21 +195,25 @@ export class CadastroProjetoComponent {
   preencherFormulario() {
     if (this.id) {
       Object.keys(this.projeto).forEach((key: string) => {
-        this.form.get(key)?.setValue(key.includes('data') ? new Date(this.projeto[key]) : this.projeto[key]);
+        this.form.get(key)?.setValue(this.projeto[key]);
       });
 
-      this.form.get('cliente')?.setValue(this.projeto.clienteId);
-      this.form.get('status')?.setValue(this.projeto.statusId);
+      this.form.get('cliente')?.setValue(this.projeto.cliente.id);
+      this.form.get('status')?.setValue(this.projeto.status.id);
     }
     console.log(this.clientes);
   }
 
   ngOnInit() {
     this.initForm();
+    this.initFormCalculoPeriodo();
     this.getClientes();
     this.getStatus();
     this.getDetail();
     this.id ? this.title = 'Editar Projeto' : 'Cadastro de Projeto';
+    if (this.id) {
+      this.getTarefas({ first: 0, rows: this.rows } as LazyLoadEvent);
+    }
   }
 
   save() {
@@ -121,12 +237,12 @@ export class CadastroProjetoComponent {
       if (!this.id) {
         this.service.create(projeto).subscribe({
           next: (response: Projeto) => {
-            this.show('success', 'Cadastro de Projeto', 'Projeto Cadastrado com sucesso!');
             this.loading = false;
+            this.messageService.sucesso('Cadastro de Projeto', 'Projeto Cadastrado com sucesso!');
             setTimeout(() => { this.router.navigateByUrl('projeto/listagem') }, 100);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
+            this.messageService.erro(this.title, `${error.error.error}`);
             this.loading = false;
           }
         })
@@ -134,26 +250,25 @@ export class CadastroProjetoComponent {
         this.title == 'Cadastro de Projeto' ? 'Editar Projeto' : 'Cadastro de Projeto';
         this.service.update(this.id, projeto).subscribe({
           next: (response: Projeto) => {
-            this.show('success', this.title, 'Projeto Cadastrado com sucesso!');
+            this.messageService.sucesso(this.title, 'Projeto Cadastrado com sucesso!');
             this.loading = false;
             setTimeout(() => { this.router.navigateByUrl('projeto/listagem') }, 100);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
             this.loading = false;
+            this.messageService.erro(this.title, `${error.error.error}`);
           }
         });
       }
     } else {
-      this.show('error', 'Cadastro de Projeto', 'Preencha todos os campos obrigatórios');
-      Object.values(this.form.controls).forEach((control: AbstractControl) => {
-        if (control.hasError('required') && control.invalid) {
-          control.markAsDirty();
-          control.updateValueAndValidity();
-        }
-      });
+      this.messageService.erro('Cadastro de Projeto', 'Preencha todos os campos obrigatórios');
+      Utils.getRequiredFieldsInvalid(this.form);
       this.loading = false;
     }
+  }
+
+  editarTarefa(id: string) {
+    this.router.navigateByUrl(`tarefas/editar/${id}`);
   }
 
   cancelar() {

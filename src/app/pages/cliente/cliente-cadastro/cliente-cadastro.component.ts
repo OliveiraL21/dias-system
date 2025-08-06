@@ -4,7 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import Cliente from 'src/app/models/cliente/cliente';
+import { MensagemService } from 'src/app/services/message/Mensagem.service';
 
+interface TipoCliente {
+  descricao: string;
+};
 @Component({
   selector: 'app-cliente-cadastro',
   templateUrl: './cliente-cadastro.component.html',
@@ -18,22 +22,30 @@ export class ClienteCadastroComponent {
   id: any = this.activatedRouter.snapshot.paramMap.get('id');
   title: string = 'Cadastro de Cliente';
   cliente: any;
-
-  constructor(private fb: FormBuilder, private messageService: MessageService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService) { }
+  tiposCliente: TipoCliente[] = [
+    { descricao: 'Pessoa Física' },
+    { descricao: 'Pessoa Jurídica' }
+  ]
+  changeViewCpfCnpj?: string;
+  constructor(private fb: FormBuilder, private messageService: MensagemService, private router: Router, private activatedRouter: ActivatedRoute, private clienteService: ClienteService) { }
 
   initForm() {
     this.form = this.fb.group({
       razaoSocial: [null, [Validators.required]],
-      cnpj: [null, [Validators.required]],
+      tipo: [null, [Validators.required]],
+      cnpj: [null, null],
+      cpf: [null, null],
       telefone: [null, [Validators.required]],
-      celular: [null, [Validators.required]],
-      email: [null, [Validators.required, Validators.email]]
+      celular: [null, null],
+      email: [null, [Validators.required, Validators.email]],
+      logradouro: [null, [Validators.required]],
+      numero: [null, [Validators.required]],
+      bairro: [null, [Validators.required]],
+      cep: [null, null],
+      cidade: [null, [Validators.required]],
     })
   }
 
-  show(type: string, title: string, message: string) {
-    this.messageService.add({ severity: type, summary: title, detail: message });
-  }
 
   cancelar() {
     this.router.navigateByUrl('cliente');
@@ -49,7 +61,7 @@ export class ClienteCadastroComponent {
           this.loading = false;
         },
         error: (error: any) => {
-          this.show('error', this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do cliente, tente novamente mais tarde!'}`);
+          this.messageService.erro(this.title, `${error.error.error ? error.error.error : 'Erro ao consultar os dados do cliente, tente novamente mais tarde!'}`);
           this.loading = false;
         }
       });
@@ -64,6 +76,36 @@ export class ClienteCadastroComponent {
     }
   }
 
+  tipoClienteChange() {
+    this.changeCPFCNPJValidator();
+
+  }
+
+  changeCPFCNPJValidator() {
+    if (this.form.get('tipo')?.value === 'Pessoa Física') {
+      this.form.get('cnpj')?.clearValidators();
+      this.form.get('cpf')?.setValidators([Validators.required]);
+      this.form.get('cnpj')?.updateValueAndValidity();
+      this.form.get('cpf')?.updateValueAndValidity();
+      this.changeViewCpfCnpj = "Pessoa Física";
+    } if (this.form.get('tipo')?.value === 'Pessoa Jurídica') {
+      this.form.get('cpf')?.clearValidators();
+      this.form.get('cnpj')?.setValidators([Validators.required]);
+      this.form.get('cpf')?.updateValueAndValidity();
+      this.form.get('cnpj')?.updateValueAndValidity();
+      this.changeViewCpfCnpj = "Pessoa Jurídica";
+    }
+    if (this.form.get('tipo')?.value === null) {
+      this.form.get('cnpj')?.clearValidators();
+      this.form.get('cpf')?.clearValidators();
+      this.form.get('cnpj')?.updateValueAndValidity();
+      this.form.get('cpf')?.updateValueAndValidity();
+      this.changeViewCpfCnpj = undefined;
+    }
+  }
+
+
+
   ngOnInit() {
     this.initForm();
     this.getDetail();
@@ -76,16 +118,17 @@ export class ClienteCadastroComponent {
       const data = this.form.value;
       let cliente: Cliente = new Cliente();
       cliente = data;
+      cliente.id = this.id;
 
       if (!this.id) {
         this.clienteService.create(cliente).subscribe({
           next: (response: Cliente) => {
-            this.show('success', 'Cadastro de Cliente', 'Cliente Cadastrado com sucesso!');
+            this.messageService.sucesso('Cadastro de Cliente', 'Cliente Cadastrado com sucesso!');
             this.loading = false;
             setTimeout(() => { this.router.navigateByUrl('cliente') }, 1000);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
+            this.messageService.erro(this.title, `${error.error.error}`);
             this.loading = false;
           }
         })
@@ -93,18 +136,18 @@ export class ClienteCadastroComponent {
         this.title == 'Cadastro de Cliente' ? 'Editar Cliente' : 'Cadastro de Cliente';
         this.clienteService.update(this.id, cliente).subscribe({
           next: (response: Cliente) => {
-            this.show('success', this.title, 'Cliente Cadastrado com sucesso!');
+            this.messageService.sucesso(this.title, 'Cliente Editado com sucesso!');
             this.loading = false;
             setTimeout(() => { this.router.navigateByUrl('cliente') }, 2000);
           },
           error: (error: any) => {
-            this.show('error', this.title, `${error.error.error}`);
+            this.messageService.sucesso(this.title, `${error.error.error}`);
             this.loading = false;
           }
         });
       }
     } else {
-      this.show('error', 'Cadastro de Cliente', 'Preencha todos os campos obrigatórios');
+      this.messageService.erro('Cadastro de Cliente', 'Preencha todos os campos obrigatórios');
       Object.values(this.form.controls).forEach((control: AbstractControl) => {
         if (control.hasError('required') && control.invalid) {
           control.markAsDirty();

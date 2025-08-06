@@ -37,15 +37,15 @@ export class DashboardComponent {
   }
 
   getProjetos() {
-    this.projetoService.listaSimples().subscribe({
+    this.projetoService.listaDashboardProjects().subscribe({
       next: (response: any[]) => {
-        this.projetos = response;
+        this.projetos = response.filter((projeto: Projeto) => projeto.status?.descricao == "Em andamento");
       }
     })
   }
 
-  getProjectTasks(projeto: number) {
-    if (projeto && projeto > 0) {
+  getProjectTasks(projeto: string) {
+    if (projeto) {
       this.tarefasService.listByProjeto(projeto).subscribe({
         next: (tarefas: any) => {
           this.tarefas = tarefas;

@@ -1,0 +1,14 @@
+<div class="w-full mb-5" [formGroup]="form">
+  <p-floatLabel class="w-full">
+    <input type="text" pInputText [formControlName]="controlData.controlName" class="w-full"
+      *ngIf="controlData.mask === '' || controlData.mask === undefined">
+    <p-inputMask [mask]="controlData.mask" [formControlName]="controlData.controlName" *ngIf="controlData.mask"
+      class="w-full" styleClass="w-full"></p-inputMask>
+    <label [for]="controlData.forLabel"><span *ngIf="controlData.required"
+        class="text-red-600 mr-1">*</span>{{controlData.label}}</label>
+  </p-floatLabel>
+  <small *ngIf="form.get(controlData.controlName)?.hasError('required') && form.get(controlData.controlName)?.dirty"
+    class="p-0 mb-4 mt-2 p-error block">
+    Campo obrigatório
+  </small>
+</div>
