@@ -44,7 +44,7 @@ export class OrcamentoHoraListagemComponent {
         this.orcamentos = response.map((orcamento: OrcamentoHora) => ({
           ...orcamento,
           createAt: new Date(parseInt(orcamento.createAt?.toString()?.split('-')[0] ?? '2025'), parseInt(orcamento.createAt?.toString().split('-')[1] ?? '07') - 1, parseInt(orcamento.createAt?.toString()?.split('-')[2] ?? '22')).toLocaleDateString(),
-        }));
+        })).sort((a: OrcamentoHora, b: OrcamentoHora) => a.numero < b.numero ? 1 : -1);
         this.loading = false;
       }, error: (error: HttpErrorResponse) => {
         this.loading = false;
@@ -90,7 +90,7 @@ export class OrcamentoHoraListagemComponent {
         this.orcamentos = response.map((orcamento: OrcamentoHora) => ({
           ...orcamento,
           createAt: new Date(parseInt(orcamento.createAt?.toString()?.split('-')[0] ?? '2025'), parseInt(orcamento.createAt?.toString().split('-')[1] ?? '07') - 1, parseInt(orcamento.createAt?.toString()?.split('-')[2] ?? '22')).toLocaleDateString(),
-        }));
+        })).sort((a: OrcamentoHora, b: OrcamentoHora) => a.numero < b.numero ? 1 : -1);
         this.loading = false;
       }, error: (error: HttpErrorResponse) => {
         this.loading = false;
