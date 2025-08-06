@@ -3,6 +3,8 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow } = require("electron");
 const path = require("path");
+app.commandLine.appendSwitch('high-dpi-support', 'true');
+app.commandLine.appendSwitch('force-device-scale-factor', '1');
 
 const createWindow = () => {
   // Create the browser window.
