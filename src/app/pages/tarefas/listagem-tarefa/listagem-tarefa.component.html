@@ -37,7 +37,8 @@
           <td class="text-center">{{ tarefa.data | date : "dd/MM/yyyy" }}</td>
           <td class="w-12rem">{{tarefa.projeto?.descricao}}</td>
           <td class="text-center lg:w-7rem">
-            <p-tag *ngIf="tarefa.status.descricao == 'Em Andamento' " [value]="tarefa.status.descricao"></p-tag>
+            <p-tag *ngIf="tarefa.status.descricao == 'Ativo'" [value]="tarefa.status.descricao"></p-tag>
+            <p-tag *ngIf="tarefa.status.descricao == 'Em andamento' " [value]="tarefa.status.descricao"></p-tag>
 
             <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " [value]="tarefa.status.descricao"
               [severity]="'warning'"></p-tag>
