@@ -14,7 +14,7 @@ export class ClienteService {
 
   constructor(private http: HttpClient) { }
 
-  filtrar(razaoSocial: string, cnpj: string): Observable<Cliente[]> {
+  filtrar(razaoSocial: string, cnpj: string, cpf: string): Observable<Cliente[]> {
     let param = new HttpParams();
     if (razaoSocial) {
       param = param.set('razaoSocial', razaoSocial);
@@ -22,6 +22,10 @@ export class ClienteService {
 
     if (cnpj) {
       param = param.set('cnpj', cnpj);
+    }
+
+    if (cpf) {
+      param = param.set('cpf', cpf);
     }
 
     return this.http.get<Cliente[]>(`${url}/filtrar`, { params: param });

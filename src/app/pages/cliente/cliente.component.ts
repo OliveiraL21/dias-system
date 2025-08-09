@@ -28,6 +28,7 @@ export class ClienteComponent {
     return [
       new CustomFilter('razaoSocial', 'text', 'Informe a razão social', 'Razão Social'),
       new CustomFilter('cnpj', 'cnpj', '00.000.000/0000-00', 'Cnpj', '99.999.999/9999-99'),
+      new CustomFilter('cpf', 'cpf', '000.000.000-00', 'Cpf', '999.999.999-99')
     ]
   }
 
@@ -36,7 +37,7 @@ export class ClienteComponent {
       this.loading = true;
       console.log(data);
       data.cnpj = data.cnpj ? data.cnpj.replace('/', '-') : data.cnpj;
-      this.clienteService.filtrar(data.razaoSocial, data.cnpj).subscribe({
+      this.clienteService.filtrar(data.razaoSocial, data.cnpj, data.cpf).subscribe({
         next: (response: Cliente[]) => {
           this.clients = response;
           this.loading = false;
