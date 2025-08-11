@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { TarefaService } from 'src/app/services/tarefas/tarefa.service';
@@ -21,8 +21,42 @@ export class ListagemTarefaComponent {
   loading: boolean = false;
   tarefas: TarefaListagem[] = [];
   projetos: ProjetoListagem[] = [];
+  finalizarSplitButtonItems: MenuItem[] = [];
 
-  constructor(private projetoService: ProjetoService, private service: TarefaService, private messageService: MensagemService, private confirmationService: ConfirmationService, private router: Router) { }
+  constructor(private projetoService: ProjetoService, private service: TarefaService, private messageService: MensagemService, private confirmationService: ConfirmationService, private router: Router) {
+    this.finalizarSplitButtonItems = [
+      {
+        label: 'Bloquear',
+        icon: 'pi pi-lock',
+        tooltipOptions: {
+          tooltipLabel: 'Bloquear tarefa',
+        },
+        command: () => {
+
+        }
+      },
+      {
+        label: 'Inativar',
+        tooltipOptions: {
+          tooltipLabel: 'Inativar tarefa',
+        },
+        icon: 'pi pi-ban',
+        command: () => {
+
+        }
+      },
+      {
+        label: 'Finalizar',
+        icon: 'pi pi-check',
+        tooltipOptions: {
+          tooltipLabel: 'Finalizar tarefa',
+        },
+        command: () => {
+
+        }
+      }
+    ]
+  }
 
 
   getCustomFilter(): CustomFilter[] {

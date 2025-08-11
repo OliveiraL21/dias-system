@@ -39,6 +39,7 @@ import { InputPasswordComponent } from 'src/app/components/input-password/input-
 import { SelectComponent } from 'src/app/components/select/select.component';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { SpeedDialModule } from 'primeng/speeddial';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     DialogModule,
     MegaMenuModule,
     FloatLabelModule,
-    InputNumberModule
+    InputNumberModule,
+    SpeedDialModule,
   ],
 
   exports: [
@@ -131,7 +133,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     InputNumberComponent,
     CustomFileComponent,
     FloatLabelModule,
-    InputNumberModule
+    InputNumberModule,
+    SpeedDialModule,
   ]
 })
 export class ShareModuleModule { }
