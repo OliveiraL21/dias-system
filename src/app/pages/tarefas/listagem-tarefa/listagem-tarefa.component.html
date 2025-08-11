@@ -56,13 +56,9 @@
               [severity]="'danger'"></p-tag>
           </td>
           <td class="flex justify-content-center gap-2s text-center lg:w-8rem">
-
-            <button pButton type="button" icon="pi pi-ellipsis-v" (click)="menu.toggle($event)"
-              class="p-button-text p-button-rounded p-button-sm">
-            </button>
-
-            <p-menu #menu [popup]="true" [model]="finalizarSplitButtonItems"></p-menu>
-
+            <p-button [text]="true" icon="pi pi-ellipsis-v" (click)="menu.toggle($event)">
+            </p-button>
+            <p-tieredMenu #menu [popup]="true" [model]="finalizarSplitButtonItems" [pop] />
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(tarefa.id)"></p-button>
             <p-button icon="pi pi-trash" [text]="true" severity="danger"
               (onClick)="deletar($event, tarefa.id)"></p-button>
