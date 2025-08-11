@@ -40,6 +40,7 @@ import { SelectComponent } from 'src/app/components/select/select.component';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { TieredMenuModule } from 'primeng/tieredmenu';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
     FloatLabelModule,
     InputNumberModule,
     SpeedDialModule,
+    TieredMenuModule,
   ],
 
   exports: [
@@ -135,6 +137,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
     FloatLabelModule,
     InputNumberModule,
     SpeedDialModule,
+    TieredMenuModule,
   ]
 })
 export class ShareModuleModule { }
