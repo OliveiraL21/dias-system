@@ -59,6 +59,18 @@ export class ListagemTarefaComponent {
   }
 
 
+  updateTarefaStatus(id: string, tarefa: Tarefa) {
+    this.loading = true;
+    this.service.update(id, tarefa).subscribe({
+      next: (response: any) => {
+        this.messageService.sucesso('Tarefas', ``);
+        this.loading = false;
+      }, error: (error: any) => {
+        this.loading = false;
+      }
+    })
+  }
+
   getCustomFilter(): CustomFilter[] {
     return [
       new CustomFilter('descricao', 'text', 'Informe a descrição da tarefa', 'Tarefa'),
