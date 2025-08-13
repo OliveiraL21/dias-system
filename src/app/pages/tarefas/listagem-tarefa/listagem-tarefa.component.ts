@@ -10,6 +10,10 @@ import { Tarefa, TarefaListagem } from 'src/app/models/tarefa/tarefa';
 import { CustomFilter } from 'src/app/models/customFilter/customFilter';
 import { formatDate } from 'date-fns';
 import { MensagemService } from 'src/app/services/message/Mensagem.service';
+import { Status } from 'src/app/models/status/status';
+import { StatusService } from 'src/app/services/status/status.service';
+
+
 
 @Component({
   selector: 'app-listagem-tarefa',
@@ -22,8 +26,10 @@ export class ListagemTarefaComponent {
   tarefas: TarefaListagem[] = [];
   projetos: ProjetoListagem[] = [];
   finalizarSplitButtonItems: MenuItem[] = [];
+  selectedTarefa: Tarefa | null = null;
+  status: Status[] = [];
 
-  constructor(private projetoService: ProjetoService, private service: TarefaService, private messageService: MensagemService, private confirmationService: ConfirmationService, private router: Router) {
+  constructor(private projetoService: ProjetoService, private service: TarefaService, private messageService: MensagemService, private confirmationService: ConfirmationService, private router: Router, private statusService: StatusService) {
     this.finalizarSplitButtonItems = [
       {
         label: 'Bloquear',
@@ -32,7 +38,8 @@ export class ListagemTarefaComponent {
           tooltipLabel: 'Bloquear tarefa',
         },
         command: () => {
-
+          this.selectedTarefa!.status = this.setStatus('Bloqueado', this.selectedTarefa!);
+          this.updateTarefaStatus(this.selectedTarefa?.id ?? '', this.selectedTarefa!, 'Bloqueada');
         }
       },
       {
@@ -42,7 +49,8 @@ export class ListagemTarefaComponent {
         },
         icon: 'pi pi-ban',
         command: () => {
-
+          this.selectedTarefa!.status = this.setStatus('Inativo', this.selectedTarefa!);
+          this.updateTarefaStatus(this.selectedTarefa?.id ?? '', this.selectedTarefa!, 'Inativada');
         }
       },
       {
@@ -52,21 +60,48 @@ export class ListagemTarefaComponent {
           tooltipLabel: 'Finalizar tarefa',
         },
         command: () => {
-
+          this.selectedTarefa!.status = this.setStatus('Finalizado', this.selectedTarefa!);
+          console.log(this.selectedTarefa);
+          this.updateTarefaStatus(this.selectedTarefa?.id ?? '', this.selectedTarefa!, 'Finalizada');
         }
       }
     ]
   }
 
+  getStatus() {
+    this.statusService.listaTodos().subscribe({
+      next: (response: Status[]) => {
+        this.status = response;
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    })
+  }
 
-  updateTarefaStatus(id: string, tarefa: Tarefa) {
+  setStatus(statusNovo: string, tarefa: Tarefa): Status | null {
+    if (statusNovo) {
+      let s = this.status.find(s => s.descricao === statusNovo);
+      return s ?? tarefa.status;
+    }
+    return tarefa.status;
+  }
+
+  openPopupTarefa(event: MouseEvent, tarefa: Tarefa, menu: any) {
+    this.selectedTarefa = tarefa;
+    menu.toggle(event);
+  }
+
+  updateTarefaStatus(id: string, tarefa: Tarefa, statusMessage: string) {
     this.loading = true;
     this.service.update(id, tarefa).subscribe({
       next: (response: any) => {
-        this.messageService.sucesso('Tarefas', ``);
+        this.messageService.sucesso('Tarefas', `Tarefa ${statusMessage} com sucesso!`);
+        this.listarTarefas();
         this.loading = false;
       }, error: (error: any) => {
         this.loading = false;
+        this.messageService.erro('Tarefas', `Não foi possível alterar a tarefa, tente novamente mais tarde!`);
       }
     })
   }
@@ -207,5 +242,6 @@ export class ListagemTarefaComponent {
   ngOnInit() {
     this.listarTarefas();
     this.getProjetos();
+    this.getStatus();
   }
 }

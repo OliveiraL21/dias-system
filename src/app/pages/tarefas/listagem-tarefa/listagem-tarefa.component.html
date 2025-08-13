@@ -40,7 +40,7 @@
             <p-tag *ngIf="tarefa.status.descricao == 'Ativo'" [value]="tarefa.status.descricao"></p-tag>
             <p-tag *ngIf="tarefa.status.descricao == 'Em andamento' " [value]="tarefa.status.descricao"></p-tag>
 
-            <p-tag *ngIf="tarefa.status.descricao == 'Inatívo' " class="text-center" [value]="tarefa.status.descricao"
+            <p-tag *ngIf="tarefa.status.descricao == 'Inativo' " class="text-center" [value]="tarefa.status.descricao"
               [severity]="'warning'"></p-tag>
 
             <p-tag *ngIf="tarefa.status.descricao == 'Excluído' " class="text-center" [value]="tarefa.status.descricao"
@@ -59,7 +59,7 @@
             <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(tarefa.id)"></p-button>
             <p-button icon="pi pi-trash" [text]="true" severity="danger"
               (onClick)="deletar($event, tarefa.id)"></p-button>
-            <p-button [text]="true" icon="pi pi-ellipsis-v" (click)="menu.toggle($event)">
+            <p-button [text]="true" icon="pi pi-ellipsis-v" (click)="openPopupTarefa($event, tarefa, menu)">
             </p-button>
           </td>
         </tr>

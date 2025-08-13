@@ -3,7 +3,7 @@ import { Projeto } from '../projeto/projeto';
 import { Status } from '../status/status';
 
 export class Tarefa {
-  id?: number;
+  id?: string;
   data: string | null = null;
   horarioInicio: any | null = null;
   horarioFim: any | null = null;
@@ -15,7 +15,7 @@ export class Tarefa {
 }
 
 export class TarefaListagem {
-  id?: number;
+  id?: string;
   data: Date | null = null;
   horarioInicio: any | null = null;
   horarioFim: any | null = null;
