@@ -34,6 +34,7 @@ export class OrcamentoHoraCadastroComponent {
   clientes: Cliente[] = [];
   empresas: Empresa[] = [];
   isCalculated: boolean = false;
+  disableCalculoServico: boolean = true;
 
 
   constructor(private fb: FormBuilder, private service: OrcamentoHoraService, private clienteService: ClienteService, private empresaService: EmpresaService, private router: Router, private activatedRouter: ActivatedRoute, private confirmationService: ConfirmationService, private messageService: MensagemService, private servicoService: ServicoService) { }
@@ -94,7 +95,7 @@ export class OrcamentoHoraCadastroComponent {
       clienteId: [null, [Validators.required]],
       valorTotal: [null, null],
       valorHora: [null, [Validators.required]],
-      tempoDeEntrega: [null, null],
+      tempoDeEntrega: [{ disabled: true, value: null }, null],
       servicos: this.fb.array([])
     })
   }
@@ -111,8 +112,20 @@ export class OrcamentoHoraCadastroComponent {
     })
   }
 
+  habilitarCalculoDeEntrega() {
+    this.disableCalculoServico = false;
+    this.form.get('tempoDeEntrega')?.enable();
+  }
+
+  desabilitarCalculoDeEntrega() {
+    this.disableCalculoServico = true;
+    this.form.get('tempoDeEntrega')?.reset();
+    this.form.get('tempoDeEntrega')?.disable();
+  }
+
   adicionarServico() {
     this.servicosFormArray?.push(this.createServico());
+    this.habilitarCalculoDeEntrega();
   }
 
   removerServico(event: Event, i: number) {
@@ -132,12 +145,18 @@ export class OrcamentoHoraCadastroComponent {
             next: (response: boolean) => {
               this.messageService.sucesso('Serviço', 'Serviço excluido com sucesso!');
               this.servicosFormArray.removeAt(i);
+              if (this.servicosFormArray.length == 0) {
+                this.desabilitarCalculoDeEntrega();
+              }
               this.loading = false;
             }
           })
         } else {
-          this.servicosFormArray.removeAt(i),
-            this.loading = false;
+          this.servicosFormArray.removeAt(i);
+          if (this.servicosFormArray.length == 0) {
+            this.desabilitarCalculoDeEntrega();
+          }
+          this.loading = false;
         }
       },
     })
@@ -177,6 +196,7 @@ export class OrcamentoHoraCadastroComponent {
       }
     })
   }
+
 
   ngOnInit() {
     this.initForm();
@@ -251,14 +271,19 @@ export class OrcamentoHoraCadastroComponent {
 
   calcularTempoDeEntrega() {
     this.loading = true;
-    if (this.servicosFormArray.getRawValue().length > 0) {
-      let servicos = this.servicosFormArray.getRawValue();
-      let total = 0;
-      servicos.forEach((servico: Servico) => {
-        total += parseFloat(servico.quantidadeHora);
-      });
+    if (this.servicosFormArray.valid) {
+      if (this.servicosFormArray.getRawValue().length > 0) {
+        let servicos = this.servicosFormArray.getRawValue();
+        let total = 0;
+        servicos.forEach((servico: Servico) => {
+          total += parseFloat(servico.quantidadeHora);
+        });
 
-      this.form.get('tempoDeEntrega')?.setValue(`${total / 4} dias`);
+        this.form.get('tempoDeEntrega')?.setValue(`${total / 4} dias`);
+        this.loading = false;
+      }
+    } else {
+      this.messageService.erro('Error', 'Por favor preencha todos os campos obrigatórios dos serviços.');
       this.loading = false;
     }
   }

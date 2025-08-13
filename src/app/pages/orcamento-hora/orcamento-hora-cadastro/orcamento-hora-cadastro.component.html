@@ -48,8 +48,8 @@
     <div class="w-full flex gap-2">
       <p-button class="ml-2" label="Cancelar" severity="danger" icon="pi pi-times" iconPos="right"
         (onClick)="cancelar()"></p-button>
-      <p-button label="Calcular Entrega" icon="pi pi-calculator" iconPos="right" (onClick)="calcularTempoDeEntrega()"
-        severity="success"></p-button>
+      <p-button [disabled]="disableCalculoServico" label="Calcular Entrega" icon="pi pi-calculator" iconPos="right"
+        (onClick)="calcularTempoDeEntrega()" severity="success"></p-button>
       <p-button label="Salvar" icon="pi pi-save" iconPos="right" (onClick)="salvar()"></p-button>
 
     </div>

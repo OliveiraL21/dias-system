@@ -38,7 +38,7 @@ export class OrcamentoPorProjetoCadastroComponent {
   produtos: Produto[] = [];
   listOfProdutos: any[] = [];
   produtoSelecionado?: Produto;
-
+  disableCalculoProduto: boolean = true;
   constructor(private fb: FormBuilder, private router: Router, private activeRouter: ActivatedRoute, private service: OrcamentoPorProjetoService, private messageService: MensagemService, private empresaService: EmpresaService, private clienteService: ClienteService, private produtoService: ProdutoService, private confirmationService: ConfirmationService, private produtoOrcamentoService: ProdutoOrcamentoService) { }
 
   getProdutoDescrition(id: string): string {
@@ -185,7 +185,16 @@ export class OrcamentoPorProjetoCadastroComponent {
     return this.form.get('produtos') as FormArray;
   }
 
+  habilitarCalculoDeEntrega() {
+    this.disableCalculoProduto = false;
+    this.form.get('tempoDeEntrega')?.enable();
+  }
 
+  desabilitarCalculoDeEntrega() {
+    this.disableCalculoProduto = true;
+    this.form.get('tempoDeEntrega')?.reset();
+    this.form.get('tempoDeEntrega')?.disable();
+  }
 
   adicionarProduto() {
     var formG = this.fb.group({
@@ -196,6 +205,9 @@ export class OrcamentoPorProjetoCadastroComponent {
       valorUnitario: [null, null]
     });
     this.ProdutoOrcamento?.push(formG);
+    if (this.ProdutoOrcamento.length > 0) {
+      this.habilitarCalculoDeEntrega();
+    }
   }
 
   removerProduto(event: Event, i: number) {
@@ -210,11 +222,13 @@ export class OrcamentoPorProjetoCadastroComponent {
       accept: () => {
         this.loading = true;
         let id = this.ProdutoOrcamento.at(i)?.get('id')?.value;
-        console.log(id);
         if (id) {
           this.produtoOrcamentoService.delete(id).subscribe({
             next: (response: boolean) => {
               this.ProdutoOrcamento?.removeAt(i);
+              if (this.ProdutoOrcamento.length == 0) {
+                this.desabilitarCalculoDeEntrega();
+              }
               this.loading = false;
             }, error: (error: HttpErrorResponse) => {
               this.loading = false;
@@ -222,6 +236,9 @@ export class OrcamentoPorProjetoCadastroComponent {
           })
         } else {
           this.ProdutoOrcamento?.removeAt(i);
+          if (this.ProdutoOrcamento.length == 0) {
+            this.desabilitarCalculoDeEntrega();
+          }
           this.loading = false;
         }
       },
@@ -236,7 +253,7 @@ export class OrcamentoPorProjetoCadastroComponent {
       clienteId: [null, [Validators.required]],
       valorTotal: [null, null],
       createAt: [null, null],
-      tempoDeEntrega: [null, null],
+      tempoDeEntrega: [{ disabled: true, value: null }, null],
       produtos: this.fb.array([]),
     })
   }
