@@ -34,7 +34,7 @@
           <td class="text-center lg:w-2">
             <p-tag *ngIf="projeto.status.descricao == 'Em andamento' " [value]="projeto.status.descricao"></p-tag>
 
-            <p-tag *ngIf="projeto.status.descricao == 'Inatívo' " [value]="projeto.status.descricao"
+            <p-tag *ngIf="projeto.status.descricao == 'Inativo' " [value]="projeto.status.descricao"
               [severity]="'warning'"></p-tag>
 
             <p-tag *ngIf="projeto.status.descricao == 'Excluído' " [value]="projeto.status.descricao"
@@ -49,10 +49,14 @@
             <p-tag *ngIf="projeto.status.descricao == 'Bloqueado' " [value]="projeto.status.descricao"
               [severity]="'danger'"></p-tag>
           </td>
-          <td class="text-center lg:w-2">
-            <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(projeto.id)"></p-button>
-            <p-button icon="pi pi-trash" [text]="true" severity="danger"
-              (onClick)="deletar($event, projeto.id)"></p-button>
+          <td class="text-center">
+            <div class="flex gap-2 lg:w-2">
+              <p-button icon="pi pi-pencil" [text]="true" (onClick)="editar(projeto.id)"></p-button>
+              <p-button icon="pi pi-trash" [text]="true" severity="danger"
+                (onClick)="deletar($event, projeto.id)"></p-button>
+              <app-button-tired-menu [finalizarSplitButtonItems]="buttonTiredItems"
+                (openPopupEmitter)="openPopup($event, projeto)"></app-button-tired-menu>
+            </div>
           </td>
         </tr>
       </ng-template>

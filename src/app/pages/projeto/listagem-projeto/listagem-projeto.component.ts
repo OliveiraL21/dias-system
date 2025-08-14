@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ClienteService } from 'src/app/services/cliente-service/cliente.service';
 import { ProjetoService } from 'src/app/services/projeto/projeto.service';
 import { Projeto, ProjetoListagem } from 'src/app/models/projeto/projeto';
@@ -24,10 +24,80 @@ export class ListagemProjetoComponent {
   comboProjeto: Projeto[] = [];
   clientes: Cliente[] = [];
   status: Status[] = [];
+  buttonTiredItems: MenuItem[] = [];
+  selectedProjeto: ProjetoListagem | null = null;
 
-  constructor(private fb: FormBuilder, private clienteService: ClienteService, private statusService: StatusService, private service: ProjetoService, private messageService: MensagemService, private router: Router, private confirmationService: ConfirmationService) { }
+
+  constructor(private fb: FormBuilder, private clienteService: ClienteService, private statusService: StatusService, private service: ProjetoService, private messageService: MensagemService, private router: Router, private confirmationService: ConfirmationService) {
+    this.buttonTiredItems = [
+      {
+        label: 'Bloquear',
+        icon: 'pi pi-lock',
+        tooltipOptions: {
+          tooltipLabel: 'Bloquear tarefa',
+          tooltipPosition: 'left'
+        },
+        command: () => {
+          let projeto: Projeto = { ...this.selectedProjeto } as Projeto;
+          projeto.status = this.setStatus('Bloqueado', projeto);
+          this.updateProjetoStatus(projeto.id ?? '', projeto, 'Bloqueado');
+        }
+      },
+      {
+        label: 'Inativar',
+        tooltipOptions: {
+          tooltipLabel: 'Inativar tarefa',
+          tooltipPosition: 'left'
+        },
+        icon: 'pi pi-ban',
+        command: () => {
+          let projeto: Projeto = { ...this.selectedProjeto } as Projeto;
+          projeto.status = this.setStatus('Inativo', projeto);
+          this.updateProjetoStatus(projeto.id ?? '', projeto, 'Inativado');
+        }
+      },
+      {
+        label: 'Finalizar',
+        icon: 'pi pi-check',
+        tooltipOptions: {
+          tooltipLabel: 'Finalizar tarefa',
+          tooltipPosition: 'left'
+        },
+        command: () => {
+          let projeto: Projeto = { ...this.selectedProjeto } as Projeto;
+          projeto.status = this.setStatus('Finalizado', projeto);
+          this.updateProjetoStatus(projeto.id ?? '', projeto, 'Finalizado');
+        }
+      }
+    ]
+  }
+
+  setStatus(statusNovo: string, projeto: Projeto): Status | null {
+    if (statusNovo) {
+      let s = this.status.find(s => s.descricao === statusNovo);
+      return s ?? projeto.status;
+    }
+    return projeto.status;
+  }
 
 
+  updateProjetoStatus(id: string, projeto: Projeto, statusMessage: string) {
+    this.loading = true;
+    this.service.update(id, projeto).subscribe({
+      next: (response: any) => {
+        this.messageService.sucesso('Projeto', `Projeto ${statusMessage} com sucesso!`);
+        this.getProjetos();
+        this.loading = false;
+      }, error: () => {
+        this.loading = false;
+      }
+    })
+  }
+
+  openPopup(data: any, projeto: ProjetoListagem) {
+    this.selectedProjeto = projeto;
+    data.menu.toggle(data.event);
+  }
   getCustomFilter(): CustomFilter[] {
     return [
       new CustomFilter('projeto', 'dropdown', 'Selecione o projeto', 'Projeto', '', this.projetos, 'id', 'descricao', true),

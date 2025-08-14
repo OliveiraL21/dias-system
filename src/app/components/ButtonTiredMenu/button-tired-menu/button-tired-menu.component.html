@@ -1,0 +1,4 @@
+<div>
+  <p-button [text]="true" icon="pi pi-ellipsis-v" (click)="openPopupTarefa($event, menu)"></p-button>
+  <p-tieredMenu #menu [popup]="true" [appendTo]="'body'" [model]="finalizarSplitButtonItems" />
+</div>

@@ -41,6 +41,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { ButtonTiredMenuComponent } from 'src/app/components/ButtonTiredMenu/button-tired-menu/button-tired-menu.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     CustomFormComponent,
     InputNumberComponent,
     CustomFileComponent,
+    ButtonTiredMenuComponent,
 
   ],
   imports: [
@@ -138,6 +140,7 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
     InputNumberModule,
     SpeedDialModule,
     TieredMenuModule,
+    ButtonTiredMenuComponent
   ]
 })
 export class ShareModuleModule { }

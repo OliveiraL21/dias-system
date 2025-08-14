@@ -3,7 +3,7 @@ import { Status } from "../status/status";
 import { Tarefa } from "../tarefa/tarefa";
 
 export class Projeto {
-  id?: number;
+  id?: string;
   descricao: string | null = null;
   dataInicio: Date | undefined;
   dataFim: Date | undefined;
@@ -14,7 +14,7 @@ export class Projeto {
 }
 
 export class ProjetoListagem {
-  id: number | undefined;
+  id: string | undefined;
   descricao: string | null = null;
   dataInicio: Date | undefined;
   dataFim: Date | undefined;
