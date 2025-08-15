@@ -112,6 +112,7 @@ export class ListagemTarefaComponent {
       new CustomFilter('dataInicio', 'date', 'Selecione a data inicial', 'Inicio'),
       new CustomFilter('dataFim', 'date', 'Selecione a data fim', 'Fim'),
       new CustomFilter('projetoId', 'dropdown', 'Selecione o projeto', 'Projeto', '', this.projetos, 'id', 'descricao', true),
+      new CustomFilter('statusId', 'dropdown', 'Selecione o status', 'Status', '', this.status, 'id', 'descricao', true)
     ]
   }
 
@@ -225,7 +226,7 @@ export class ListagemTarefaComponent {
         return;
       }
 
-      this.service.filtrar(data.descricao, data.dataInicio, data.dataFim, data.projetoId).subscribe({
+      this.service.filtrar(data.descricao, data.dataInicio, data.dataFim, data.projetoId, data.statusId).subscribe({
         next: (response: TarefaListagem[]) => {
           this.formatTarefasList(response);
           this.loading = false;

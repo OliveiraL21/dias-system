@@ -24,8 +24,8 @@ export class TarefaService {
     return this.http.get<any>(`${url}/projeto/${projeto}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
-  filtrar(descricao?: string, dataInicio?: string, dataFim?: string, projeto?: string): Observable<TarefaListagem[]> {
-    return this.http.get<TarefaListagem[]>(`${url}/filtrar?descricao=${descricao}&dataInicio=${dataInicio}&dataFim=${dataFim}&projetoId=${projeto}`);
+  filtrar(descricao?: string, dataInicio?: string, dataFim?: string, projeto?: string, statusId?: string): Observable<TarefaListagem[]> {
+    return this.http.get<TarefaListagem[]>(`${url}/filtrar?descricao=${descricao}&dataInicio=${dataInicio}&dataFim=${dataFim}&projetoId=${projeto}&statusId=${statusId}`);
   }
   create(tarefa: Tarefa): Observable<Tarefa> {
     return this.http.post<Tarefa>(`${url}`, tarefa);
