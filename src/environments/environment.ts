@@ -5,12 +5,11 @@
 export const environment = {
   production: false,
   //URLs locales windows
-  api_url: 'https://localhost:5001',
-  api_usuario_url: 'https://localhost:6001',
+  // api_url: 'https://localhost:5001',
+  // api_usuario_url: 'https://localhost:6001',
 
-
-  // api_url: 'http://192.168.0.19:83',
-  // api_usuario_url: 'http://192.168.0.19:84',
+  api_url: 'https://localhost:44364',
+  api_usuario_url: 'https://localhost:44336',
 };
 
 /*
