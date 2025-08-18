@@ -5,6 +5,8 @@ const { app, BrowserWindow } = require("electron");
 const path = require("path");
 app.commandLine.appendSwitch('high-dpi-support', 'true');
 app.commandLine.appendSwitch('force-device-scale-factor', '1');
+app.disableHardwareAcceleration();
+
 
 const createWindow = () => {
   // Create the browser window.
