@@ -18,3 +18,9 @@ html {
   margin: 0;
   padding: 0;
 }
+
+.poem {
+  overflow: scroll;
+  scrollbar-width: thin;
+
+}
