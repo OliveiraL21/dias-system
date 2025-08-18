@@ -94,7 +94,7 @@ export class EmpresaListagemComponent {
     if (filtros) {
       this.loading = true;
       console.log(filtros);
-      this.service.filtrar(filtros.razaoSocial, filtros.cpf).subscribe({
+      this.service.filtrar(filtros.razaoSocial, filtros.cpf?.replace('.', '')?.replace('.', '')?.replace('-', '')).subscribe({
         next: (response: Empresa[]) => {
           this.empresas = response;
           this.loading = false;

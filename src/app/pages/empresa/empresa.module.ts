@@ -5,6 +5,7 @@ import { EmpresaRoutingModule } from './empresa-routing.module';
 import { ShareModuleModule } from 'src/app/common/share-module/share-module.module';
 import { EmpresaListagemComponent } from './empresa-listagem/empresa-listagem.component';
 import { EmpresaCadastroComponent } from './empresa-cadastro/empresa-cadastro.component';
+import { CpfPipe } from "../../common/pipes/cpf/cpf.pipe";
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { EmpresaCadastroComponent } from './empresa-cadastro/empresa-cadastro.co
     CommonModule,
     EmpresaRoutingModule,
     ShareModuleModule,
+    CpfPipe
   ]
 })
 export class EmpresaModule { }

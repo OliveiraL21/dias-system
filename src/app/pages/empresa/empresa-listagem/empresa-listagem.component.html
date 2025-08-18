@@ -25,7 +25,7 @@
       <ng-template pTemplate="body" let-empresa>
         <tr>
           <td class="text-center">{{empresa.razaoSocial}}</td>
-          <td class="text-center">{{empresa.cpf}}</td>
+          <td class="text-center">{{empresa.cpf | cpf}}</td>
           <td class="text-center">{{empresa.email}}</td>
           <td class="text-center">{{empresa.celular}}</td>
           <td class="text-center lg:w-min">
