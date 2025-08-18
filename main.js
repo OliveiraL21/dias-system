@@ -15,12 +15,13 @@ const createWindow = () => {
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: true,
     },
 
   });
 
   // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'dist/index.html'));
+  mainWindow.loadFile(path.join(__dirname, 'dist/gereciador-tarefas-front-end-new/index.html'));
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

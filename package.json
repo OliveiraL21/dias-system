@@ -5,6 +5,7 @@
   "author": "Lucas José Dias de Oliveira",
   "scripts": {
     "ng": "ng",
+    "serve": "ng serve",
     "start": "electron .",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
