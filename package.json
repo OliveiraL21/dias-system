@@ -1,10 +1,9 @@
 {
-  "name": "dias-system",
+  "name": "dias system",
   "version": "0.0.0",
   "main": "main.js",
   "author": "Lucas José Dias de Oliveira",
   "description": "Sistema da empresa Dias Systems para gerenciamento de tarefas.",
-  "productName": "Dias System",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -17,9 +16,25 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
-  "build": {
-    "asar": true,
-    "productName": "Dias System"
+  "config": {
+    "forge": {
+      "packagerConfig":{
+        "icon": "src/assets/images/clock red.ico",
+        "asar": true,
+        "productName": "Dias System",
+        "appVersion": "1.0.0"
+      },
+       "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "dias_system",
+            "setupIcon": "src/assets/images/clock red.ico",
+            "shortcutName": "Dias System"
+          }
+        }
+      ]
+    }
   },
   "private": true,
   "dependencies": {
