@@ -43,3 +43,6 @@ Thumbs.db
 
 # environments - dev
 /src/environments/environment.ts
+
+/out
+./out
