@@ -29,7 +29,7 @@
           "name": "@electron-forge/maker-squirrel",
           "config": {
             "name": "dias_system",
-            "setupIcon": "src/assets/images/clock red.ico",
+            "setupIcon": "./src/assets/images/clock red.ico",
             "shortcutName": "Dias System"
           }
         }
