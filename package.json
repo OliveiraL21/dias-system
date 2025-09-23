@@ -1,6 +1,6 @@
 {
   "name": "dias-system",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "main.js",
   "author": "Lucas José Dias de Oliveira",
   "description": "Sistema da empresa Dias Systems para gerenciamento de tarefas.",
@@ -30,7 +30,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "src/assets/images/clock-red.ico"
+      "icon": "src/assets/images/dias-system-logotipo-img.ico"
     },
     "nsis": {
       "oneClick": false,
