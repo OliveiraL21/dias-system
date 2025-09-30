@@ -13,7 +13,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
-    icon: './src/assets/images/clock red.png',
+    icon: './src/assets/images/Logo dias system.png',
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),

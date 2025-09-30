@@ -30,7 +30,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "src/assets/images/clock-red.ico"
+      "icon": "src/assets/images/Logo-dias-system.ico"
     },
     "nsis": {
       "oneClick": false,
