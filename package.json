@@ -26,11 +26,11 @@
       "package.json"
     ],
     "directories": {
-      "output": "c://projetos/dias-system/release/instalador"
+      "output": "c://projetos/dias-system/release"
     },
     "win": {
       "target": "nsis",
-      "icon": "src/assets/images/dias-system-logotipo-img.ico"
+      "icon": "src/assets/images/Logo-dias-system.ico"
     },
     "nsis": {
       "oneClick": false,
