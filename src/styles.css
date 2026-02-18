@@ -4,6 +4,9 @@
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
 
+:root {
+  --company-background-color: #1649ff;
+}
 
 body {
   font-family: var(--font-family);

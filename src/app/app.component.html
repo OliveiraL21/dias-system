@@ -1,11 +1,11 @@
-<main class="h-screen overflow-y-auto flex">
+<main class="h-screen overflow-y-auto flex" [ngClass]="authenticated ? 'surface-200' : 'bg-white'">
   <p-blockUI [blocked]="loading">
     <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
       animationDuration=".5s"></p-progressSpinner>
   </p-blockUI>
   <div *ngIf="authenticated == true" class="w-auto h-full bg-bluegray-700 text-white border-round-right">
     <div class="h-full">
-      <div class="avatar-container">
+      <div class="avatar-container" (click)="myAccount()">
         <img *ngIf="avatarImage" [src]="photo" alt="Foto de perfil" class="avatar-large" />
         <p-avatar *ngIf="!avatarImage" size="xlarge" icon="pi pi-user"></p-avatar>
       </div>
@@ -15,7 +15,7 @@
       </p-megaMenu>
     </div>
   </div>
-  <div [ngClass]="authenticated ? 'w-10 ml-7 h-full' : 'w-full h-full'">
+  <div [ngClass]="authenticated ? 'w-10 ml-3 px-2 h-full' : 'w-full h-full'">
     <p-toast></p-toast>
     <router-outlet></router-outlet>
   </div>
