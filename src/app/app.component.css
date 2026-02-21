@@ -11,8 +11,14 @@
 
 }
 
+.bg-dias {
+  background-color: #2c4ab8;
+}
+
+
 ::ng-deep .p-megamenu.p-megamenu-vertical {
   padding-top: 1.25rem;
+  background: #2c4ab8 !important;
 }
 
 ::ng-deep .menu-lateral .p-menuitem-text {
@@ -48,8 +54,8 @@
 }
 
 .avatar-container {
-  width: 11rem;
-  height: 11rem;
+  width: 10rem;
+  height: 10rem;
   border-radius: 50%;
   overflow: hidden;
   display: flex;

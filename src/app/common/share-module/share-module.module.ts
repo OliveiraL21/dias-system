@@ -42,6 +42,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { TieredMenuModule } from 'primeng/tieredmenu';
 import { ButtonTiredMenuComponent } from 'src/app/components/ButtonTiredMenu/button-tired-menu/button-tired-menu.component';
+import { MenuSuperiorComponent } from 'src/app/components/menu-superior/menu-superior.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { BadgeModule } from 'primeng/badge';
+
 
 @NgModule({
   declarations: [
@@ -55,7 +59,7 @@ import { ButtonTiredMenuComponent } from 'src/app/components/ButtonTiredMenu/but
     InputNumberComponent,
     CustomFileComponent,
     ButtonTiredMenuComponent,
-
+    MenuSuperiorComponent
   ],
   imports: [
     CommonModule,
@@ -93,6 +97,8 @@ import { ButtonTiredMenuComponent } from 'src/app/components/ButtonTiredMenu/but
     InputNumberModule,
     SpeedDialModule,
     TieredMenuModule,
+    OverlayPanelModule,
+    BadgeModule
   ],
 
   exports: [
@@ -140,7 +146,10 @@ import { ButtonTiredMenuComponent } from 'src/app/components/ButtonTiredMenu/but
     InputNumberModule,
     SpeedDialModule,
     TieredMenuModule,
-    ButtonTiredMenuComponent
+    ButtonTiredMenuComponent,
+    MenuSuperiorComponent,
+    OverlayPanelModule,
+    BadgeModule
   ]
 })
 export class ShareModuleModule { }
