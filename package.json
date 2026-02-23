@@ -1,9 +1,9 @@
 {
   "name": "dias-system",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "main.js",
   "author": "Lucas José Dias de Oliveira",
-  "description": "Sistema da empresa Dias Systems para gerenciamento de tarefas.",
+  "description": "Sistema da empresa Dias Systems para gerenciamento de projetos e orçamentos.",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -14,12 +14,18 @@
     "test": "ng test",
     "electron": "ng build --base-href ./ && electron .",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "publish": "ng build --base-href ./ && electron builder --publish always"
   },
   "build": {
     "appId": "com.diassystem.app",
     "asar": true,
     "productName": "Dias System",
+    "publish": {
+      "provider": "github",
+      "owner": "OliveiraL21",
+      "repo": "dias-system"
+    },
     "files": [
       "dist/**/*",
       "main.js",
@@ -39,6 +45,14 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Dias System"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility",
+      "icon": "src/assets/images/Logo dias system.png"
     }
   },
   "private": true,
@@ -53,7 +67,9 @@
     "@angular/router": "^17.1.0",
     "chart.js": "^4.4.1",
     "date-fns": "^4.1.0",
+    "electron-log": "^5.4.3",
     "electron-squirrel-startup": "^1.0.1",
+    "electron-updater": "^6.8.3",
     "primeflex": "^3.3.1",
     "primeicons": "^6.0.1",
     "primeng": "^17.18.15",
@@ -76,7 +92,7 @@
     "@types/jasmine": "~4.3.0",
     "@types/node": "^20.11.28",
     "electron": "^29.4.6",
-    "electron-builder": "^26.0.12",
+    "electron-builder": "^26.8.1",
     "electron-winstaller": "^5.4.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",

@@ -1,12 +1,17 @@
 // main.js
 
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, autoUpdater, dialog } = require("electron");
+const { appUpdater } = require('electron-updater');
+const log = require('electron-log');
 const path = require("path");
 app.commandLine.appendSwitch('high-dpi-support', 'true');
 app.commandLine.appendSwitch('force-device-scale-factor', '1');
 app.disableHardwareAcceleration();
 
+appUpdater.logger = log;
+appUpdater.logger.transports.file.level = 'info';
+log.info('Aplicando log... ')
 
 const createWindow = () => {
   // Create the browser window.
@@ -25,13 +30,15 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'dist/gereciador-tarefas-front-end-new/index.html'));
 
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdates();
+  })
+
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+
 app.whenReady().then(() => {
   createWindow();
 
@@ -39,6 +46,37 @@ app.whenReady().then(() => {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+});
+
+autoUpdater.on('checking-for-update', () => {
+  log.info('Verificando atualizações...');
+});
+
+autoUpdater.on('update-available', (info) => {
+  log.info('Atualização disponível.');
+  // Opcional: Avisar o usuário que está baixando
+});
+
+autoUpdater.on('update-not-available', (info) => {
+  log.info('Nenhuma atualização disponível.');
+});
+
+autoUpdater.on('error', (err) => {
+  log.error('Erro na atualização: ', err);
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+  log.info("Atualização Baixada");
+
+  dialog.showMessageBox({
+    type: 'info',
+    title: 'Atualização Pronta',
+    message: 'Uma nova versão foi baixada. Deseja reiniciar e instalar agora?',
+    buttons: ['Sim', 'Depois']
+  }).then((returnValue) => {
+    if (returnValue.response === 0)
+      autoUpdater.quitAndInstall();
   });
 });
 
