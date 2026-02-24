@@ -12,6 +12,11 @@ const url = `${environment.api_url}/`;
 export class ProjetoService {
 
   constructor(private http: HttpClient) { }
+
+  calculateTotalHour(id: string): Observable<any> {
+    return this.http.get<any>(`${url}Projeto/calculateTotalHourProject/${id}`)
+  }
+
   listaTodos(): Observable<ProjetoListagem[]> {
     return this.http.get<ProjetoListagem[]>(`${url}lista/projetos`);
   }
