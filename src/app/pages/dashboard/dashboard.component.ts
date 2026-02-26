@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Projeto, ProjetoListagem } from 'src/app/models/projeto/projeto';
@@ -22,6 +23,7 @@ export class DashboardComponent {
   projetos: ProjetoListagem[] = [];
   projeto!: Projeto;
   tarefas!: any;
+  totalHours: string = "";
 
   constructor(private messageService: MessageService, private projetoService: ProjetoService, private tarefasService: TarefaService, private service: DashboardService) {
     this.getDados()
@@ -29,9 +31,25 @@ export class DashboardComponent {
   }
 
   getDados() {
+    this.loading = true;
     this.service.carregarDados().subscribe({
       next: (response) => {
         this.projetosAtivos = response.projetosAtivos;
+        this.loading = false;
+      }, error: () => {
+        this.loading = false;
+      }
+    })
+  }
+
+  getTotalHoursByProject(projeto: string) {
+    this.projetoService.calculateTotalHour(projeto).subscribe({
+      next: (total: any) => {
+        this.totalHours = total.total;
+        this.loading = false;
+      }, error: (err: HttpErrorResponse) => {
+        console.log(err.error);
+        this.loading = false;
       }
     })
   }
@@ -45,6 +63,7 @@ export class DashboardComponent {
   }
 
   getProjectTasks(projeto: string) {
+    this.loading = true;
     if (projeto) {
       this.tarefasService.listByProjeto(projeto).subscribe({
         next: (tarefas: any) => {
@@ -64,10 +83,16 @@ export class DashboardComponent {
               }
             ]
           };
+          this.getTotalHoursByProject(projeto)
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
         }
       })
     } else {
       this.tarefas = null;
+      this.loading = false;
     }
   }
 

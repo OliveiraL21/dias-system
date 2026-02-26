@@ -1,22 +1,25 @@
-<main class="h-screen overflow-y-auto flex">
+<main class="h-screen  flex" [ngClass]="authenticated ? 'surface-200' : 'bg-white'">
   <p-blockUI [blocked]="loading">
     <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
       animationDuration=".5s"></p-progressSpinner>
   </p-blockUI>
-  <div *ngIf="authenticated == true" class="w-auto h-full bg-bluegray-700 text-white border-round-right">
+  <div *ngIf="authenticated == true" class="w-auto h-screen bg-dias text-white border-round-right">
     <div class="h-full">
-      <div class="avatar-container">
-        <img *ngIf="avatarImage" [src]="photo" alt="Foto de perfil" class="avatar-large" />
-        <p-avatar *ngIf="!avatarImage" size="xlarge" icon="pi pi-user"></p-avatar>
+      <div class="flex justify-content-start align-items-center w-full " (click)="myAccount()">
+        <img src="assets/images/Logo-dias-system-black.png" width="150px"
+          style="max-height: 150px; object-fit: contain; margin-left: 8px; margin-top:-40px" alt="Logo da empresa" />
       </div>
 
       <p-megaMenu #menu orientation="vertical" [model]="items" class="h-full menu-lateral"
-        styleClass="h-full bg-bluegray-700 text-white border-round-right border-none border-noround-left">
+        styleClass="h-full -mt-6 text-white border-round-right border-none border-noround-left">
       </p-megaMenu>
     </div>
   </div>
-  <div [ngClass]="authenticated ? 'w-10 ml-7 h-full' : 'w-full h-full'">
+  <div [ngClass]="authenticated ? 'w-11 h-screen flex flex-column' : 'w-full h-full'">
     <p-toast></p-toast>
-    <router-outlet></router-outlet>
+    <app-menu-superior *ngIf="authenticated" class="w-full" [userPhoto]="photo"></app-menu-superior>
+    <div [ngClass]="authenticated ? 'px-2 pb-5 ml-3 h-full flex-1 overflow-y-auto' : 'h-full'">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </main>

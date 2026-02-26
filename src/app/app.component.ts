@@ -40,6 +40,10 @@ export class AppComponent {
     })
   }
 
+  myAccount() {
+    this.route.navigateByUrl('minha-conta');
+  }
+
   getUser() {
     const id = localStorage.getItem("Id") ?? null;
     if (id) {

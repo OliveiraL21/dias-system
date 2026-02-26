@@ -1,16 +1,22 @@
-<div class="w-full h-full flex align-items-center justify-content-center bg-bluegray-400">
+<div class="w-full h-full flex ">
   <p-toast position="top-right"></p-toast>
   <p-blockUI [blocked]="loading">
     <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="8" fill="var(--surface-ground)"
       animationDuration=".5s"></p-progressSpinner>
   </p-blockUI>
 
-  <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+  <div class="w-6 h-full bg-dias flex justify-content-center align-items-center">
+    <div class="flex flex-column">
+      <img src="assets/images/dias-system-login-ilustration.png" alt="imagem gerencia de projetos" width="500px"
+        height="500px">
+    </div>
+  </div>
+
+  <div class="p-6 w-6">
     <div class="text-center mb-5 lg:mb-3">
-      <img src="assets/images/Logo dias system.png" alt="Image" height="50" class="mb-3">
-      <div class="text-900 text-3xl font-medium mb-3 lg:text-xl mb-2">Gerenciador de Tarefas Dias</div>
-      <span class="text-600 font-medium line-height-3 lg:text-sm">Já possui uma conta ?</span>
-      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer lg:text-sm" (click)="login()">Faça o Login
+      <div class="text-900 text-7xl font-medium mb-3">Criar Conta!</div>
+      <span class="text-sm font-medium line-height-3">Já possui uma conta ?</span>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer text-sm" (click)="login()">Faça o Login
         Agora !</a>
     </div>
 
@@ -32,6 +38,9 @@
         <small class="p-error block p-1 mb-2"
           *ngIf="form.get('email')?.hasError('required') && form.get('email')?.dirty">
           Campo obrigatório
+        </small>
+        <small class="p-error block p-1 mb-2" *ngIf="form.get('email')?.hasError('email') && form.get('email')?.dirty">
+          E-mail inválido, digite um e-mail valido.
         </small>
 
         <span class="p-input-icon-right w-full">
