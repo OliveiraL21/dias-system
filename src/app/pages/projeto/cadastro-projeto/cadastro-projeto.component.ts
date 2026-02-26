@@ -125,8 +125,9 @@ export class CadastroProjetoComponent {
     this.form = this.fb.group({
       descricao: [null, [Validators.required]],
       dataInicio: [null, [Validators.required]],
-      dataFim: [null, [Validators.required]],
+      dataFim: [null, null],
       cliente: [null, [Validators.required]],
+      valorHora: [null, [Validators.required]],
       status: [null, [Validators.required]]
     })
   }
@@ -228,6 +229,7 @@ export class CadastroProjetoComponent {
         descricao: data.descricao,
         dataInicio: data.dataInicio,
         dataFim: data.dataFim,
+        valorHora: data.valorHora,
         cliente: cliente !== null && cliente !== undefined ? cliente : null,
         clienteId: data.cliente,
         tarefas: [],
