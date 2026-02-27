@@ -3,13 +3,12 @@
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, dialog } = require("electron");
 const { autoUpdater } = require('electron-updater');
-const log = require('electron-log');
 const path = require("path");
 app.commandLine.appendSwitch('high-dpi-support', 'true');
 app.commandLine.appendSwitch('force-device-scale-factor', '1');
 app.disableHardwareAcceleration();
 
-autoUpdater.logger = log;
+autoUpdater.logger = require('electron-log');
 autoUpdater.logger.transports.file.level = 'info';
 log.info('Aplicando log... ')
 
@@ -32,6 +31,10 @@ const createWindow = () => {
 
   mainWindow.once('ready-to-show', () => {
     autoUpdater.checkForUpdatesAndNotify();
+
+    if (process.platform === 'linux') {
+      app.setDesktopName('bijus-da-manu.desktop');
+    }
   })
 
   // Open the DevTools.
