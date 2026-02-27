@@ -1,6 +1,6 @@
 {
   "name": "dias-system",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "main.js",
   "author": "Lucas José Dias de Oliveira",
   "description": "Sistema da empresa Dias Systems para gerenciamento de projetos e orçamentos.",
@@ -15,7 +15,7 @@
     "electron": "ng build --base-href ./ && electron .",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "ng build --base-href ./ && electron builder --publish always"
+    "publish": "ng build --base-href ./ && electron-builder --publish always"
   },
   "build": {
     "appId": "com.diassystem.app",
@@ -32,7 +32,8 @@
       "package.json"
     ],
     "directories": {
-      "output": "c://projetos/dias-system/release"
+      "output": "c://projetos/dias-system/release",
+      "app": "."
     },
     "win": {
       "target": "nsis",
