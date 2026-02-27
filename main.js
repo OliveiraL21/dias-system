@@ -31,7 +31,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'dist/gereciador-tarefas-front-end-new/index.html'));
 
   mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdates();
+    autoUpdater.checkForUpdatesAndNotify();
   })
 
   // Open the DevTools.
