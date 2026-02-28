@@ -2,6 +2,7 @@
 
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, dialog } = require("electron");
+const log = require('electron-log');
 const path = require("path");
 app.commandLine.appendSwitch('high-dpi-support', 'true');
 app.commandLine.appendSwitch('force-device-scale-factor', '1');
@@ -10,7 +11,7 @@ app.disableHardwareAcceleration();
 const updater = require('electron-updater');
 const autoUpdater = updater.autoUpdater;
 
-autoUpdater.logger = require('electron-log');
+autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('Aplicando log... ')
 
