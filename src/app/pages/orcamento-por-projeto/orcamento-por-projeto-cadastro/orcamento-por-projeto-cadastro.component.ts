@@ -254,6 +254,9 @@ export class OrcamentoPorProjetoCadastroComponent {
       valorTotal: [null, null],
       createAt: [null, null],
       tempoDeEntrega: [{ disabled: true, value: null }, null],
+      desconto: [null, null],
+      valorTotalDesconto: [null, null],
+      observacao: [null, null],
       produtos: this.fb.array([]),
     })
   }
@@ -275,6 +278,14 @@ export class OrcamentoPorProjetoCadastroComponent {
       {
         type: 'number',
         data: new CustomInputNumberData('valorTotal', 'Valor Total', 'valorTotal', 'currency', true, this.id ? true : false),
+      },
+      {
+        type: 'number',
+        data: new CustomInputNumberData('desconto', 'Desconto', 'desconto', 'percent', false, true, false, '%')
+      },
+      {
+        type: 'number',
+        data: new CustomInputNumberData('valorTotalDesconto', 'Valor Total com Desconto', 'valorTotalDesconto', 'currency', false, true, false, '')
       },
       {
         type: 'data',

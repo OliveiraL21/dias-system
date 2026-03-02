@@ -5,9 +5,10 @@ export default class CustomInputNumberData {
   mode: string;
   required: boolean;
   visible: boolean;
-  grouping: boolean
+  grouping: boolean;
+  suffix: string;
 
-  constructor(controlName: string, label: string, forLabel: string, mode: string, required: boolean, visible: boolean = true, grouping = true) {
+  constructor(controlName: string, label: string, forLabel: string, mode: string, required: boolean, visible: boolean = true, grouping = true, suffix: string = '') {
     this.controlName = controlName;
     this.label = label;
     this.forLabel = forLabel;
@@ -15,5 +16,6 @@ export default class CustomInputNumberData {
     this.required = required;
     this.visible = visible;
     this.grouping = grouping;
+    this.suffix = suffix;
   }
 }
