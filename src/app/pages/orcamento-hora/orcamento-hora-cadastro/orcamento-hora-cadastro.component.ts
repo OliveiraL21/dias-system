@@ -8,6 +8,7 @@ import Cliente from 'src/app/models/cliente/cliente';
 import { CustomFormControls } from 'src/app/models/custonsModels/CustomFormData/CustomFormControls';
 import CustomInputNumberData from 'src/app/models/custonsModels/customInputNumberData/CustomInputNumberData';
 import CustomSelectData from 'src/app/models/custonsModels/CustomSelect/CustomSelectData';
+import { CustomTextareaData } from 'src/app/models/custonsModels/CustomTextarea/CustomTextareaData';
 import { CustomInputText } from 'src/app/models/custonsModels/CustomTextInputData/CustomInputText';
 import { Empresa } from 'src/app/models/empresa/Empresa';
 import { OrcamentoHora } from 'src/app/models/orcamentoHora/OrcamentoHora';
@@ -62,8 +63,20 @@ export class OrcamentoHoraCadastroComponent {
         data: new CustomInputNumberData('valorTotal', 'Valor Total', 'valorTotal', 'currency', true, this.id ? true : false)
       },
       {
+        type: 'number',
+        data: new CustomInputNumberData('valorTotal', 'Valor Total', 'valorTotal', 'currency', true, this.id ? true : false),
+      },
+      {
+        type: 'number',
+        data: new CustomInputNumberData('desconto', 'Desconto', 'desconto', 'percent', false, true, false, '%')
+      },
+      {
         type: 'text',
         data: new CustomInputText('tempoDeEntrega', 'Ex: 30 dias', 'tempoDeEntrega', 'Tempo De Entrega', 'tempoDeEntrega', false, false, '', true),
+      },
+      {
+        type: 'textarea',
+        data: new CustomTextareaData('observacao', '12', '52', 'observacao', 'Observação')
       }
     ]
   }
@@ -95,7 +108,10 @@ export class OrcamentoHoraCadastroComponent {
       clienteId: [null, [Validators.required]],
       valorTotal: [null, null],
       valorHora: [null, [Validators.required]],
+      desconto: [null, null],
+      valorTotalDesconto: [null, null],
       tempoDeEntrega: [{ disabled: true, value: null }, null],
+      observacao: [null, null],
       servicos: this.fb.array([])
     })
   }
@@ -235,7 +251,10 @@ export class OrcamentoHoraCadastroComponent {
       id: this.id ?? "",
       numero: data.numero,
       valorHora: data.valorHora,
+      desconto: data.desconto,
       valorTotal: data.valorTotal,
+      valorTotalDesconto: data.valorTotalDesconto,
+      observacao: data.observacao,
       empresaId: data.empresaId,
       clienteId: data.clienteId,
       servicos: data.servicos,

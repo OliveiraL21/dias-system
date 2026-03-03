@@ -8,6 +8,7 @@ import Cliente from 'src/app/models/cliente/cliente';
 import { CustomFormControls } from 'src/app/models/custonsModels/CustomFormData/CustomFormControls';
 import CustomInputNumberData from 'src/app/models/custonsModels/customInputNumberData/CustomInputNumberData';
 import CustomSelectData from 'src/app/models/custonsModels/CustomSelect/CustomSelectData';
+import { CustomTextareaData } from 'src/app/models/custonsModels/CustomTextarea/CustomTextareaData';
 import { CustomInputText } from 'src/app/models/custonsModels/CustomTextInputData/CustomInputText';
 import { Empresa } from 'src/app/models/empresa/Empresa';
 import { OrcamentoPorProjeto } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjeto';
@@ -79,6 +80,9 @@ export class OrcamentoPorProjetoCadastroComponent {
       tempoDeEntrega: data.tempoDeEntrega,
       numero: data.numero,
       valorTotal: data.valorTotal,
+      desconto: data.desconto,
+      valorTotalDesconto: data.valorTotalDesconto,
+      observacao: data.observacao,
       produtos: data.produtos?.map((produto: Produto) => ({
         id: produto.id,
         orcamentoId: this.id,
@@ -294,6 +298,10 @@ export class OrcamentoPorProjetoCadastroComponent {
       {
         type: 'text',
         data: new CustomInputText('tempoDeEntrega', 'Ex: 30 dias', 'tempoDeEntrega', 'Tempo De Entrega', 'tempoDeEntrega', false, false, '', true),
+      },
+      {
+        type: 'textarea',
+        data: new CustomTextareaData('observacao', '12', '52', 'observacao', 'Observação')
       }
     ]
   }

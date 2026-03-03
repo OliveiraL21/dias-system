@@ -45,6 +45,7 @@ import { ButtonTiredMenuComponent } from 'src/app/components/ButtonTiredMenu/but
 import { MenuSuperiorComponent } from 'src/app/components/menu-superior/menu-superior.component';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { BadgeModule } from 'primeng/badge';
+import { InputTextareaComponent } from 'src/app/components/input-textarea/input-textarea.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { BadgeModule } from 'primeng/badge';
     InputNumberComponent,
     CustomFileComponent,
     ButtonTiredMenuComponent,
-    MenuSuperiorComponent
+    MenuSuperiorComponent,
+    InputTextareaComponent
   ],
   imports: [
     CommonModule,

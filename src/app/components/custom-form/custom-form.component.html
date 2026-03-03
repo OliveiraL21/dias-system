@@ -18,6 +18,9 @@
     <div *ngIf="control.type === 'file'" class="w-25rem mt-5 mb-2">
       <app-custom-file (FileEventEmitter)="fileChange($event)" [FileInput]="file"></app-custom-file>
     </div>
+    <div *ngIf="control.type === 'textarea'" class="w-25rem mt-5 mb-2">
+      <app-input-textarea [control]="control.data"></app-input-textarea>
+    </div>
   </div>
 
   <div class="w-full mt-8 flex gap-2" *ngIf="formButtonsVisible">

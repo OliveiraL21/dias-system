@@ -1,0 +1,7 @@
+<div class="w-full mb-5" [formGroup]="form">
+  <p-floatLabel>
+    <textarea [name]="control.id" [id]="control.id" [formControlName]="control.controlName" [rows]="control.rows"
+      [cols]="control.cols"></textarea>
+    <label [for]="control.id">{{control.label}}</label>
+  </p-floatLabel>
+</div>
