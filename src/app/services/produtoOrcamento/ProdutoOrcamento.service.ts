@@ -5,7 +5,7 @@ import { ProdutoOrcamento } from 'src/app/models/produtoOrcamento/ProdutoOrcamen
 import { ProdutoOrcamentoCreate } from 'src/app/models/produtoOrcamento/ProdutoOrcamentoCreate';
 import { ProdutoOrcamentoUpdate } from 'src/app/models/produtoOrcamento/ProdutoOrcamentoUpdate';
 import { environment } from 'src/environments/environment';
-const baseUrl = `${environment.api_url}/ProdutoOrcamentoPorProjeto`
+const baseUrl = `${environment.api_url}ProdutoOrcamentoPorProjeto`
 
 @Injectable({
   providedIn: 'root'

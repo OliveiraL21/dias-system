@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Status } from 'src/app/models/status/status';
 import { environment } from 'src/environments/environment';
 
-const url = `${environment.api_url}/Status`;
+const url = `${environment.api_url}Status`;
 
 @Injectable({
   providedIn: 'root'

@@ -5,7 +5,7 @@ import { Servico } from 'src/app/models/servico/Servico';
 import { ServicoCreate } from 'src/app/models/servico/ServicoCreate';
 import { ServicoUpdate } from 'src/app/models/servico/ServicoUpdate';
 import { environment } from 'src/environments/environment';
-const baseUrl = `${environment.api_url}/Servico`
+const baseUrl = `${environment.api_url}Servico`
 @Injectable({
   providedIn: 'root'
 })

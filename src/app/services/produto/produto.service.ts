@@ -6,7 +6,7 @@ import { ProdutoCreate } from 'src/app/models/produto/ProdutoCreate';
 import { ProdutoUpdate } from 'src/app/models/produto/ProdutoUpdate';
 import { environment } from 'src/environments/environment';
 
-const baseUrl = `${environment.api_url}/Produto`;
+const baseUrl = `${environment.api_url}Produto`;
 
 @Injectable({
   providedIn: 'root'

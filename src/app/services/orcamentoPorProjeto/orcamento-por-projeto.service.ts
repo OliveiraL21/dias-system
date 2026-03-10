@@ -6,7 +6,7 @@ import { OrcamentoPorProjetoCreate } from 'src/app/models/orcamentoPorProjeto/Or
 import { OrcamentoPorProjetoList } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoList';
 import { OrcamentoPorProjetoUpdate } from 'src/app/models/orcamentoPorProjeto/OrcamentoPorProjetoUpdate';
 import { environment } from 'src/environments/environment';
-const baseUrl = `${environment.api_url}/OrcamentoPorProjeto`;
+const baseUrl = `${environment.api_url}OrcamentoPorProjeto`;
 @Injectable({
   providedIn: 'root'
 })

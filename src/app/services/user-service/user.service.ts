@@ -5,7 +5,7 @@ import { Usuario } from 'src/app/models/usuario/usuario';
 
 import { environment } from 'src/environments/environment';
 
-const baseUrl = `${environment.api_usuario_url}/Usuario`;
+const baseUrl = `${environment.api_usuario_url}Usuario`;
 
 @Injectable({
   providedIn: 'root'

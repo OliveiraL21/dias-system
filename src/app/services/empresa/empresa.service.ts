@@ -5,7 +5,7 @@ import { Empresa } from 'src/app/models/empresa/Empresa';
 import { EmpresaCreate } from 'src/app/models/empresa/EmpresaCreate';
 import { EmpresaUpdate } from 'src/app/models/empresa/EmpresaUpdate';
 import { environment } from 'src/environments/environment';
-const baseUrl = `${environment.api_url}/Empresa`;
+const baseUrl = `${environment.api_url}Empresa`;
 @Injectable({
   providedIn: 'root'
 })

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Tarefa, TarefaListagem } from 'src/app/models/tarefa/tarefa';
 import { environment } from 'src/environments/environment';
 
-const url = `${environment.api_url}/Tarefa`;
+const url = `${environment.api_url}Tarefa`;
 
 @Injectable({
   providedIn: 'root'

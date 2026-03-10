@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-const url = `${environment.api_usuario_url}/Logout`
+const url = `${environment.api_usuario_url}Logout`
 
 @Injectable({
   providedIn: 'root'

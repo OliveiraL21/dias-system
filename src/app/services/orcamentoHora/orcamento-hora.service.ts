@@ -5,7 +5,7 @@ import { OrcamentoHora } from 'src/app/models/orcamentoHora/OrcamentoHora';
 import { OrcamentoHoraCreate } from 'src/app/models/orcamentoHora/OrcamentoHoraCreate';
 import { OrcamentoHoraUpdate } from 'src/app/models/orcamentoHora/OrcamentoHoraUpdate';
 import { environment } from 'src/environments/environment';
-const baseUrl = `${environment.api_url}/OrcamentoHora`
+const baseUrl = `${environment.api_url}OrcamentoHora`
 @Injectable({
   providedIn: 'root'
 })

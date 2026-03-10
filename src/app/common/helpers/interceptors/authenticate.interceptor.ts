@@ -9,7 +9,7 @@ export class AuthenticateInterceptor implements HttpInterceptor {
   constructor(private tokenService: TokenService) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.url.split('/')[2] == environment.api_usuario_url.split('/')[2]) {
+    if (req.url.split('/')[1] == environment.api_usuario_url.split('/')[1]) {
       return next.handle(req);
     }
 
