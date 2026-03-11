@@ -1,6 +1,6 @@
 {
   "name": "dias-system",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "main.js",
   "author": "Lucas José Dias de Oliveira",
   "description": "Sistema da empresa Dias Systems para gerenciamento de projetos e orçamentos.",
